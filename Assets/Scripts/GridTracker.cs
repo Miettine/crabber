@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class GridTracker : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    Grid grid;
+    private void Awake() {
+        grid = GameObject.Find( "Grid" ).GetComponent<Grid>();
+    }
+    void Start() {
         
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int coordinate = grid.WorldToCell(mouseWorldPos);
+        Debug.Log(coordinate);
     }
 }
