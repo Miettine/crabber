@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class GridTracker : MonoBehaviour
 {
+
 	const string WaterTileName = "HexTilesetv3_5";
 	const string PlacedPotTileName = "HexTilesetv3_41";
 	const string TerrainGridName = "TerrainGrid";
@@ -34,6 +36,11 @@ public class GridTracker : MonoBehaviour
 		if (potSprite == null)
 			throw new System.Exception("ERROR: Failed to find potSprite");
 	}
+
+	internal List<Vector3Int> GetAllPotLocations() {
+		throw new NotImplementedException();
+	}
+
 	void Start() {
 		
 	}
