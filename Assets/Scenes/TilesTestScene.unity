@@ -3499,7 +3499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f68946f80ce49b4d8d369022fd52265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 9208405276911119325, guid: fe58c847d4263b14aaaeba53024d862f, type: 3}
+  potSprite: {fileID: 9208405276911119325, guid: fe58c847d4263b14aaaeba53024d862f,
+    type: 3}
 --- !u!4 &1159050753
 Transform:
   m_ObjectHideFlags: 0
@@ -3513,6 +3514,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1421239640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1421239642}
+  - component: {fileID: 1421239641}
+  m_Layer: 0
+  m_Name: PlayerController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1421239641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421239640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1e7a6917d7f9b4a944351526c1e964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1421239642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421239640}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.65356654, y: -0.76096094, z: -17.81836}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2019822272
 GameObject:

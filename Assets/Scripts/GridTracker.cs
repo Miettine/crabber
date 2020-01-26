@@ -9,12 +9,7 @@ public class GridTracker : MonoBehaviour
     const string PlacedPotTileName = "HexTilesetv3_41";
     const string TerrainGridName = "TerrainGrid";
     const string MarkerGridName = "MarkerGrid";
-    //const string PotPlacerName = "PotPlacer";
-
-    private delegate void PlacePotDelegate(Tile tile);
-    private delegate void RemovePotDelegate(Tile tile);
-    PlacePotDelegate placePotFunction;
-    RemovePotDelegate removePotFunction;
+    const string PlayerControllerGameObjectName = "PlayerController";
 
     Grid terrainGrid;
     Tilemap terrainTilemap;
@@ -22,9 +17,10 @@ public class GridTracker : MonoBehaviour
     Grid markerGrid;
     Tilemap markerTilemap;
 
-    PotPlacer potPlacer;
+    PlayerController playerController;
 
-    public Sprite sprite;
+    [SerializeField]
+    private Sprite potSprite;
     private void Awake() {
         terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
         terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
@@ -32,9 +28,8 @@ public class GridTracker : MonoBehaviour
         markerGrid = GameObject.Find(MarkerGridName).GetComponent<Grid>();
         markerTilemap = markerGrid.GetComponentInChildren<Tilemap>();
 
-        placePotFunction = new PlacePotDelegate(PlacePot);
-        removePotFunction = new RemovePotDelegate(RemovePot);
-        //potPlacer = GameObject.Find(PotPlacerName).GetComponent<PotPlacer>();
+        playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
+
     }
     void Start() {
         
@@ -45,11 +40,11 @@ public class GridTracker : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            PlaceOrRemovePot(mouseWorldPos, placePotFunction, removePotFunction);
+            PlaceOrRemovePot(mouseWorldPos);
 
         }
     }
-    void PlaceOrRemovePot(Vector3 worldPos, PlacePotDelegate placePot, RemovePotDelegate removePot) {
+    void PlaceOrRemovePot(Vector3 worldPos) {
         Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
         var terrainTile = (Tile) terrainTilemap.GetTile(terrainCoordinate);
 
@@ -64,30 +59,21 @@ public class GridTracker : MonoBehaviour
         bool allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
         Vector3Int location = markerCoordinate;
 
-        if (allowedToPlace) {
+        if (allowedToPlace && playerController.hasPotsLeft()) {
             Tile tile = ScriptableObject.CreateInstance<Tile>();
-            tile.sprite = sprite;
+            tile.sprite = potSprite;
             markerTilemap.SetTile(location, tile);
-            //placePot(markerTile);
+
+            playerController.throwPot();
         } else if (allowedToRemove) {
             Tile tile = ScriptableObject.CreateInstance<Tile>();
             markerTilemap.SetTile(location, tile);
-            //removePot(markerTile);
+
+            playerController.retrievePot();
         }
-
-    }
-
-    void PlacePot(Tile tile) {
-        Debug.Log("PlacePot "+tile);
-    }
-
-    void RemovePot(Tile tile) {
-        tile.sprite = null;
-        Debug.Log("RemovePot " + tile);
     }
 
     bool SpriteHasName(Sprite givenSprite, string name) {
-        
         return givenSprite == null ? false : givenSprite.name == name;
     }
 }
