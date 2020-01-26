@@ -11,8 +11,10 @@ public class GridTracker : MonoBehaviour
     const string MarkerGridName = "MarkerGrid";
     //const string PotPlacerName = "PotPlacer";
 
-    //private delegate void PlacePotDelegate();
-    //private delegate void RemovePotDelegate();
+    private delegate void PlacePotDelegate(Tile tile);
+    private delegate void RemovePotDelegate(Tile tile);
+    PlacePotDelegate placePotFunction;
+    RemovePotDelegate removePotFunction;
 
     Grid terrainGrid;
     Tilemap terrainTilemap;
@@ -28,6 +30,8 @@ public class GridTracker : MonoBehaviour
         markerGrid = GameObject.Find(MarkerGridName).GetComponent<Grid>();
         markerTilemap = markerGrid.GetComponentInChildren<Tilemap>();
 
+        placePotFunction = new PlacePotDelegate(PlacePot);
+        removePotFunction = new RemovePotDelegate(RemovePot);
         //potPlacer = GameObject.Find(PotPlacerName).GetComponent<PotPlacer>();
     }
     void Start() {
@@ -39,34 +43,41 @@ public class GridTracker : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            AllowedToPlaceAndRemovePot(mouseWorldPos, out bool allowedToPlace, out bool allowedToRemove, out Vector3Int place);
+            PlaceOrRemovePot(mouseWorldPos, placePotFunction, removePotFunction);
 
-            Debug.Log("allowedToPlace: "+ allowedToPlace);
-            Debug.Log("allowedToRemove: " + allowedToRemove);
-
-            if (allowedToPlace) {
-                Debug.Log("Allowed to place");
-                
-            } else if (allowedToRemove) {
-                Debug.Log("Allowed to remove");
-
-            }
         }
     }
-    void AllowedToPlaceAndRemovePot(Vector3 worldPos, out bool allowedToPlace, out bool allowedToRemove, out Vector3Int location) {
+    void PlaceOrRemovePot(Vector3 worldPos, PlacePotDelegate placePot, RemovePotDelegate removePot) {
         Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
-        Sprite terrainSprite = terrainTilemap.GetSprite(terrainCoordinate);
+        var terrainTile = (Tile) terrainTilemap.GetTile(terrainCoordinate);
 
-        bool terrainIsWaterTile = SpriteHasName(terrainSprite, WaterTileName);
+        bool terrainIsWaterTile = SpriteHasName(terrainTile.sprite, WaterTileName);
 
         Vector3Int markerCoordinate = markerGrid.WorldToCell(worldPos);
-        Sprite markerSprite = markerTilemap.GetSprite(markerCoordinate);
+        var markerTile = (Tile) markerTilemap.GetTile(markerCoordinate);
 
-        bool markerGridHasPlacedPotTile = SpriteHasName(markerSprite, PlacedPotTileName);
+        bool markerGridHasPlacedPotTile = SpriteHasName(markerTile.sprite, PlacedPotTileName);
 
-        allowedToPlace = terrainIsWaterTile && !markerGridHasPlacedPotTile;
-        allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
-        location = markerCoordinate;
+        bool allowedToPlace = terrainIsWaterTile && !markerGridHasPlacedPotTile;
+        bool allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
+        Vector3Int location = markerCoordinate;
+
+        if (allowedToPlace) {
+
+            placePot(markerTile);
+
+        } else if (allowedToRemove) { 
+            removePot(markerTile);
+        }
+
+    }
+
+    void PlacePot(Tile tile) {
+        Debug.Log("PlacePot "+tile);
+    }
+
+    void RemovePot(Tile tile) {
+        Debug.Log("RemovePot " + tile);
     }
 
     bool SpriteHasName(Sprite givenSprite, string name) {
