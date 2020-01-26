@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    private int pots = 7;
+    void Awake() {
+        
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +25,15 @@ public class PlayerController : MonoBehaviour
     }
 
     public bool hasPotsLeft() {
-        return true;
+        return pots > 0;
     }
 
     internal void retrievePot() {
-        
+        pots++;
     }
 
     internal void throwPot() {
-        
+        if (pots > 0)
+            pots--;
     }
 }
