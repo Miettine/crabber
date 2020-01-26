@@ -31,25 +31,34 @@ public class GridTracker : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            bool allowed = AllowedToPlacePot(mouseWorldPos);
-            Debug.Log(allowed);
+            AllowedToPlaceAndRemovePot(mouseWorldPos, out bool allowedToPlace, out bool allowedToRemove);
+
+            Debug.Log("allowedToPlace: "+ allowedToPlace);
+            Debug.Log("allowedToRemove: " + allowedToRemove);
+
+            if (allowedToPlace) {
+                Debug.Log("Allowed to place");
+            } else if (allowedToRemove) {
+                Debug.Log("Allowed to remove");
+            }
         }
-        
     }
-    bool AllowedToPlacePot(Vector3 worldPos) {
+    void AllowedToPlaceAndRemovePot(Vector3 worldPos, out bool allowedToPlace, out bool allowedToRemove) {
         Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
         Sprite terrainSprite = terrainTilemap.GetSprite(terrainCoordinate);
 
-        bool allowedToPlaceTerrain = SpriteHasName(terrainSprite, WaterTileName);
+        bool terrainIsWaterTile = SpriteHasName(terrainSprite, WaterTileName);
 
         Vector3Int markerCoordinate = markerGrid.WorldToCell(worldPos);
         Sprite markerSprite = markerTilemap.GetSprite(markerCoordinate);
 
-        bool allowedToPlaceMarker = !SpriteHasName(markerSprite, PlacedPotTileName);
+        bool markerGridHasPlacedPotTile = SpriteHasName(markerSprite, PlacedPotTileName);
 
-        return allowedToPlaceTerrain && allowedToPlaceMarker;
+        allowedToPlace = terrainIsWaterTile && !markerGridHasPlacedPotTile;
+        allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
     }
-     bool SpriteHasName(Sprite givenSprite, string name) {
+
+    bool SpriteHasName(Sprite givenSprite, string name) {
         
         return givenSprite == null ? false : givenSprite.name == name;
     }
