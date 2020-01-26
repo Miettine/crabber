@@ -9,18 +9,26 @@ public class GridTracker : MonoBehaviour
     const string PlacedPotTileName = "HexTilesetv3_41";
     const string TerrainGridName = "TerrainGrid";
     const string MarkerGridName = "MarkerGrid";
+    //const string PotPlacerName = "PotPlacer";
+
+    //private delegate void PlacePotDelegate();
+    //private delegate void RemovePotDelegate();
 
     Grid terrainGrid;
     Tilemap terrainTilemap;
 
     Grid markerGrid;
     Tilemap markerTilemap;
+
+    PotPlacer potPlacer;
     private void Awake() {
         terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
         terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
 
         markerGrid = GameObject.Find(MarkerGridName).GetComponent<Grid>();
         markerTilemap = markerGrid.GetComponentInChildren<Tilemap>();
+
+        //potPlacer = GameObject.Find(PotPlacerName).GetComponent<PotPlacer>();
     }
     void Start() {
         
@@ -31,19 +39,21 @@ public class GridTracker : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            AllowedToPlaceAndRemovePot(mouseWorldPos, out bool allowedToPlace, out bool allowedToRemove);
+            AllowedToPlaceAndRemovePot(mouseWorldPos, out bool allowedToPlace, out bool allowedToRemove, out Vector3Int place);
 
             Debug.Log("allowedToPlace: "+ allowedToPlace);
             Debug.Log("allowedToRemove: " + allowedToRemove);
 
             if (allowedToPlace) {
                 Debug.Log("Allowed to place");
+                
             } else if (allowedToRemove) {
                 Debug.Log("Allowed to remove");
+
             }
         }
     }
-    void AllowedToPlaceAndRemovePot(Vector3 worldPos, out bool allowedToPlace, out bool allowedToRemove) {
+    void AllowedToPlaceAndRemovePot(Vector3 worldPos, out bool allowedToPlace, out bool allowedToRemove, out Vector3Int location) {
         Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
         Sprite terrainSprite = terrainTilemap.GetSprite(terrainCoordinate);
 
@@ -56,6 +66,7 @@ public class GridTracker : MonoBehaviour
 
         allowedToPlace = terrainIsWaterTile && !markerGridHasPlacedPotTile;
         allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
+        location = markerCoordinate;
     }
 
     bool SpriteHasName(Sprite givenSprite, string name) {
