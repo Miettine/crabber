@@ -19,6 +19,7 @@ public class GridTracker : MonoBehaviour
 
 	PlayerController playerController;
 
+	//TODO: Get sprite with code
 	[SerializeField]
 	private Sprite potSprite;
 	private void Awake() {
@@ -30,6 +31,8 @@ public class GridTracker : MonoBehaviour
 
 		playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
 
+		if (potSprite == null)
+			throw new System.Exception("ERROR: Failed to find potSprite");
 	}
 	void Start() {
 		
