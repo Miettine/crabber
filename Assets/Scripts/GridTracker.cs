@@ -28,10 +28,13 @@ public class GridTracker : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Input.GetMouseButtonDown(0)) {
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            bool allowed = AllowedToPlacePot(mouseWorldPos);
+            Debug.Log(allowed);
+        }
         
-        bool allowed = AllowedToPlacePot(mouseWorldPos);
-        Debug.Log( allowed );
     }
     bool AllowedToPlacePot(Vector3 worldPos) {
         Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
@@ -39,11 +42,10 @@ public class GridTracker : MonoBehaviour
 
         bool allowedToPlaceTerrain = SpriteHasName(terrainSprite, WaterTileName);
 
-
         Vector3Int markerCoordinate = markerGrid.WorldToCell(worldPos);
-        Sprite markerSprite = terrainTilemap.GetSprite(markerCoordinate);
+        Sprite markerSprite = markerTilemap.GetSprite(markerCoordinate);
 
-        bool allowedToPlaceMarker = SpriteHasName(markerSprite, PlacedPotTileName);
+        bool allowedToPlaceMarker = !SpriteHasName(markerSprite, PlacedPotTileName);
 
         return allowedToPlaceTerrain && allowedToPlaceMarker;
     }
