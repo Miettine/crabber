@@ -23,6 +23,8 @@ public class GridTracker : MonoBehaviour
     Tilemap markerTilemap;
 
     PotPlacer potPlacer;
+
+    public Sprite sprite;
     private void Awake() {
         terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
         terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
@@ -63,11 +65,14 @@ public class GridTracker : MonoBehaviour
         Vector3Int location = markerCoordinate;
 
         if (allowedToPlace) {
-
-            placePot(markerTile);
-
-        } else if (allowedToRemove) { 
-            removePot(markerTile);
+            Tile tile = ScriptableObject.CreateInstance<Tile>();
+            tile.sprite = sprite;
+            markerTilemap.SetTile(location, tile);
+            //placePot(markerTile);
+        } else if (allowedToRemove) {
+            Tile tile = ScriptableObject.CreateInstance<Tile>();
+            markerTilemap.SetTile(location, tile);
+            //removePot(markerTile);
         }
 
     }
@@ -77,6 +82,7 @@ public class GridTracker : MonoBehaviour
     }
 
     void RemovePot(Tile tile) {
+        tile.sprite = null;
         Debug.Log("RemovePot " + tile);
     }
 
