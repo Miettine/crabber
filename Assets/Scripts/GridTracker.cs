@@ -11,6 +11,7 @@ public class GridTracker : MonoBehaviour
 	const string PlacedPotTileName = "HexTilesetv3_41";
 	const string TerrainGridName = "TerrainGrid";
 	const string MarkerGridName = "MarkerGrid";
+	const string UnderwaterGridName = "UnderwaterGrid";
 	const string PlayerControllerGameObjectName = "PlayerController";
 
 	Grid terrainGrid;
@@ -19,11 +20,18 @@ public class GridTracker : MonoBehaviour
 	Grid markerGrid;
 	Tilemap markerTilemap;
 
+	Grid underwaterGrid;
+	Tilemap underwaterTilemap;
+
 	PlayerController playerController;
 
 	//TODO: Get sprite with code
 	[SerializeField]
 	private Sprite potSprite;
+
+	[SerializeField]
+	private Sprite debugUnderwaterTileSprite;
+	
 	private void Awake() {
 		terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
 		terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
@@ -31,10 +39,13 @@ public class GridTracker : MonoBehaviour
 		markerGrid = GameObject.Find(MarkerGridName).GetComponent<Grid>();
 		markerTilemap = markerGrid.GetComponentInChildren<Tilemap>();
 
+		underwaterGrid = GameObject.Find(UnderwaterGridName).GetComponent<Grid>();
+		underwaterTilemap = markerGrid.GetComponentInChildren<Tilemap>();
+
 		playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
 
 		if (potSprite == null)
-			throw new System.Exception("ERROR: Failed to find potSprite");
+			throw new Exception("ERROR: Failed to find potSprite");
 	}
 
 	internal List<Vector3Int> GetAllPotLocations() {
@@ -42,7 +53,8 @@ public class GridTracker : MonoBehaviour
 	}
 
 	void Start() {
-		
+		DebugUnderwaterGrid(new Vector3Int(0, 0, 0), 47);
+		DebugUnderwaterGrid(new Vector3Int(1, 0, 0), 23);
 	}
 
 	// Update is called once per frame
@@ -54,6 +66,18 @@ public class GridTracker : MonoBehaviour
 
 		}
 	}
+	void DebugUnderwaterGrid(Vector3Int location, int amount) {
+
+		UnderwaterTile underwaterTile = ScriptableObject.CreateInstance<UnderwaterTile>();
+		underwaterTile.sprite = potSprite;
+
+		underwaterTile.sprite = debugUnderwaterTileSprite;
+		underwaterTile.Crab = amount;
+		underwaterTile.DebugPrintCrab();
+		underwaterTilemap.SetTile(location, underwaterTile);
+		underwaterTile.DebugPrintCrab();
+	}
+
 	void PlaceOrRemovePot(Vector3 worldPos) {
 		Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
 		var terrainTile = (Tile) terrainTilemap.GetTile(terrainCoordinate);
@@ -79,7 +103,7 @@ public class GridTracker : MonoBehaviour
 			Tile tile = ScriptableObject.CreateInstance<Tile>();
 			markerTilemap.SetTile(location, tile);
 
-			playerController.retrievePot();
+			playerController.addPot();
 		}
 	}
 

@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 		return pots > 0;
 	}
 
-	internal void retrievePot() {
+	internal void addPot() {
 		pots++;
 	}
 
