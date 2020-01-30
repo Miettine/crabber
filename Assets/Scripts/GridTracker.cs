@@ -13,7 +13,6 @@ public class GridTracker : MonoBehaviour
 	const string TerrainGridName = "TerrainGrid";
 	const string MarkerGridName = "MarkerGrid";
 	const string UnderwaterGridName = "UnderwaterGrid";
-	const string PlayerControllerGameObjectName = "PlayerController";
 	const string SwarmControllerName = "SwarmController";
 
 	Grid terrainGrid;
@@ -24,8 +23,6 @@ public class GridTracker : MonoBehaviour
 
 	Grid underwaterGrid;
 	Tilemap underwaterTilemap;
-
-	//PlayerController playerController;
 
 	SwarmController swarmController;
 
