@@ -29,9 +29,7 @@ public class GameController : MonoBehaviour
 	void OnGoClicked() {
 		Debug.Log("Going! :D");
 
-		foreach (Vector3Int position in gridTracker.GetAllPotLocations()) {
-			// Do stuff per position
-		}
+		gridTracker.GetAllPotTiles();
 		//gridTracker.removeAllPotMarkers();
 		//playerController.resetAll
 	}

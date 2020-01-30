@@ -46,10 +46,10 @@ public class GridTracker : MonoBehaviour
 		markerTilemap = markerGrid.GetComponentInChildren<Tilemap>();
 
 		underwaterGrid = GameObject.Find(UnderwaterGridName).GetComponent<Grid>();
-		underwaterTilemap = markerGrid.GetComponentInChildren<Tilemap>();
+		underwaterTilemap = underwaterGrid.GetComponentInChildren<Tilemap>();
 
 		swarmController = GameObject.Find(SwarmControllerName).GetComponent<SwarmController>();
-		swarmController.setGridTracker(this);
+		swarmController.SetGridTracker(this);
 
 		playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
 
@@ -57,9 +57,18 @@ public class GridTracker : MonoBehaviour
 			throw new Exception("ERROR: Failed to find potSprite");
 	}
 
-	internal List<Vector3Int> GetAllPotLocations() {
-		throw new NotImplementedException();
+	internal List<Tile> GetAllPotTiles() {
+		var tiles = new List<Tile>();
+
+		foreach (var pos in markerTilemap.cellBounds.allPositionsWithin) {
+			//Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
+			Tile potTile = (Tile) underwaterTilemap.GetTile(pos);
+			tiles.Add(potTile);
+		}
+
+		return tiles;
 	}
+
 
 	void Start() {
 

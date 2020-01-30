@@ -41,7 +41,7 @@ public class SwarmController : MonoBehaviour
 
 	}
 
-	internal void setGridTracker(GridTracker gridTracker) {
+	internal void SetGridTracker(GridTracker gridTracker) {
 		this.gridTracker = gridTracker;
 	}
 }
