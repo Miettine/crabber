@@ -13,6 +13,7 @@ public class GridTracker : MonoBehaviour
 	const string MarkerGridName = "MarkerGrid";
 	const string UnderwaterGridName = "UnderwaterGrid";
 	const string PlayerControllerGameObjectName = "PlayerController";
+	const string SwarmControllerName = "SwarmController";
 
 	Grid terrainGrid;
 	Tilemap terrainTilemap;
@@ -25,13 +26,18 @@ public class GridTracker : MonoBehaviour
 
 	PlayerController playerController;
 
+	SwarmController swarmController;
+
 	//TODO: Get sprite with code
 	[SerializeField]
 	private Sprite potSprite;
 
 	[SerializeField]
 	private Sprite debugUnderwaterTileSprite;
-	
+
+	[SerializeField]
+	private Sprite[] numberSprites;
+
 	private void Awake() {
 		terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
 		terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
@@ -41,6 +47,9 @@ public class GridTracker : MonoBehaviour
 
 		underwaterGrid = GameObject.Find(UnderwaterGridName).GetComponent<Grid>();
 		underwaterTilemap = markerGrid.GetComponentInChildren<Tilemap>();
+
+		swarmController = GameObject.Find(SwarmControllerName).GetComponent<SwarmController>();
+		swarmController.setGridTracker(this);
 
 		playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
 
@@ -53,8 +62,10 @@ public class GridTracker : MonoBehaviour
 	}
 
 	void Start() {
-		DebugUnderwaterGrid(new Vector3Int(0, 0, 0), 47);
-		DebugUnderwaterGrid(new Vector3Int(1, 0, 0), 23);
+
+		swarmController.DebugSwarms();
+
+		//PlaceUnderWaterTile(new Vector3Int(0, 0, 2), 3);
 	}
 
 	// Update is called once per frame
@@ -66,14 +77,15 @@ public class GridTracker : MonoBehaviour
 
 		}
 	}
-	void DebugUnderwaterGrid(Vector3Int location, int amount) {
+	public void PlaceUnderWaterTile(Vector3Int location, int crabAmount) {
 
 		UnderwaterTile underwaterTile = ScriptableObject.CreateInstance<UnderwaterTile>();
-		underwaterTile.sprite = potSprite;
 
-		underwaterTile.sprite = debugUnderwaterTileSprite;
-		underwaterTile.Crab = amount;
-		underwaterTile.DebugPrintCrab();
+		//underwaterTile.sprite = debugUnderwaterTileSprite;
+		
+		underwaterTile.Crab = crabAmount;
+
+		underwaterTile.sprite = this.numberSprites[crabAmount];
 		underwaterTilemap.SetTile(location, underwaterTile);
 		underwaterTile.DebugPrintCrab();
 	}
@@ -82,12 +94,12 @@ public class GridTracker : MonoBehaviour
 		Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
 		var terrainTile = (Tile) terrainTilemap.GetTile(terrainCoordinate);
 
-		bool terrainIsWaterTile = SpriteHasName(terrainTile.sprite, WaterTileName);
+		bool terrainIsWaterTile = TileHasSpriteWithName(terrainTile, WaterTileName);
 
 		Vector3Int markerCoordinate = markerGrid.WorldToCell(worldPos);
 		var markerTile = (Tile) markerTilemap.GetTile(markerCoordinate);
 
-		bool markerGridHasPlacedPotTile = SpriteHasName(markerTile.sprite, PlacedPotTileName);
+		bool markerGridHasPlacedPotTile = TileHasSpriteWithName(markerTile, PlacedPotTileName);
 
 		bool allowedToPlace = terrainIsWaterTile && !markerGridHasPlacedPotTile;
 		bool allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
@@ -107,6 +119,9 @@ public class GridTracker : MonoBehaviour
 		}
 	}
 
+	bool TileHasSpriteWithName(Tile givenTile, string name) {
+		return givenTile == null ? false : SpriteHasName(givenTile.sprite, name);
+	}
 	bool SpriteHasName(Sprite givenSprite, string name) {
 		return givenSprite == null ? false : givenSprite.name == name;
 	}
