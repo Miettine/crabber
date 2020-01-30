@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+	const string GridTrackerGameObjectName = "GridTracker";
 	const string PotsLeftTextGameObjectName = "PotsLeftText";
 
+	GridTracker gridTracker;
 	Text potsLeftText;
+
+	public delegate void AddPotDelegate();
+	public delegate void ThrowPotDelegate();
 
 	[SerializeField]
 	private int startPots = 7;
@@ -16,14 +21,22 @@ public class PlayerController : MonoBehaviour
 	private int pots;
 	void Awake() {
 		pots = startPots;
+		gridTracker = GameObject.Find(GridTrackerGameObjectName).GetComponent<GridTracker>();
 		potsLeftText = GameObject.Find(PotsLeftTextGameObjectName).GetComponent<Text>();
 	}
 
-
-	// Start is called before the first frame update
 	void Start()
 	{
 		UpdatePotsLeftText();
+	}
+
+	void Update() {
+		if (Input.GetMouseButtonDown(0)) {
+			Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+			gridTracker.PlaceOrRemovePot(mouseWorldPos, HasPotsLeft(), ThrowPot, AddPot);
+
+		}
 	}
 
 	public bool HasPotsLeft() {

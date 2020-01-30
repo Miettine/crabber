@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static PlayerController;
 
 public class GridTracker : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class GridTracker : MonoBehaviour
 	Grid underwaterGrid;
 	Tilemap underwaterTilemap;
 
-	PlayerController playerController;
+	//PlayerController playerController;
 
 	SwarmController swarmController;
 
@@ -51,7 +52,7 @@ public class GridTracker : MonoBehaviour
 		swarmController = GameObject.Find(SwarmControllerName).GetComponent<SwarmController>();
 		swarmController.SetGridTracker(this);
 
-		playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
+		//playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
 
 		if (potSprite == null)
 			throw new Exception("ERROR: Failed to find potSprite");
@@ -77,15 +78,6 @@ public class GridTracker : MonoBehaviour
 		//PlaceUnderWaterTile(new Vector3Int(0, 0, 2), 3);
 	}
 
-	// Update is called once per frame
-	void Update() {
-		if (Input.GetMouseButtonDown(0)) {
-			Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-			PlaceOrRemovePot(mouseWorldPos);
-
-		}
-	}
 	public UnderwaterTile PlaceUnderWaterTile(Vector2Int location, int crabAmount) {
 
 		UnderwaterTile underwaterTile = ScriptableObject.CreateInstance<UnderwaterTile>();
@@ -116,7 +108,7 @@ public class GridTracker : MonoBehaviour
 		return underwaterTile;
 	}
 
-	void PlaceOrRemovePot(Vector3 worldPos) {
+	public void PlaceOrRemovePot(Vector3 worldPos, bool playerHasPotsLeft, ThrowPotDelegate throwPotDelegate, AddPotDelegate addPotDelegate) {
 		Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
 		var terrainTile = (Tile) terrainTilemap.GetTile(terrainCoordinate);
 
@@ -131,17 +123,17 @@ public class GridTracker : MonoBehaviour
 		bool allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
 		Vector3Int location = markerCoordinate;
 
-		if (allowedToPlace && playerController.HasPotsLeft()) {
+		if (allowedToPlace && playerHasPotsLeft) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();
 			tile.sprite = potSprite;
 			markerTilemap.SetTile(location, tile);
 
-			playerController.ThrowPot();
+			throwPotDelegate();
 		} else if (allowedToRemove) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();
 			markerTilemap.SetTile(location, tile);
 
-			playerController.AddPot();
+			addPotDelegate();
 		}
 	}
 
