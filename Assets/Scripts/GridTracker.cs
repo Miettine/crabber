@@ -122,17 +122,17 @@ public class GridTracker : MonoBehaviour
 		bool allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
 		Vector3Int location = markerCoordinate;
 
-		if (allowedToPlace && playerController.hasPotsLeft()) {
+		if (allowedToPlace && playerController.HasPotsLeft()) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();
 			tile.sprite = potSprite;
 			markerTilemap.SetTile(location, tile);
 
-			playerController.throwPot();
+			playerController.ThrowPot();
 		} else if (allowedToRemove) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();
 			markerTilemap.SetTile(location, tile);
 
-			playerController.addPot();
+			playerController.AddPot();
 		}
 	}
 
