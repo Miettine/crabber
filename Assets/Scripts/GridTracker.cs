@@ -63,7 +63,7 @@ public class GridTracker : MonoBehaviour
 
 	void Start() {
 
-		swarmController.DebugSwarms();
+		swarmController.PlaceDebugSwarms();
 
 		//PlaceUnderWaterTile(new Vector3Int(0, 0, 2), 3);
 	}
@@ -77,17 +77,34 @@ public class GridTracker : MonoBehaviour
 
 		}
 	}
-	public void PlaceUnderWaterTile(Vector3Int location, int crabAmount) {
+	public UnderwaterTile PlaceUnderWaterTile(Vector2Int location, int crabAmount) {
 
 		UnderwaterTile underwaterTile = ScriptableObject.CreateInstance<UnderwaterTile>();
 
-		//underwaterTile.sprite = debugUnderwaterTileSprite;
-		
 		underwaterTile.Crab = crabAmount;
 
-		underwaterTile.sprite = this.numberSprites[crabAmount];
-		underwaterTilemap.SetTile(location, underwaterTile);
+		//underwaterTile.sprite = this.numberSprites[crabAmount];
+		underwaterTilemap.SetTile(new Vector3Int(location.x, location.y, 0), underwaterTile);
+
+		return underwaterTile;
+	}
+
+	public UnderwaterTile RevealUnderWaterTile(Vector2Int location) {
+
+		Vector3Int vector3Location = new Vector3Int(location.x, location.y, 0);
+
+		UnderwaterTile underwaterTile = (UnderwaterTile) underwaterTilemap.GetTile(vector3Location);
+
+		if (underwaterTile == null)
+			underwaterTile = PlaceUnderWaterTile(location, 0);
+
+		int crabAmount = underwaterTile.Crab;
+		underwaterTile.sprite = numberSprites[crabAmount];
+
 		underwaterTile.DebugPrintCrab();
+		underwaterTilemap.RefreshTile(vector3Location);
+
+		return underwaterTile;
 	}
 
 	void PlaceOrRemovePot(Vector3 worldPos) {

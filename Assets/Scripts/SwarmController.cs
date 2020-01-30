@@ -19,20 +19,26 @@ public class SwarmController : MonoBehaviour
 		
 	}
 
-	internal void DebugSwarms() {
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(0, 0, 0), 0);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(0, 1, 0), 1);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(0, 2, 0), 1);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(0, 3, 0), 1);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(0, -1, 0), 2);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(0, -2, 0), 2);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(0, -3, 0), 2);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(1, 0, 0), 3);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(2, 0, 0), 3);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(3, 0, 0), 3);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(-1, 0, 0), 4);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(-2, 0, 0), 4);
-		gridTracker.PlaceUnderWaterTile(new Vector3Int(-3, 0, 0), 4);
+	internal void PlaceDebugSwarms() {
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(0, 0), 7);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(0, 1), 1);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(0, 2), 1);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(0, 3), 1);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(0, -1), 2);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(0, -2), 2);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(0, -3), 2);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(1, 0), 3);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(2, 0), 3);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(3, 0), 3);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(-1, 0), 4);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(-2, 0), 4);
+		gridTracker.PlaceUnderWaterTile(new Vector2Int(-3, 0), 4);
+
+		gridTracker.RevealUnderWaterTile(new Vector2Int(0, 0));
+
+		gridTracker.RevealUnderWaterTile(new Vector2Int(-3, 0));
+		gridTracker.RevealUnderWaterTile(new Vector2Int(3, 3));
+
 	}
 
 	internal void setGridTracker(GridTracker gridTracker) {
