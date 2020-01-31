@@ -6,6 +6,7 @@ using UnityEngine;
 public class SwarmController : MonoBehaviour
 {
 
+	const string GameControllerGameObjectName = "GameController";
 	GridTracker gridTracker;
 	// Start is called before the first frame update
 	void Start()

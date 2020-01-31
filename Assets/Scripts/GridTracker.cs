@@ -56,15 +56,16 @@ public class GridTracker : MonoBehaviour
 	}
 
 	internal List<Tile> GetAllPotTiles() {
-		var tiles = new List<Tile>();
+		var potTiles = new List<Tile>();
 
 		foreach (var pos in markerTilemap.cellBounds.allPositionsWithin) {
 			//Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
-			Tile potTile = (Tile) underwaterTilemap.GetTile(pos);
-			tiles.Add(potTile);
+			Tile potTile = (Tile)markerTilemap.GetTile(pos);
+			if (potTile != null)
+				potTiles.Add(potTile);
 		}
 
-		return tiles;
+		return potTiles;
 	}
 
 
@@ -119,6 +120,7 @@ public class GridTracker : MonoBehaviour
 		bool allowedToPlace = terrainIsWaterTile && !markerGridHasPlacedPotTile;
 		bool allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
 		Vector3Int location = markerCoordinate;
+
 
 		if (allowedToPlace && playerHasPotsLeft) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();

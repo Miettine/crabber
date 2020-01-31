@@ -8,9 +8,11 @@ public class PlayerController : MonoBehaviour
 {
 	const string GridTrackerGameObjectName = "GridTracker";
 	const string PotsLeftTextGameObjectName = "PotsLeftText";
+	const string PlayerControllerGameObjectName = "PlayerController";
 
 	GridTracker gridTracker;
 	Text potsLeftText;
+	GameController gameController;
 
 	public delegate void AddPotDelegate();
 	public delegate void ThrowPotDelegate();
@@ -23,11 +25,16 @@ public class PlayerController : MonoBehaviour
 		pots = startPots;
 		gridTracker = GameObject.Find(GridTrackerGameObjectName).GetComponent<GridTracker>();
 		potsLeftText = GameObject.Find(PotsLeftTextGameObjectName).GetComponent<Text>();
+		gameController = GameController.GetGameController();
+	}
+
+	internal static PlayerController GetPlayerController() {
+		return GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
 	}
 
 	void Start()
 	{
-		UpdatePotsLeftText();
+		OnPotsChanged();
 	}
 
 	void Update() {
@@ -45,14 +52,16 @@ public class PlayerController : MonoBehaviour
 
 	internal void AddPot() {
 		pots++;
-		UpdatePotsLeftText();
+		OnPotsChanged();
 	}
-	void UpdatePotsLeftText() {
+	void OnPotsChanged() {
 		potsLeftText.text = "Pots left: " + pots;
+		gameController.OnPlayersPotsChanged();
+
 	}
 	internal void ThrowPot() {
 		if (pots > 0) 
 			pots--;
-		UpdatePotsLeftText();
+		OnPotsChanged();
 	}
 }
