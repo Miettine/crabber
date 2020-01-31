@@ -55,14 +55,21 @@ public class GridTracker : MonoBehaviour
 			throw new Exception("ERROR: Failed to find potSprite");
 	}
 
-	internal List<Tile> GetAllPotTiles() {
+	internal List<Tile> GetAllPotTiles(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
 		var potTiles = new List<Tile>();
 
-		foreach (var pos in markerTilemap.cellBounds.allPositionsWithin) {
+		foreach (var tilePosition in markerTilemap.cellBounds.allPositionsWithin) {
 			//Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
-			Tile potTile = (Tile)markerTilemap.GetTile(pos);
-			if (potTile != null)
+			Tile potTile = (Tile) markerTilemap.GetTile(tilePosition);
+			
+			if (potTile != null) {
 				potTiles.Add(potTile);
+				UnderwaterTile underwaterTile = RevealUnderWaterTile(tilePosition);
+				
+				addPotDelegate();
+				addCrabDelegate(underwaterTile.Crab);
+			}
+				
 		}
 
 		return potTiles;
@@ -77,33 +84,41 @@ public class GridTracker : MonoBehaviour
 	}
 
 	public UnderwaterTile PlaceUnderWaterTile(Vector2Int location, int crabAmount) {
+		return PlaceUnderWaterTile(new Vector3Int(location.x, location.y, 0), crabAmount);
+	}
+	public UnderwaterTile PlaceUnderWaterTile(Vector3Int location, int crabAmount) {
 
 		UnderwaterTile underwaterTile = ScriptableObject.CreateInstance<UnderwaterTile>();
 
 		underwaterTile.Crab = crabAmount;
 
 		//underwaterTile.sprite = this.numberSprites[crabAmount];
-		underwaterTilemap.SetTile(new Vector3Int(location.x, location.y, 0), underwaterTile);
+		underwaterTilemap.SetTile(location, underwaterTile);
 
 		return underwaterTile;
 	}
 
 	public UnderwaterTile RevealUnderWaterTile(Vector2Int location) {
+		return RevealUnderWaterTile( new Vector3Int(location.x, location.y, 0) );
+	}
 
-		Vector3Int vector3Location = new Vector3Int(location.x, location.y, 0);
+	public UnderwaterTile RevealUnderWaterTile(Vector3Int location) {
 
-		UnderwaterTile underwaterTile = (UnderwaterTile) underwaterTilemap.GetTile(vector3Location);
+		UnderwaterTile underwaterTile = GetUnderwaterTile(location);
 
 		if (underwaterTile == null)
 			underwaterTile = PlaceUnderWaterTile(location, 0);
 
-		int crabAmount = underwaterTile.Crab;
-		underwaterTile.sprite = numberSprites[crabAmount];
+		underwaterTile.sprite = numberSprites[underwaterTile.Crab];
 
 		underwaterTile.DebugPrintCrab();
-		underwaterTilemap.RefreshTile(vector3Location);
+		underwaterTilemap.RefreshTile(location);
 
 		return underwaterTile;
+	}
+
+	UnderwaterTile GetUnderwaterTile(Vector3Int location) {
+		return (UnderwaterTile) underwaterTilemap.GetTile(location);
 	}
 
 	public void PlaceOrRemovePot(Vector3 worldPos, bool playerHasPotsLeft, ThrowPotDelegate throwPotDelegate, AddPotDelegate addPotDelegate) {
