@@ -44,9 +44,15 @@ public class SwarmController : MonoBehaviour
 	Dictionary<Vector3Int, int> GetSwarms() {
 		var swarm = new Dictionary<Vector3Int, int>();
 
-		AddSwarm(swarm, Vector3Int.zero, 6, 3);
+		AddSwarm(swarm, Coord(0, 0), 6, 3);
+
+		//AddSwarm(swarm, new Vector3Int(0, -3, 0), 6, 3);
 
 		return swarm;
+	}
+
+	Vector3Int Coord(int x, int y) {
+		return new Vector3Int(y, x, 0);
 	}
 
 	/**
@@ -54,16 +60,16 @@ public class SwarmController : MonoBehaviour
 	 * */
 	void AddSwarm(Dictionary<Vector3Int, int> swarmDictionary, Vector3Int swarmCenter, params int[] populationConcentration) {
 
-		swarmDictionary.Add(new Vector3Int(0, 0, 0), populationConcentration[0]);
+		swarmDictionary.Add(Coord(0, 0), populationConcentration[0]);
 
-		swarmDictionary.Add(new Vector3Int(0, 1, 0), populationConcentration[1]);
-		swarmDictionary.Add(new Vector3Int(0, -1, 0), populationConcentration[1]);
+		swarmDictionary.Add(Coord(1, 0), populationConcentration[1]);
+		swarmDictionary.Add(Coord(-1, 0), populationConcentration[1]);
 
-		swarmDictionary.Add(new Vector3Int(1, 0, 0), populationConcentration[1]);
-		swarmDictionary.Add(new Vector3Int(-1, 0, 0), populationConcentration[1]);
+		swarmDictionary.Add(Coord(0, 1), populationConcentration[1]);
+		swarmDictionary.Add(Coord(0, -1), populationConcentration[1]);
 
-		swarmDictionary.Add(new Vector3Int(-1, 1, 0), populationConcentration[1]);
-		swarmDictionary.Add(new Vector3Int(-1, -1, 0), populationConcentration[1]);
+		swarmDictionary.Add(Coord(1, -1), populationConcentration[1]);
+		swarmDictionary.Add(Coord(-1, -1), populationConcentration[1]);
 	}
 
 	Dictionary<Vector3Int, int> GetDebugSwarms() {
