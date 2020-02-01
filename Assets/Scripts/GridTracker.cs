@@ -76,9 +76,10 @@ public class GridTracker : MonoBehaviour
 				else if (liftedCrab == 1)
 					underwaterTile.Crab = 0;
 
-				potTile.sprite = null;
+				Tile newPotTile = ScriptableObject.CreateInstance<Tile>();
+				markerTilemap.SetTile(location, newPotTile);
 
-				markerTilemap.RefreshTile(location);
+				//markerTilemap.RefreshTile(location);
 				underwaterTilemap.RefreshTile(location);
 			}
 				
@@ -116,21 +117,21 @@ public class GridTracker : MonoBehaviour
 
 	public UnderwaterTile RevealUnderWaterTile(Vector3Int location) {
 
-		UnderwaterTile underwaterTile = GetUnderwaterTile(location);
+		UnderwaterTile underwaterTile = (UnderwaterTile) underwaterTilemap.GetTile(location);
+		UnderwaterTile newInstance;
 
 		if (underwaterTile == null)
-			underwaterTile = PlaceUnderWaterTile(location, 0);
+			newInstance = PlaceUnderWaterTile(location, 0);
+		else
+			newInstance = PlaceUnderWaterTile(location, underwaterTile.Crab);
 
-		underwaterTile.sprite = numberSprites[underwaterTile.Crab];
+		underwaterTile = null;
 
-		underwaterTile.DebugPrintCrab();
-		underwaterTilemap.RefreshTile(location);
+		newInstance.sprite = numberSprites[newInstance.Crab];
 
-		return underwaterTile;
-	}
+		newInstance.DebugPrintCrab();
 
-	UnderwaterTile GetUnderwaterTile(Vector3Int location) {
-		return (UnderwaterTile) underwaterTilemap.GetTile(location);
+		return newInstance;
 	}
 
 	public void PlaceOrRemovePot(Vector3 worldPos, bool playerHasPotsLeft, ThrowPotDelegate throwPotDelegate, AddPotDelegate addPotDelegate) {
