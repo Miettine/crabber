@@ -52,7 +52,6 @@ public class PlayerController : MonoBehaviour
 			Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 			gridTracker.PlaceOrRemovePot(mouseWorldPos, HasPotsLeft(), ThrowPot, AddPot);
-
 		}
 	}
 
@@ -89,7 +88,8 @@ public class PlayerController : MonoBehaviour
 	public void OnGoClicked() {
 		Debug.Log("Going! :D");
 
-		gridTracker.GetAllPotTiles(AddPot, AddCrab);
+		gridTracker.LiftAllPots(AddPot, AddCrab);
+		//gridTracker.GetAllPotTiles(AddPot, AddCrab);
 		//gridTracker.removeAllPotMarkers();
 		//playerController.resetAll
 	}

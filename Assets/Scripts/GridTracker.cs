@@ -12,7 +12,7 @@ public class GridTracker : MonoBehaviour
 	const string PlacedPotTileName = "HexTilesetv3_41";
 	const string TerrainGridName = "TerrainGrid";
 	const string MarkerGridName = "MarkerGrid";
-	const string UnderwaterGridName = "UnderwaterGrid";
+	const string NumberGridName = "NumberGrid";
 	const string SwarmControllerName = "SwarmController";
 
 	Grid terrainGrid;
@@ -21,17 +21,14 @@ public class GridTracker : MonoBehaviour
 	Grid markerGrid;
 	Tilemap markerTilemap;
 
-	Grid underwaterGrid;
-	Tilemap underwaterTilemap;
+	Grid numberGrid;
+	Tilemap numberTilemap;
 
 	SwarmController swarmController;
 
 	//TODO: Get sprite with code
 	[SerializeField]
 	private Sprite potSprite;
-
-	[SerializeField]
-	private Sprite debugUnderwaterTileSprite;
 
 	[SerializeField]
 	private Sprite[] numberSprites;
@@ -43,8 +40,8 @@ public class GridTracker : MonoBehaviour
 		markerGrid = GameObject.Find(MarkerGridName).GetComponent<Grid>();
 		markerTilemap = markerGrid.GetComponentInChildren<Tilemap>();
 
-		underwaterGrid = GameObject.Find(UnderwaterGridName).GetComponent<Grid>();
-		underwaterTilemap = underwaterGrid.GetComponentInChildren<Tilemap>();
+		numberGrid = GameObject.Find(NumberGridName).GetComponent<Grid>();
+		numberTilemap = numberGrid.GetComponentInChildren<Tilemap>();
 
 		swarmController = GameObject.Find(SwarmControllerName).GetComponent<SwarmController>();
 		swarmController.SetGridTracker(this);
@@ -55,83 +52,43 @@ public class GridTracker : MonoBehaviour
 			throw new Exception("ERROR: Failed to find potSprite");
 	}
 
-	internal List<Tile> GetAllPotTiles(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
-		var potTiles = new List<Tile>();
+	internal void LiftAllPots(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
+		//var potTiles = new List<Tile>();
 
 		foreach (var location in markerTilemap.cellBounds.allPositionsWithin) {
-			//Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
+			
 			Tile potTile = (Tile) markerTilemap.GetTile(location);
 			
 			if (potTile != null && potTile.sprite != null && potTile.sprite.name == PlacedPotTileName) {
-				potTiles.Add(potTile);
-				UnderwaterTile underwaterTile = RevealUnderWaterTile(location);
-
-				int liftedCrab = underwaterTile.Crab;
+				//potTiles.Add(potTile);
+				
+				int liftedCrab = swarmController.GetCrab(location);
 
 				addCrabDelegate(liftedCrab);
 				addPotDelegate();
 
-				if (liftedCrab > 1)
-					underwaterTile.Crab = 1;
-				else if (liftedCrab == 1)
-					underwaterTile.Crab = 0;
-
-				Tile newPotTile = ScriptableObject.CreateInstance<Tile>();
-				markerTilemap.SetTile(location, newPotTile);
-
-				//markerTilemap.RefreshTile(location);
-				underwaterTilemap.RefreshTile(location);
+				ClearMarkerTile(location);
+				SetNumberTile(location, liftedCrab);
 			}
-				
 		}
-
-		return potTiles;
+		//return potTiles;
 	}
 
 
 	void Start() {
 
-		swarmController.PlaceDebugSwarms();
-
 		//PlaceUnderWaterTile(new Vector3Int(0, 0, 2), 3);
 	}
 
-	public UnderwaterTile PlaceUnderWaterTile(Vector2Int location, int crabAmount) {
-		return PlaceUnderWaterTile(new Vector3Int(location.x, location.y, 0), crabAmount);
-	}
-	public UnderwaterTile PlaceUnderWaterTile(Vector3Int location, int crabAmount) {
-
-		UnderwaterTile underwaterTile = ScriptableObject.CreateInstance<UnderwaterTile>();
-
-		underwaterTile.Crab = crabAmount;
-
-		//underwaterTile.sprite = this.numberSprites[crabAmount];
-		underwaterTilemap.SetTile(location, underwaterTile);
-
-		return underwaterTile;
+	void ClearMarkerTile(Vector3Int location) {
+		Tile emptyTile = ScriptableObject.CreateInstance<Tile>();
+		markerTilemap.SetTile(location, emptyTile);
 	}
 
-	public UnderwaterTile RevealUnderWaterTile(Vector2Int location) {
-		return RevealUnderWaterTile( new Vector3Int(location.x, location.y, 0) );
-	}
-
-	public UnderwaterTile RevealUnderWaterTile(Vector3Int location) {
-
-		UnderwaterTile underwaterTile = (UnderwaterTile) underwaterTilemap.GetTile(location);
-		UnderwaterTile newInstance;
-
-		if (underwaterTile == null)
-			newInstance = PlaceUnderWaterTile(location, 0);
-		else
-			newInstance = PlaceUnderWaterTile(location, underwaterTile.Crab);
-
-		underwaterTile = null;
-
-		newInstance.sprite = numberSprites[newInstance.Crab];
-
-		newInstance.DebugPrintCrab();
-
-		return newInstance;
+	void SetNumberTile(Vector3Int location, int number) {
+		Tile numberTile = ScriptableObject.CreateInstance<Tile>();
+		numberTile.sprite = numberSprites[number];
+		numberTilemap.SetTile(location, numberTile);
 	}
 
 	public void PlaceOrRemovePot(Vector3 worldPos, bool playerHasPotsLeft, ThrowPotDelegate throwPotDelegate, AddPotDelegate addPotDelegate) {
@@ -148,7 +105,6 @@ public class GridTracker : MonoBehaviour
 		bool allowedToPlace = terrainIsWaterTile && !markerGridHasPlacedPotTile;
 		bool allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
 		Vector3Int location = markerCoordinate;
-
 
 		if (allowedToPlace && playerHasPotsLeft) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();

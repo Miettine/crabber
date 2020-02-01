@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 155623723}
   - component: {fileID: 155623722}
   m_Layer: 0
-  m_Name: UnderwaterGrid
+  m_Name: NumberGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4428,7 +4428,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 4294967295
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -4446,7 +4446,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 4294967295
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -4472,7 +4472,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 3
+  - m_RefCount: 5
     m_Data: {fileID: 9208405276911119325, guid: fe58c847d4263b14aaaeba53024d862f,
       type: 3}
   m_TileMatrixArray:

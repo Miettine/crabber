@@ -31,6 +31,6 @@ public class GameController : MonoBehaviour
 	}
 
 	internal void OnPlayersPotsChanged() {
-		//goButton.enabled = !playerController.HasPotsLeft();
+		
 	}
 }
