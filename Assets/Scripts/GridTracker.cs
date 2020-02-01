@@ -58,16 +58,28 @@ public class GridTracker : MonoBehaviour
 	internal List<Tile> GetAllPotTiles(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
 		var potTiles = new List<Tile>();
 
-		foreach (var tilePosition in markerTilemap.cellBounds.allPositionsWithin) {
+		foreach (var location in markerTilemap.cellBounds.allPositionsWithin) {
 			//Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
-			Tile potTile = (Tile) markerTilemap.GetTile(tilePosition);
+			Tile potTile = (Tile) markerTilemap.GetTile(location);
 			
-			if (potTile != null) {
+			if (potTile != null && potTile.sprite != null && potTile.sprite.name == PlacedPotTileName) {
 				potTiles.Add(potTile);
-				UnderwaterTile underwaterTile = RevealUnderWaterTile(tilePosition);
-				
+				UnderwaterTile underwaterTile = RevealUnderWaterTile(location);
+
+				int liftedCrab = underwaterTile.Crab;
+
+				addCrabDelegate(liftedCrab);
 				addPotDelegate();
-				addCrabDelegate(underwaterTile.Crab);
+
+				if (liftedCrab > 1)
+					underwaterTile.Crab = 1;
+				else if (liftedCrab == 1)
+					underwaterTile.Crab = 0;
+
+				potTile.sprite = null;
+
+				markerTilemap.RefreshTile(location);
+				underwaterTilemap.RefreshTile(location);
 			}
 				
 		}

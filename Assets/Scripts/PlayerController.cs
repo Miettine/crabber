@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour
 	const string PotsLeftTextGameObjectName = "PotsLeftText";
 	const string PlayerControllerGameObjectName = "PlayerController";
 	const string GoButtonName = "GoButton";
+	const string CrabCollectedTextGameObjectName = "CrabCollectedText";
 
 	Button goButton;
 	GridTracker gridTracker;
 	Text potsLeftText;
+	Text crabCollectedText;
 	GameController gameController;
 
 	public delegate void AddPotDelegate();
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour
 		potsLeftText = GameObject.Find(PotsLeftTextGameObjectName).GetComponent<Text>();
 		gameController = GameController.GetGameController();
 		goButton = GameObject.Find(GoButtonName).GetComponent<Button>();
+		crabCollectedText = GameObject.Find(CrabCollectedTextGameObjectName).GetComponent<Text>();
 	}
 
 	internal static PlayerController GetPlayerController() {
@@ -40,6 +43,7 @@ public class PlayerController : MonoBehaviour
 	void Start()
 	{
 		OnPotsChanged();
+		OnCrabChanged();
 		goButton.onClick.AddListener(() => OnGoClicked());
 	}
 
@@ -75,8 +79,13 @@ public class PlayerController : MonoBehaviour
 		if (crab < 0)
 			crab = 0;
 		this.crab += crab;
+		OnCrabChanged();
 	}
 
+	void OnCrabChanged() {
+		crabCollectedText.gameObject.SetActive(crab > 0);
+		crabCollectedText.text = "Collected " + crab + " crab";
+	}
 	public void OnGoClicked() {
 		Debug.Log("Going! :D");
 
