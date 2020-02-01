@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwarmController : MonoBehaviour
-{
+public class SwarmController : MonoBehaviour {
 
 	const string GameControllerGameObjectName = "GameController";
 	GridTracker gridTracker;
@@ -15,20 +14,18 @@ public class SwarmController : MonoBehaviour
 	int numberOfSwarms = 3;
 
 	// Start is called before the first frame update
-	void Start()
-	{
+	void Start() {
 		crabPopulation = GetSwarms();
 	}
 
 	// Update is called once per frame
-	void Update()
-	{
-		
+	void Update() {
+
 	}
 
 	public int GetCrab(Vector3Int location) {
 		if (crabPopulation.TryGetValue(location, out int crabAmount)) {
-			Debug.Log("Area " + location + " contained "+ crabAmount+" crab");
+			Debug.Log("Area " + location + " contained " + crabAmount + " crab");
 
 			if (crabAmount > 1)
 				crabPopulation[location] = 1;
@@ -37,14 +34,14 @@ public class SwarmController : MonoBehaviour
 
 			return crabAmount;
 		}
-		Debug.Log("Area "+location+ " contained no crab");
+		Debug.Log("Area " + location + " contained no crab");
 		return 0;
 	}
 
 	Dictionary<Vector3Int, int> GetSwarms() {
 		var swarm = new Dictionary<Vector3Int, int>();
 
-		AddSwarm(swarm, Coord(0, 0), 6, 3);
+		AddSwarm(swarm, Coord(-4, 0), 6, 3, 1);
 
 		//AddSwarm(swarm, new Vector3Int(0, -3, 0), 6, 3);
 
@@ -60,16 +57,30 @@ public class SwarmController : MonoBehaviour
 	 * */
 	void AddSwarm(Dictionary<Vector3Int, int> swarmDictionary, Vector3Int swarmCenter, params int[] populationConcentration) {
 
-		swarmDictionary.Add(Coord(0, 0), populationConcentration[0]);
+		swarmDictionary.Add(swarmCenter, populationConcentration[0]);
+		
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x, swarmCenter.y + 1, 0), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x, swarmCenter.y - 1, 0), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y, 0), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y, 0), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 1, 0), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 1, 0), populationConcentration[1]);
 
-		swarmDictionary.Add(Coord(1, 0), populationConcentration[1]);
-		swarmDictionary.Add(Coord(-1, 0), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x, swarmCenter.y + 2, 0), populationConcentration[2]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x, swarmCenter.y - 2, 0), populationConcentration[2]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 2, swarmCenter.y, 0), populationConcentration[2]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 2, swarmCenter.y, 0), populationConcentration[2]);
 
-		swarmDictionary.Add(Coord(0, 1), populationConcentration[1]);
-		swarmDictionary.Add(Coord(0, -1), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y - 1, 0), populationConcentration[2]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 2, swarmCenter.y + 1, 0), populationConcentration[2]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y + 2, 0), populationConcentration[2]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 2, swarmCenter.y - 1, 0), populationConcentration[2]);
 
-		swarmDictionary.Add(Coord(1, -1), populationConcentration[1]);
-		swarmDictionary.Add(Coord(-1, -1), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y + 1, 0), populationConcentration[2]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y - 2, 0), populationConcentration[2]);
+
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 2, 0), populationConcentration[2]);
+		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 2, 0), populationConcentration[2]);
 	}
 
 	Dictionary<Vector3Int, int> GetDebugSwarms() {
