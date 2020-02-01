@@ -11,10 +11,13 @@ public class SwarmController : MonoBehaviour
 
 	Dictionary<Vector3Int, int> crabPopulation;
 
+	[SerializeField]
+	int numberOfSwarms = 3;
+
 	// Start is called before the first frame update
 	void Start()
 	{
-		crabPopulation = GetDebugSwarms();
+		crabPopulation = GetSwarms();
 	}
 
 	// Update is called once per frame
@@ -38,6 +41,31 @@ public class SwarmController : MonoBehaviour
 		return 0;
 	}
 
+	Dictionary<Vector3Int, int> GetSwarms() {
+		var swarm = new Dictionary<Vector3Int, int>();
+
+		AddSwarm(swarm, Vector3Int.zero, 6, 3);
+
+		return swarm;
+	}
+
+	/**
+	 * The first argument is the center of the population, the next argument is one tile from the center, the third argument is two tiles away etc.
+	 * */
+	void AddSwarm(Dictionary<Vector3Int, int> swarmDictionary, Vector3Int swarmCenter, params int[] populationConcentration) {
+
+		swarmDictionary.Add(new Vector3Int(0, 0, 0), populationConcentration[0]);
+
+		swarmDictionary.Add(new Vector3Int(0, 1, 0), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(0, -1, 0), populationConcentration[1]);
+
+		swarmDictionary.Add(new Vector3Int(1, 0, 0), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(-1, 0, 0), populationConcentration[1]);
+
+		swarmDictionary.Add(new Vector3Int(-1, 1, 0), populationConcentration[1]);
+		swarmDictionary.Add(new Vector3Int(-1, -1, 0), populationConcentration[1]);
+	}
+
 	Dictionary<Vector3Int, int> GetDebugSwarms() {
 
 		var debugSwarm = new Dictionary<Vector3Int, int>();
@@ -46,9 +74,9 @@ public class SwarmController : MonoBehaviour
 		debugSwarm.Add(new Vector3Int(0, 1, 0), 3);
 		debugSwarm.Add(new Vector3Int(0, 2, 0), 2);
 		debugSwarm.Add(new Vector3Int(0, 3, 0), 1);
-		debugSwarm.Add(new Vector3Int(1, 0, 0), 4);
+		debugSwarm.Add(new Vector3Int(1, 0, 0), 6);
 		debugSwarm.Add(new Vector3Int(2, 0, 0), 5);
-		debugSwarm.Add(new Vector3Int(3, 0, 0), 6);
+		debugSwarm.Add(new Vector3Int(3, 0, 0), 4);
 
 		return debugSwarm;
 	}
