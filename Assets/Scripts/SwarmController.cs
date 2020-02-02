@@ -17,12 +17,7 @@ public class SwarmController : MonoBehaviour {
 	void Start() {
 		crabPopulation = GetSwarms();
 	}
-
-	// Update is called once per frame
-	void Update() {
-
-	}
-
+	
 	public int GetCrab(Vector3Int location) {
 		if (crabPopulation.TryGetValue(location, out int crabAmount)) {
 			Debug.Log("Area " + location + " contained " + crabAmount + " crab");
@@ -82,20 +77,14 @@ public class SwarmController : MonoBehaviour {
 		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 2, 0), populationConcentration[2]);
 		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 2, 0), populationConcentration[2]);
 	}
-
-	Dictionary<Vector3Int, int> GetDebugSwarms() {
-
-		var debugSwarm = new Dictionary<Vector3Int, int>();
-
-		debugSwarm.Add(new Vector3Int(0, 0, 0), 9);
-		debugSwarm.Add(new Vector3Int(0, 1, 0), 3);
-		debugSwarm.Add(new Vector3Int(0, 2, 0), 2);
-		debugSwarm.Add(new Vector3Int(0, 3, 0), 1);
-		debugSwarm.Add(new Vector3Int(1, 0, 0), 6);
-		debugSwarm.Add(new Vector3Int(2, 0, 0), 5);
-		debugSwarm.Add(new Vector3Int(3, 0, 0), 4);
-
-		return debugSwarm;
+	
+	void AddCrab(Dictionary<Vector3Int, int> swarmDictionary, Vector3Int location, int amount){
+		if (swarmDictionary.TryGetValue(location, out int crabAmount)) {
+			swarmDictionary[location] += amount;
+		} else {
+			swarmDictionary.Add(location, amount);
+		}
+		
 	}
 
 	internal void SetGridTracker(GridTracker gridTracker) {
