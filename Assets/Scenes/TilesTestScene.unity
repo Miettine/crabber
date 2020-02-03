@@ -3997,6 +3997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc276cbc01371a34bb5886839942645f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfSwarms: 3
 --- !u!4 &1148418178
 Transform:
   m_ObjectHideFlags: 0
@@ -4542,7 +4543,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Collected 0 crab
+  m_Text: 'Total haul: 12'
 --- !u!222 &2098727032
 CanvasRenderer:
   m_ObjectHideFlags: 0

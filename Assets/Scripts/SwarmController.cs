@@ -36,7 +36,9 @@ public class SwarmController : MonoBehaviour {
 	Dictionary<Vector3Int, int> GetSwarms() {
 		var swarm = new Dictionary<Vector3Int, int>();
 
-		AddSwarm(swarm, Coord(-4, 0), 6, 3, 1);
+		AddSwarm(swarm, Coord(-4, 2), 8, 4, 2);
+		AddSwarm(swarm, Coord(5, 0), 8, 4, 2);
+		AddSwarm(swarm, Coord(-1, -1), 8, 4, 2);
 
 		//AddSwarm(swarm, new Vector3Int(0, -3, 0), 6, 3);
 
