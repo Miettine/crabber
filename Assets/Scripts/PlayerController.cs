@@ -95,8 +95,6 @@ public class PlayerController : MonoBehaviour
 		Debug.Log("Going! :D");
 
 		gridTracker.LiftAllPots(AddPot, AddCrab);
-		//gridTracker.GetAllPotTiles(AddPot, AddCrab);
-		//gridTracker.removeAllPotMarkers();
-		//playerController.resetAll
+		gameController.OnAllPotsLifted();
 	}
 }

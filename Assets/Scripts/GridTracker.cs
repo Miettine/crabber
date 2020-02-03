@@ -45,7 +45,6 @@ public class GridTracker : MonoBehaviour
 
 		swarmController = GameObject.Find(SwarmControllerName).GetComponent<SwarmController>();
 		swarmController.SetGridTracker(this);
-
 		//playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
 
 		if (potSprite == null)

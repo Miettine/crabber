@@ -9,11 +9,11 @@ public class GameController : MonoBehaviour
 	
 	const string GridTrackerName = "GridTracker";
 	const string GameControllerGameObjectName = "GameController";
-	const string RoundTextGameObjectName = "RoundText";
+	const string RoundTextGameObjectName = "RoundsText";
 
-	GridTracker gridTracker;
+	//GridTracker gridTracker;
 	
-	PlayerController playerController;
+	//PlayerController playerController;
 
 	Text roundText;
 
@@ -23,13 +23,13 @@ public class GameController : MonoBehaviour
 	int currentRound = 1;
 
 	private void Awake() {
-		gridTracker = GameObject.Find(GridTrackerName).GetComponent<GridTracker>();
-		playerController = PlayerController.GetPlayerController();
+		//gridTracker = GameObject.Find(GridTrackerName).GetComponent<GridTracker>();
+		//playerController = PlayerController.GetPlayerController();
 		roundText = GameObject.Find(RoundTextGameObjectName).GetComponent<Text>();
 	}
 
 	private void Start() {
-		
+		UpdateRoundsText();
 	}
 
 	// Update is called once per frame
@@ -46,6 +46,10 @@ public class GameController : MonoBehaviour
 	}
 
 	internal void OnRoundOver() {
+		currentRound++;
+		UpdateRoundsText();	
+	}
+	void UpdateRoundsText() {
 		roundText.text = "Round: " + currentRound + "/" + numberOfRounds;
 	}
 
