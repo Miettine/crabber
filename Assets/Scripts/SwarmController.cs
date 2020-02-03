@@ -52,30 +52,30 @@ public class SwarmController : MonoBehaviour {
 	 * */
 	void AddSwarm(Dictionary<Vector3Int, int> swarmDictionary, Vector3Int swarmCenter, params int[] populationConcentration) {
 
-		swarmDictionary.Add(swarmCenter, populationConcentration[0]);
-		
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x, swarmCenter.y + 1, 0), populationConcentration[1]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x, swarmCenter.y - 1, 0), populationConcentration[1]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y, 0), populationConcentration[1]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y, 0), populationConcentration[1]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 1, 0), populationConcentration[1]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 1, 0), populationConcentration[1]);
+		AddCrab(swarmDictionary, swarmCenter, populationConcentration[0]);
 
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x, swarmCenter.y + 2, 0), populationConcentration[2]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x, swarmCenter.y - 2, 0), populationConcentration[2]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 2, swarmCenter.y, 0), populationConcentration[2]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 2, swarmCenter.y, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y + 1, 0), populationConcentration[1]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y - 1, 0), populationConcentration[1]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y, 0), populationConcentration[1]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y, 0), populationConcentration[1]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 1, 0), populationConcentration[1]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 1, 0), populationConcentration[1]);
 
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y - 1, 0), populationConcentration[2]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 2, swarmCenter.y + 1, 0), populationConcentration[2]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y + 2, 0), populationConcentration[2]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 2, swarmCenter.y - 1, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y + 2, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y - 2, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 2, swarmCenter.y, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 2, swarmCenter.y, 0), populationConcentration[2]);
 
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y + 1, 0), populationConcentration[2]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x + 1, swarmCenter.y - 2, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y - 1, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 2, swarmCenter.y + 1, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y + 2, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 2, swarmCenter.y - 1, 0), populationConcentration[2]);
 
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 2, 0), populationConcentration[2]);
-		swarmDictionary.Add(new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 2, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y + 1, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y - 2, 0), populationConcentration[2]);
+
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 2, 0), populationConcentration[2]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 2, 0), populationConcentration[2]);
 	}
 	
 	void AddCrab(Dictionary<Vector3Int, int> swarmDictionary, Vector3Int location, int amount){
