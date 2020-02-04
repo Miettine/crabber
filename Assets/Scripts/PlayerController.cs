@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void Update() {
-		if (Input.GetMouseButtonDown(0)) {
+		if (!gameController.GameIsOver() && Input.GetMouseButtonDown(0)) {
 			Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 			gridTracker.PlaceOrRemovePot(mouseWorldPos, HasPotsLeft(), ThrowPot, AddPot);
@@ -74,6 +74,11 @@ public class PlayerController : MonoBehaviour
 		if (!inDevelopment)
 			goButton.interactable = !HasPotsLeft();
 	}
+
+	internal void OnGameOver() {
+		goButton.interactable = false;
+	}
+
 	internal void ThrowPot() {
 		if (pots > 0) 
 			pots--;
