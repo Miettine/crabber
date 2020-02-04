@@ -93,8 +93,10 @@ public class PlayerController : MonoBehaviour
 	}
 	public void OnGoClicked() {
 		Debug.Log("Going! :D");
-
+		int crabBefore = crab;
 		gridTracker.LiftAllPots(AddPot, AddCrab);
-		gameController.OnAllPotsLifted();
+		
+		gameController.OnAllPotsLifted(crab - crabBefore);
+
 	}
 }
