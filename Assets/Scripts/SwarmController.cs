@@ -10,6 +10,17 @@ public class SwarmController : MonoBehaviour {
 
 	Dictionary<Vector3Int, int> crabPopulation;
 
+	System.Random randomizer = new System.Random();
+
+	[SerializeField]
+	int XMinCoordinate = -3;
+	[SerializeField]
+	int XMaxCoordinate = 3;
+	[SerializeField]
+	int YMinCoordinate = -2;
+	[SerializeField]
+	int YMaxCoordinate = 2;
+
 	[SerializeField]
 	int numberOfSwarms = 3;
 
@@ -35,13 +46,16 @@ public class SwarmController : MonoBehaviour {
 
 	Dictionary<Vector3Int, int> GetSwarms() {
 		var swarm = new Dictionary<Vector3Int, int>();
+		var takenPlaces = new List<Vector3Int>();
 
-		AddSwarm(swarm, Coord(-4, 2), 9, 3, 1);
-		AddSwarm(swarm, Coord(5, 0), 9, 3, 1);
-		AddSwarm(swarm, Coord(-1, -1), 9, 3, 1);
+		for (int i = 1; i <= numberOfSwarms; i++) {
 
-		//AddSwarm(swarm, new Vector3Int(0, -3, 0), 6, 3);
+			var newSwarmPlace = Coord(randomizer.Next(XMinCoordinate, XMaxCoordinate), randomizer.Next(YMinCoordinate, YMaxCoordinate));
 
+			AddSwarm(swarm, newSwarmPlace, 9, 3, 1);
+
+			takenPlaces.Add(newSwarmPlace);
+		}
 		return swarm;
 	}
 
