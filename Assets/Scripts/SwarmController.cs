@@ -24,9 +24,12 @@ public class SwarmController : MonoBehaviour {
 	[SerializeField]
 	int numberOfSwarms = 3;
 
+	[SerializeField]
+	int[] populationConcentration = { 6, 2, 1 };
+
 	// Start is called before the first frame update
 	void Start() {
-		crabPopulation = GetSwarms();
+		crabPopulation = GetSwarms(populationConcentration);
 	}
 	
 	public int GetCrab(Vector3Int location) {
@@ -44,9 +47,10 @@ public class SwarmController : MonoBehaviour {
 		return 0;
 	}
 
-	Dictionary<Vector3Int, int> GetSwarms() {
+	Dictionary<Vector3Int, int> GetSwarms(int[] populationConcentration) {
 		var swarm = new Dictionary<Vector3Int, int>();
 		var takenPlaces = new List<Vector3Int>();
+
 
 		for (int i = 1; i <= numberOfSwarms; i++) {
 
@@ -61,7 +65,7 @@ public class SwarmController : MonoBehaviour {
 					notAllowedPlacement = false;
 			}
 
-			AddSwarm(swarm, newSwarmPlace, 5, 1);
+			AddSwarm(swarm, newSwarmPlace, populationConcentration);
 
 			takenPlaces.Add(newSwarmPlace);
 			Debug.Log("Placed swarm at " + newSwarmPlace);

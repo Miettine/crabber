@@ -68,6 +68,7 @@ public class GameController : MonoBehaviour
 		gameOver = true;
 		restartButton.gameObject.SetActive(true);
 		playerController.OnGameOver();
+		SwarmController.
 	}
 
 

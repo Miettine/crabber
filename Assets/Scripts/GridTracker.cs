@@ -34,7 +34,6 @@ public class GridTracker : MonoBehaviour {
 
 	[SerializeField]
 	Color previousRoundColor;
-
 	private void Awake() {
 		terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
 		terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
