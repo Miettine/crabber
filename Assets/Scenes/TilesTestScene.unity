@@ -4216,7 +4216,7 @@ MonoBehaviour:
   XMaxCoordinate: 9
   YMinCoordinate: -4
   YMaxCoordinate: 3
-  numberOfSwarms: 5
+  numberOfSwarms: 6
 --- !u!4 &1148418178
 Transform:
   m_ObjectHideFlags: 0

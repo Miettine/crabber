@@ -54,6 +54,13 @@ public class GridTracker : MonoBehaviour
 	internal void LiftAllPots(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
 		//var potTiles = new List<Tile>();
 
+		/*foreach (var location in markerTilemap.cellBounds.allPositionsWithin) {
+
+			SetNumberTile(location, 11, 30);
+		}*/
+
+			
+
 		foreach (var location in markerTilemap.cellBounds.allPositionsWithin) {
 			
 			Tile potTile = (Tile) markerTilemap.GetTile(location);
@@ -67,7 +74,7 @@ public class GridTracker : MonoBehaviour
 				addPotDelegate();
 
 				ClearMarkerTile(location);
-				SetNumberTile(location, liftedCrab);
+				SetNumberTile(location, liftedCrab, 20);
 			}
 		}
 		//return potTiles;
@@ -84,9 +91,17 @@ public class GridTracker : MonoBehaviour
 		markerTilemap.SetTile(location, emptyTile);
 	}
 
-	void SetNumberTile(Vector3Int location, int number) {
+	void SetNumberTile(Vector3Int location, int number , float alpha = 255) {
+		SetNumberTile(location, numberSprites[number], alpha);
+	}
+
+	void SetNumberTile(Vector3Int location, Sprite sprite, float alpha = 255) {
 		Tile numberTile = ScriptableObject.CreateInstance<Tile>();
-		numberTile.sprite = numberSprites[number];
+		numberTile.sprite = sprite;
+
+		if (alpha != 255)
+			numberTile.color = new Color(255, 255, 255, alpha);
+
 		numberTilemap.SetTile(location, numberTile);
 	}
 
