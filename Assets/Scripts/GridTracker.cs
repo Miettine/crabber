@@ -94,6 +94,10 @@ public class GridTracker : MonoBehaviour {
 		markerTilemap.SetTile(location, emptyTile);
 	}
 
+	public void SetNumberTile(Vector3Int location, int number) {
+		SetNumberTile(location, numberSprites[number], previousRoundColor);
+	}
+
 	void SetNumberTile(Vector3Int location, int number, Color color) {
 		SetNumberTile(location, numberSprites[number], color);
 	}

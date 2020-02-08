@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SwarmController : MonoBehaviour {
 
-	const string GameControllerGameObjectName = "GameController";
+	const string SwarmControllerGameObjectName = "SwarmController";
 	GridTracker gridTracker;
 
 	Dictionary<Vector3Int, int> crabPopulation;
@@ -31,7 +31,10 @@ public class SwarmController : MonoBehaviour {
 	void Start() {
 		crabPopulation = GetSwarms(populationConcentration);
 	}
-	
+
+	public static SwarmController GetSwarmController() {
+		return GameObject.Find(SwarmControllerGameObjectName).GetComponent<SwarmController>();
+	}
 	public int GetCrab(Vector3Int location) {
 		if (crabPopulation.TryGetValue(location, out int crabAmount)) {
 			Debug.Log("Area " + location + " contained " + crabAmount + " crab");
@@ -78,6 +81,12 @@ public class SwarmController : MonoBehaviour {
 
 	Vector3Int Coord(int x, int y) {
 		return new Vector3Int(y, x, 0);
+	}
+
+	internal void RevealAllSwarms() {
+		foreach (KeyValuePair<Vector3Int, int> swarm in crabPopulation) {
+			gridTracker.SetNumberTile(swarm.Key, swarm.Value);
+		}
 	}
 
 	/**

@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
 	Text logText;
 	Button restartButton;
 	PlayerController playerController;
+	SwarmController swarmController;
 
 	[SerializeField]
 	private int numberOfRounds = 7;
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour
 		logText = GameObject.Find(LogTextGameObjectName).GetComponent<Text>();
 		restartButton = GameObject.Find(RestartButtonGameObjectName).GetComponent<Button>();
 		playerController = PlayerController.GetPlayerController();
+		swarmController = SwarmController.GetSwarmController();
 	}
 
 	private void Start() {
@@ -68,7 +70,7 @@ public class GameController : MonoBehaviour
 		gameOver = true;
 		restartButton.gameObject.SetActive(true);
 		playerController.OnGameOver();
-		SwarmController.
+		swarmController.RevealAllSwarms();
 	}
 
 
