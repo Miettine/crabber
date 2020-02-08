@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static PlayerController;
 
-public class GridTracker : MonoBehaviour
-{
+public class GridTracker : MonoBehaviour {
 
 	const string WaterTileName = "HexTilesetv3_5";
 	const string PlacedPotTileName = "HexTilesetv3_41";
@@ -33,6 +32,9 @@ public class GridTracker : MonoBehaviour
 	[SerializeField]
 	private Sprite[] numberSprites;
 
+	[SerializeField]
+	Color previousRoundColor;
+
 	private void Awake() {
 		terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
 		terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
@@ -54,10 +56,12 @@ public class GridTracker : MonoBehaviour
 	internal void LiftAllPots(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
 		//var potTiles = new List<Tile>();
 
-		/*foreach (var location in markerTilemap.cellBounds.allPositionsWithin) {
+		foreach (var location in numberTilemap.cellBounds.allPositionsWithin) {
+			var markerTile = (Tile)numberTilemap.GetTile(location);
 
-			SetNumberTile(location, 11, 30);
-		}*/
+			if (markerTile != null && markerTile.sprite != null)
+				SetNumberTile(location, markerTile.sprite, previousRoundColor);
+		}
 
 			
 
@@ -74,7 +78,7 @@ public class GridTracker : MonoBehaviour
 				addPotDelegate();
 
 				ClearMarkerTile(location);
-				SetNumberTile(location, liftedCrab, 20);
+				SetNumberTile(location, liftedCrab, Color.white);
 			}
 		}
 		//return potTiles;
@@ -91,16 +95,15 @@ public class GridTracker : MonoBehaviour
 		markerTilemap.SetTile(location, emptyTile);
 	}
 
-	void SetNumberTile(Vector3Int location, int number , float alpha = 255) {
-		SetNumberTile(location, numberSprites[number], alpha);
+	void SetNumberTile(Vector3Int location, int number, Color color) {
+		SetNumberTile(location, numberSprites[number], color);
 	}
-
-	void SetNumberTile(Vector3Int location, Sprite sprite, float alpha = 255) {
+	void SetNumberTile(Vector3Int location, Sprite sprite, Color color) {
 		Tile numberTile = ScriptableObject.CreateInstance<Tile>();
 		numberTile.sprite = sprite;
 
-		if (alpha != 255)
-			numberTile.color = new Color(255, 255, 255, alpha);
+		if (color != null)
+			numberTile.color = color;
 
 		numberTilemap.SetTile(location, numberTile);
 	}

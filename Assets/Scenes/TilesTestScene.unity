@@ -4283,6 +4283,7 @@ MonoBehaviour:
   - {fileID: -496637869985919634, guid: 26d53d4165d08d0439b9ce65e464b5b3, type: 3}
   - {fileID: 1450478300579402091, guid: 26d53d4165d08d0439b9ce65e464b5b3, type: 3}
   - {fileID: 7527335101965979720, guid: 26d53d4165d08d0439b9ce65e464b5b3, type: 3}
+  previousRoundColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 0.7607843}
 --- !u!4 &1159050753
 Transform:
   m_ObjectHideFlags: 0
