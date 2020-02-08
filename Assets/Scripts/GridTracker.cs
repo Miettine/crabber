@@ -110,6 +110,8 @@ public class GridTracker : MonoBehaviour
 			tile.sprite = potSprite;
 			markerTilemap.SetTile(location, tile);
 
+			Debug.Log("Placed pot at " + location);
+
 			throwPotDelegate();
 		} else if (allowedToRemove) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();
