@@ -13,11 +13,14 @@ public class GameController : MonoBehaviour
 	const string RoundTextGameObjectName = "RoundsText";
 	const string LogTextGameObjectName = "LogText";
 	const string RestartButtonGameObjectName = "RestartButton";
+	const string QuitButtonGameObjectName = "QuitButton";
+
 	Text roundText;
 	Text logText;
 	Button restartButton;
 	PlayerController playerController;
 	SwarmController swarmController;
+	Button quitButton;
 
 	[SerializeField]
 	private int numberOfRounds = 7;
@@ -25,6 +28,11 @@ public class GameController : MonoBehaviour
 	int currentRound = 1;
 
 	bool gameOver = false;
+
+	[SerializeField]
+	bool inDevelopment = true;
+
+	public bool InDevelopment { get { return inDevelopment; } }
 
 	private void Awake() {
 		//gridTracker = GameObject.Find(GridTrackerName).GetComponent<GridTracker>();
@@ -34,11 +42,15 @@ public class GameController : MonoBehaviour
 		restartButton = GameObject.Find(RestartButtonGameObjectName).GetComponent<Button>();
 		playerController = PlayerController.GetPlayerController();
 		swarmController = SwarmController.GetSwarmController();
+		quitButton = GameObject.Find(QuitButtonGameObjectName).GetComponent<Button>();
 	}
 
 	private void Start() {
 		restartButton.onClick.AddListener(() => RestartGame());
 		restartButton.gameObject.SetActive(false);
+
+		quitButton.onClick.AddListener(() => GameOver());
+		quitButton.gameObject.SetActive(InDevelopment);
 
 		logText.text = "";
 		UpdateRoundsText(currentRound, numberOfRounds);

@@ -29,7 +29,7 @@ public class SwarmController : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		crabPopulation = GetSwarms(populationConcentration);
+		crabPopulation = GetSwarms(populationConcentration, numberOfSwarms);
 	}
 
 	public static SwarmController GetSwarmController() {
@@ -50,22 +50,24 @@ public class SwarmController : MonoBehaviour {
 		return 0;
 	}
 
-	Dictionary<Vector3Int, int> GetSwarms(int[] populationConcentration) {
+	Dictionary<Vector3Int, int> GetSwarms(int[] populationConcentration, int number) {
 		var swarm = new Dictionary<Vector3Int, int>();
 		var takenPlaces = new List<Vector3Int>();
 
+		for (int i = 1; i <= number; i++) {
 
-		for (int i = 1; i <= numberOfSwarms; i++) {
+			Vector3Int newSwarmPlace = GetDebugVector3Int();
 
-			Vector3Int newSwarmPlace = GetRandomizedVector3Int();
+			bool notAllowedPlacement = true;
 
-			var notAllowedPlacement = true;
 			while (notAllowedPlacement) {
-				newSwarmPlace = GetRandomizedVector3Int();
-				if (takenPlaces.Contains(newSwarmPlace))
+				
+				if (unacceptableSwarmPlace(takenPlaces, newSwarmPlace)){
+					newSwarmPlace = GetRandomizedVector3Int();
 					continue;
-				else 
+				} else {
 					notAllowedPlacement = false;
+				}
 			}
 
 			AddSwarm(swarm, newSwarmPlace, populationConcentration);
@@ -74,6 +76,14 @@ public class SwarmController : MonoBehaviour {
 			Debug.Log("Placed swarm at " + newSwarmPlace);
 		}
 		return swarm;
+	}
+
+	bool unacceptableSwarmPlace(List<Vector3Int> takenPlaces, Vector3Int newSwarmPlace){
+		return takenPlaces.Contains(newSwarmPlace);
+	}
+
+	Vector3Int GetDebugVector3Int() {
+		return Coord(1, 0);
 	}
 	Vector3Int GetRandomizedVector3Int() {
 		return Coord(randomizer.Next(XMinCoordinate, XMaxCoordinate), randomizer.Next(YMinCoordinate, YMaxCoordinate));
@@ -96,12 +106,25 @@ public class SwarmController : MonoBehaviour {
 
 		AddCrab(swarmDictionary, swarmCenter, populationConcentration[0]);
 
-		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y + 1, 0), populationConcentration[1]);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y, 0), 1);
+
+		int location2x = swarmCenter.x % 2 == 0 ? swarmCenter.x + 1 : swarmCenter.x;
+		int location2y = swarmCenter.y + 1;
+		//swarmCenter.x swarmCenter.y + 1;
+		AddCrab(swarmDictionary, new Vector3Int(location2x, location2y, 0), 2);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 1, 0), 3);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y, 0), 4);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 1, 0), 5);
+		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y - 1, 0), 6);
+
+		/**
+				AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y + 1, 0), populationConcentration[1]);
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y - 1, 0), populationConcentration[1]);
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y, 0), populationConcentration[1]);
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y, 0), populationConcentration[1]);
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 1, 0), populationConcentration[1]);
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 1, 0), populationConcentration[1]);
+*/
 
 		if (populationConcentration.Length > 2) {
 			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y + 2, 0), populationConcentration[2]);

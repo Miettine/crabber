@@ -23,9 +23,6 @@ public class PlayerController : MonoBehaviour
 	public delegate void AddCrabDelegate(int crab);
 
 	[SerializeField]
-	bool inDevelopment = true;
-
-	[SerializeField]
 	private int startPots = 7;
 
 	int pots;
@@ -71,7 +68,7 @@ public class PlayerController : MonoBehaviour
 		potsLeftText.text = "Pots left: " + pots;
 		gameController.OnPlayersPotsChanged();
 
-		if (!inDevelopment)
+		if (!gameController.InDevelopment)
 			goButton.interactable = !HasPotsLeft();
 	}
 

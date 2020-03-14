@@ -37,7 +37,7 @@ public class GridTracker : MonoBehaviour {
 	private void Awake() {
 		terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
 		terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
-
+		
 		markerGrid = GameObject.Find(MarkerGridName).GetComponent<Grid>();
 		markerTilemap = markerGrid.GetComponentInChildren<Tilemap>();
 
