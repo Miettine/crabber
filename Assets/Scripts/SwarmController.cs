@@ -174,20 +174,20 @@ public class SwarmController : MonoBehaviour {
 		int location1y = swarmCenter.y;
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 2, swarmCenter.y, 0), 1);
 
-		int location2x = swarmCenter.x + 1;
-		int location2y = swarmCenter.y + 1;
+		int location2x = location1x;
+		int location2y = location1y + 1;
 		AddCrab(swarmDictionary, new Vector3Int(location2x, location2y, 0), 2);
 		//AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 2, swarmCenter.y + 1, 0), 2);
 
-		int location3x = swarmCenter.x + 1;
-		int location3y = swarmCenter.y + 2;
+		int location3x = location2x;
+		int location3y = location2y + 1;
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y + 2, 0), 3);
 
-		int location4x = swarmCenter.x;
-		int location4y = swarmCenter.y + 2;
+		int location4x = location3x - 1;
+		int location4y = location3y + 1;
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y + 2, 0), 4);
 
-		int location5x = swarmCenter.x - 1;
+		int location5x = location4x + 1;
 		int location5y = swarmCenter.y + 2;
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 2, 0), 5);
 		
