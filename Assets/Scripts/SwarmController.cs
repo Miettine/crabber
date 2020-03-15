@@ -29,7 +29,8 @@ public class SwarmController : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		crabPopulation = GetSwarms(populationConcentration, numberOfSwarms);
+		crabPopulation = GetDebugSwarms();
+		//GetSwarms(populationConcentration, numberOfSwarms);
 	}
 
 	public static SwarmController GetSwarmController() {
@@ -50,13 +51,23 @@ public class SwarmController : MonoBehaviour {
 		return 0;
 	}
 
+	Dictionary<Vector3Int, int> GetDebugSwarms() {
+		var swarm = new Dictionary<Vector3Int, int>();
+
+		AddSwarm(swarm, new Vector3Int(0, 0, 0), new int[]{9, 2} );
+		AddSwarm(swarm, new Vector3Int(-1, -4, 0), new int[]{9, 2} );
+		AddSwarm(swarm, new Vector3Int(1, 4, 0), new int[]{9, 2} );
+
+		return swarm;
+	}
+
 	Dictionary<Vector3Int, int> GetSwarms(int[] populationConcentration, int number) {
 		var swarm = new Dictionary<Vector3Int, int>();
 		var takenPlaces = new List<Vector3Int>();
 
 		for (int i = 1; i <= number; i++) {
 
-			Vector3Int newSwarmPlace = GetDebugVector3Int();
+			Vector3Int newSwarmPlace = GetRandomizedVector3Int();
 
 			bool notAllowedPlacement = true;
 
@@ -126,8 +137,8 @@ public class SwarmController : MonoBehaviour {
 		int location4y = swarmCenterY;
 		AddCrab(swarmDictionary, new Vector3Int(location4x, location4y, 0), 4);
 
-		int location5x = location3x;
-		int location5y = swarmCenterY - 1;
+		int location5x = location4x;
+		int location5y = location4y - 1;
 		AddCrab(swarmDictionary, new Vector3Int(location5x, location5y, 0), 5);
 	
 		int location6x = swarmCenterX;
