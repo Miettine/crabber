@@ -57,7 +57,8 @@ public class SwarmController : MonoBehaviour {
 		AddSwarm(swarm, new Vector3Int(0, 0, 0), new int[]{9, 2} );
 		AddSwarm(swarm, new Vector3Int(-1, -4, 0), new int[]{9, 2} );
 		AddSwarm(swarm, new Vector3Int(1, 4, 0), new int[]{9, 2} );
-
+		AddSwarm(swarm, new Vector3Int(3, 8, 0), new int[]{9, 2} );
+		AddSwarm(swarm, new Vector3Int(-3, -8, 0), new int[]{9, 2} );
 		return swarm;
 	}
 
@@ -121,15 +122,13 @@ public class SwarmController : MonoBehaviour {
 
 		int location1x = swarmCenterX + 1;
 		int location1y = swarmCenterY;
-		AddCrab(swarmDictionary, new Vector3Int(location1x, swarmCenter.y, 0), 1);
+		AddCrab(swarmDictionary, new Vector3Int(location1x, location1y, 0), 1);
 
-		bool evenNumberedXCoordinateCell = swarmCenterX % 2 == 0;
-
-		int location2x = evenNumberedXCoordinateCell ? swarmCenterX : location1x;
+		int location2x = location1x - 1;
 		int location2y = swarmCenterY + 1;
 		AddCrab(swarmDictionary, new Vector3Int(location2x, location2y, 0), 2);
 
-		int location3x = evenNumberedXCoordinateCell ? swarmCenterX - 1 : swarmCenterX;
+		int location3x = swarmCenterX - 1;
 		int location3y = location2y;
 		AddCrab(swarmDictionary, new Vector3Int(location3x, location3y, 0), 3);
 
