@@ -83,7 +83,7 @@ public class SwarmController : MonoBehaviour {
 	}
 
 	Vector3Int GetDebugVector3Int() {
-		return Coord(1, 0);
+		return Coord(0, 0);
 	}
 	Vector3Int GetRandomizedVector3Int() {
 		return Coord(randomizer.Next(XMinCoordinate, XMaxCoordinate), randomizer.Next(YMinCoordinate, YMaxCoordinate));
@@ -108,11 +108,17 @@ public class SwarmController : MonoBehaviour {
 
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y, 0), 1);
 
-		int location2x = swarmCenter.x % 2 == 0 ? swarmCenter.x + 1 : swarmCenter.x;
+		bool evenNumberedXCoordinateCell = swarmCenter.x % 2 == 0;
+
+		int location2x = evenNumberedXCoordinateCell ? swarmCenter.x : swarmCenter.x + 1;
 		int location2y = swarmCenter.y + 1;
-		//swarmCenter.x swarmCenter.y + 1;
 		AddCrab(swarmDictionary, new Vector3Int(location2x, location2y, 0), 2);
-		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 1, 0), 3);
+
+		int location3x = evenNumberedXCoordinateCell ? swarmCenter.x -1 : swarmCenter.x;
+		int location3y = location2y;
+		AddCrab(swarmDictionary, new Vector3Int(location3x, location3y, 0), 3);
+
+
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y, 0), 4);
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 1, 0), 5);
 		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y - 1, 0), 6);
