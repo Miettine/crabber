@@ -104,9 +104,13 @@ public class SwarmController : MonoBehaviour {
 	 * */
 	void AddSwarm(Dictionary<Vector3Int, int> swarmDictionary, Vector3Int swarmCenter, params int[] populationConcentration) {
 
+		int locationCenterY = swarmCenter.y;
+		int locationCenterX = swarmCenter.x;
 		AddCrab(swarmDictionary, swarmCenter, populationConcentration[0]);
 
-		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y, 0), 1);
+		int location1x = locationCenterX + 1;
+		int location1y = locationCenterY;
+		AddCrab(swarmDictionary, new Vector3Int(location1x, swarmCenter.y, 0), 1);
 
 		bool evenNumberedXCoordinateCell = swarmCenter.x % 2 == 0;
 
@@ -118,10 +122,17 @@ public class SwarmController : MonoBehaviour {
 		int location3y = location2y;
 		AddCrab(swarmDictionary, new Vector3Int(location3x, location3y, 0), 3);
 
+		int location4x = swarmCenter.x - 1;
+		int location4y = swarmCenter.y;
+		AddCrab(swarmDictionary, new Vector3Int(location4x, location4y, 0), 4);
 
-		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y, 0), 4);
-		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 1, 0), 5);
-		AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y - 1, 0), 6);
+		int location5x = swarmCenter.x - 1;
+		int location5y = swarmCenter.y - 1;
+		AddCrab(swarmDictionary, new Vector3Int(location5x, location5y, 0), 5);
+	
+		int location6x = swarmCenter.x;
+		int location6y = swarmCenter.y - 1;
+		AddCrab(swarmDictionary, new Vector3Int(location6x, location6y, 0), 6);
 
 		/**
 				AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y + 1, 0), populationConcentration[1]);
