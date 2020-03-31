@@ -29,8 +29,8 @@ public class SwarmController : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		crabPopulation = //GetSwarms(populationConcentration, numberOfSwarms);
-		GetDebugSwarms();
+		crabPopulation = GetSwarms(populationConcentration, numberOfSwarms);
+		// GetDebugSwarms();
 		
 	}
 
@@ -148,23 +148,6 @@ public class SwarmController : MonoBehaviour {
 		if (populationConcentration.Length > 2) {
 			int populationConcentration2 = populationConcentration[2];
 			AddSecondCircle(swarmDictionary, swarmCenter, populationConcentration2);
-		/*
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y + 2, 0), populationConcentration2);
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x, swarmCenter.y - 2, 0), populationConcentration2);
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 2, swarmCenter.y, 0), populationConcentration2);
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 2, swarmCenter.y, 0), populationConcentration2);
-
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y - 1, 0), populationConcentration2);
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 2, swarmCenter.y + 1, 0), populationConcentration2);
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y + 2, 0), populationConcentration2);
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 2, swarmCenter.y - 1, 0), populationConcentration2);
-
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y + 1, 0), populationConcentration2);
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x + 1, swarmCenter.y - 2, 0), populationConcentration2);
-
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y - 2, 0), populationConcentration2);
-			AddCrab(swarmDictionary, new Vector3Int(swarmCenter.x - 1, swarmCenter.y + 2, 0), populationConcentration2);
-		*/
 		}
 	}
 
