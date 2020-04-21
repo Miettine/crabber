@@ -59,7 +59,7 @@ public class GridTracker : MonoBehaviour {
 			var markerTile = (Tile)numberTilemap.GetTile(location);
 
 			if (markerTile != null && markerTile.sprite != null)
-				SetNumberTile(location, markerTile.sprite, previousRoundColor);
+				SetNumberTileInOffsetCoordinates(location, markerTile.sprite, previousRoundColor);
 		}
 
 			
@@ -77,7 +77,7 @@ public class GridTracker : MonoBehaviour {
 				addPotDelegate();
 
 				ClearMarkerTile(location);
-				SetNumberTileInAxial(location, liftedCrab, Color.white);
+				SetNumberTileInOffsetCoordinates(location, liftedCrab, Color.white);
 			}
 		}
 		//return potTiles;
@@ -94,22 +94,15 @@ public class GridTracker : MonoBehaviour {
 		markerTilemap.SetTile(location, emptyTile);
 	}
 
-	public void SetNumberTileInCubic(Vector3Int location, int number) {
-		SetNumberTileInCubic(location, numberSprites[number], previousRoundColor);
+	public void SetNumberTileInCubic(Vector3Int locationInCubicCoord, int number) {
+		SetNumberTileInOffsetCoordinates(CubicCrabGrid.CubicToOffset(locationInCubicCoord), numberSprites[number], previousRoundColor);
 	}
 
-	void SetNumberTileInCubic(Vector3Int location, int number, Color color) {
-		SetNumberTileInCubic(location, numberSprites[number], color);
-	}
-	
-	SetNumberTileInAxial(){
-
-	}
-	void SetNumberTileInAxial(Vector3Int locationInAxial, Sprite sprite, Color color){
-		SetNumberTileInCubic(SwarmController. locationInAxial, sprite, color);
+	void SetNumberTileInOffsetCoordinates(Vector3Int locationInOffsetCoord, int number, Color color){
+		SetNumberTileInOffsetCoordinates(locationInOffsetCoord, numberSprites[number], color);
 	}
 
-	void SetNumberTileInCubic(Vector3Int location, Sprite sprite, Color color) {
+	void SetNumberTileInOffsetCoordinates(Vector3Int location, Sprite sprite, Color color) {
 		Tile numberTile = ScriptableObject.CreateInstance<Tile>();
 		numberTile.sprite = sprite;
 

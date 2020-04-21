@@ -113,7 +113,7 @@ public class SwarmController : MonoBehaviour {
 
 	internal void RevealAllSwarms() {
 		foreach (KeyValuePair<Vector3Int, int> swarm in crabPopulation) {
-			gridTracker.SetNumberTile(swarm.Key, swarm.Value);
+			gridTracker.SetNumberTileInCubic(swarm.Key, swarm.Value);
 		}
 	}
 

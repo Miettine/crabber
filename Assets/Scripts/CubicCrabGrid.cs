@@ -18,7 +18,11 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 
 		return cubicVector;
 	}
-	public static Vector3Int OffsetToAxial(Vector3Int offsetPoint){
+
+	public static int CubicToOffset(){
+
+	}
+	private static Vector3Int OffsetToAxial(Vector3Int offsetPoint){
 		offsetPoint.x = offsetPoint.x-(offsetPoint.y/2);
 		return offsetPoint;
 	}
@@ -26,7 +30,9 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	/// <summary> Calculates the cubic Z-coordinate from an axial coordinate
 	/// Taken from https://gamedevelopment.tutsplus.com/tutorials/introduction-to-axial-coordinates-for-hexagonal-tile-based-games--cms-28820
 	/// </summary> 
-	public static int CalculateCubicZ(Vector3Int axialPoint){
+	private static int CalculateCubicZ(Vector3Int axialPoint){
 		return -axialPoint.x-axialPoint.y;
 	}
+
+
 }
