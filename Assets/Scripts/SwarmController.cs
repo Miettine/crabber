@@ -8,7 +8,7 @@ public class SwarmController : MonoBehaviour {
 	const string SwarmControllerGameObjectName = "SwarmController";
 	GridTracker gridTracker;
 
-	Dictionary<Vector3Int, int> crabPopulation;
+	CubicCrabGrid crabPopulation;
 
 	System.Random randomizer = new System.Random();
 
@@ -29,8 +29,8 @@ public class SwarmController : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		crabPopulation = GetSwarms(populationConcentration, numberOfSwarms);
-		// GetDebugSwarms();
+		crabPopulation =// GetSwarms(populationConcentration, numberOfSwarms);
+		GetDebugSwarms();
 		
 	}
 
@@ -52,14 +52,20 @@ public class SwarmController : MonoBehaviour {
 		return 0;
 	}
 
-	Dictionary<Vector3Int, int> GetDebugSwarms() {
-		var swarm = new Dictionary<Vector3Int, int>();
-		var concentration =  new int[]{0, 0, 1};
-		AddSwarm(swarm, new Vector3Int(0, 0, 0), concentration);
+	CubicCrabGrid GetDebugSwarms() {
+		var crabGrid = new CubicCrabGrid();
+		
+		crabGrid.AddCrab(new Vector3Int(0, 0, 0), 1);
 	
-		AddSwarm(swarm, new Vector3Int(1, 9, 0), concentration);
+		crabGrid.AddCrab(new Vector3Int(1, 0, 0), 1);
+		crabGrid.AddCrab(new Vector3Int(0, 1, 0), 2);
+		crabGrid.AddCrab(new Vector3Int(0, 0, 1), 3);
+	
+		crabGrid.AddCrab(new Vector3Int(-1, 0, 0), 4);
+		crabGrid.AddCrab(new Vector3Int(0, -1, 0), 5);
+		crabGrid.AddCrab(new Vector3Int(0, 0, -1), 6);
 
-		return swarm;
+		return crabGrid;
 	}
 
 	Dictionary<Vector3Int, int> GetSwarms(int[] populationConcentration, int number) {
