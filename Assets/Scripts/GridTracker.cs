@@ -95,6 +95,9 @@ public class GridTracker : MonoBehaviour {
 	}
 
 	public void SetNumberTileInCubic(Vector3Int locationInCubicCoord, int number) {
+		var offset = CubicCrabGrid.CubicToOffset(locationInCubicCoord);
+		Debug.Log(locationInCubicCoord);
+		Debug.Log(offset);
 		SetNumberTileInOffsetCoordinates(CubicCrabGrid.CubicToOffset(locationInCubicCoord), numberSprites[number], previousRoundColor);
 	}
 
@@ -132,8 +135,8 @@ public class GridTracker : MonoBehaviour {
 			tile.sprite = potSprite;
 			markerTilemap.SetTile(location, tile);
 
-			Debug.Log("Placed pot at " + location);
-
+			Debug.Log(String.Format("Placed pot at offset {0}, cubic {1}", location, CubicCrabGrid.OffsetToCubic(location)));
+	
 			throwPotDelegate();
 		} else if (allowedToRemove) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();
