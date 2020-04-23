@@ -62,8 +62,6 @@ public class GridTracker : MonoBehaviour {
 				SetNumberTileInOffsetCoordinates(location, markerTile.sprite, previousRoundColor);
 		}
 
-			
-
 		foreach (var location in markerTilemap.cellBounds.allPositionsWithin) {
 			
 			Tile potTile = (Tile) markerTilemap.GetTile(location);
@@ -96,9 +94,8 @@ public class GridTracker : MonoBehaviour {
 
 	public void SetNumberTileInCubic(Vector3Int locationInCubicCoord, int number) {
 		var offset = CubicCrabGrid.CubicToOffset(locationInCubicCoord);
-		Debug.Log(locationInCubicCoord);
-		Debug.Log(offset);
-		SetNumberTileInOffsetCoordinates(CubicCrabGrid.CubicToOffset(locationInCubicCoord), numberSprites[number], previousRoundColor);
+		Debug.Log(String.Format("Number tile cubic {0} offset {1} amount {2}", locationInCubicCoord, offset, number));
+		SetNumberTileInOffsetCoordinates(offset, number, previousRoundColor);
 	}
 
 	void SetNumberTileInOffsetCoordinates(Vector3Int locationInOffsetCoord, int number, Color color){

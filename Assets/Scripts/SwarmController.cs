@@ -59,11 +59,9 @@ public class SwarmController : MonoBehaviour {
 	
 		crabGrid.AddCrab(new Vector3Int(1, 0, 0), 2);
 		crabGrid.AddCrab(new Vector3Int(0, 1, 0), 3);			
-		crabGrid.AddCrab(new Vector3Int(0, 0, 1), 4);
 
-		crabGrid.AddCrab(new Vector3Int(-1, 0, 0), 5);
-		crabGrid.AddCrab(new Vector3Int(0, -1, 0), 6);			
-		crabGrid.AddCrab(new Vector3Int(0, 0, -1), 7);
+		crabGrid.AddCrab(new Vector3Int(-1, 0, 0), 4);
+		crabGrid.AddCrab(new Vector3Int(0, -1, 0), 5);			
 		
 		return crabGrid;
 	}
