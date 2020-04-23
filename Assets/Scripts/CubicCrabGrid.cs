@@ -13,21 +13,21 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	}
 
 	public static Vector3Int OffsetToCubic(Vector3Int offsetPoint){
-		Vector3Int cubicVector = OffsetToAxial(offsetPoint);
-		cubicVector.z = CalculateCubicZ(cubicVector);
+		//Vector3Int cubicVector = OffsetToAxial(offsetPoint);
+		//cubicVector.z = CalculateCubicZ(cubicVector);
 		
-		return cubicVector;
+		return EvenQToCube(offsetPoint);
 	}
 
 	public static Vector3Int CubicToOffset(Vector3Int cubicPoint){
-		return new Vector3Int( cubicPoint.x + (cubicPoint.y / 2), cubicPoint.y, 0);
+		return CubeToEvenQ(cubicPoint);
 	}
 
 	/// <summary> Calculates the axial coordinates from a Unity tile-system offset coordinate
 	/// Taken from https://gamedevelopment.tutsplus.com/tutorials/introduction-to-axial-coordinates-for-hexagonal-tile-based-games--cms-28820
 	/// </summary> 
 	private static Vector3Int OffsetToAxial(Vector3Int offsetPoint){
-		offsetPoint.x = offsetPoint.x-(offsetPoint.y/2);
+		offsetPoint.x = offsetPoint.x+(offsetPoint.y/2);
 		return offsetPoint;
 	}
 
@@ -36,5 +36,31 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	/// </summary> 
 	private static int CalculateCubicZ(Vector3Int axialPoint){
 		return -axialPoint.x-axialPoint.y;
+	}
+
+	/// <summary>
+	/// Courtesy of redblobgames.com
+	/// </summary> 
+	private static Vector3Int CubeToEvenQ(Vector3Int cube){
+		var col = cube.x;
+		var row = cube.z + (cube.x + (cube.x&1)) / 2;
+		return new Vector3Int(-row, col, 0);
+	}
+
+	/// <summary>
+	/// Courtesy of redblobgames.com
+	/// </summary> 
+	private static Vector3Int EvenQToCube(Vector3Int hex){
+		/**
+		var x = hex.col;
+		var z = hex.row - (hex.col + (hex.col&1)) / 2;
+		var y = -x-z;
+		*/
+		
+		var x = hex.y;
+		var z = (-hex.x) - (hex.y + (hex.y&1)) / 2;
+		var y = -x-z;
+		
+		return new Vector3Int(x, y, z);
 	}
 }

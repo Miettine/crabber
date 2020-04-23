@@ -55,14 +55,16 @@ public class SwarmController : MonoBehaviour {
 	CubicCrabGrid GetDebugSwarms() {
 		var crabGrid = new CubicCrabGrid();
 		
-		crabGrid.AddCrab(new Vector3Int(0, 0, 0), 1);
+		crabGrid.AddCrab(new Vector3Int(0, 1, -1), 1);
 	
-		crabGrid.AddCrab(new Vector3Int(1, 0, 0), 2);
-		crabGrid.AddCrab(new Vector3Int(0, 1, 0), 3);			
+		crabGrid.AddCrab(new Vector3Int(1, 0, -1), 2);
+		crabGrid.AddCrab(new Vector3Int(1, -1, 0), 3);			
 
-		crabGrid.AddCrab(new Vector3Int(-1, 0, 0), 4);
-		crabGrid.AddCrab(new Vector3Int(0, -1, 0), 5);			
-		
+		crabGrid.AddCrab(new Vector3Int(0, -1, 1), 4);
+		crabGrid.AddCrab(new Vector3Int(-1, 0, 1), 5);			
+		crabGrid.AddCrab(new Vector3Int(-1, 1, 0), 6);
+
+		crabGrid.AddCrab(new Vector3Int(0, -1, 2), 7);
 		return crabGrid;
 	}
 
