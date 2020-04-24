@@ -18,6 +18,16 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 		}
 	}
 
+	public bool IsAcceptableSwarmPlace(Vector3Int swarmCenter){
+		if (this.TryGetValue(swarmCenter, out int crabAmount)) {
+			if (crabAmount > 0){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	* There exist algorithms that allow me to draw a ring of hexagons.
 	* However, developing the algorithms would take time and I want to 
@@ -37,7 +47,7 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 
 			AddCrab(populationConcentration[1], p1, p2, p3, p4, p5, p6);
 		}
-		
+
 		if (populationConcentration.Length > 2) {
 			var p7 = new Vector3Int(center.x, center.y + 2, center.z - 2);
 

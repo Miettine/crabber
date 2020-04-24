@@ -29,26 +29,29 @@ public class SwarmController : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		crabPopulation =// GetSwarms(populationConcentration, numberOfSwarms);
-		GetDebugSwarms();
+		crabPopulation = GetSwarms(populationConcentration, numberOfSwarms);
+		//GetDebugSwarms();
 		
 	}
 
 	public static SwarmController GetSwarmController() {
 		return GameObject.Find(SwarmControllerGameObjectName).GetComponent<SwarmController>();
 	}
-	public int GetCrab(Vector3Int location) {
-		if (crabPopulation.TryGetValue(location, out int crabAmount)) {
-			Debug.Log("Area " + location + " contained " + crabAmount + " crab");
+	public int GetCrab(Vector3Int locationInOffsetCoord) {
+
+		Vector3Int locationInCubic = CubicCrabGrid.OffsetToCubic(locationInOffsetCoord);
+
+		if (crabPopulation.TryGetValue(locationInCubic, out int crabAmount)) {
+			Debug.Log("Area " + locationInCubic + " contained " + crabAmount + " crab");
 
 			if (crabAmount > 1)
-				crabPopulation[location] = 1;
+				crabPopulation[locationInCubic] = 1;
 			else if (crabAmount >= 1)
-				crabPopulation[location] = 0;
+				crabPopulation[locationInCubic] = 0;
 
 			return crabAmount;
 		}
-		Debug.Log("Area " + location + " contained no crab");
+		Debug.Log("Area " + locationInCubic + " contained no crab");
 		return 0;
 	}
 
@@ -74,9 +77,8 @@ public class SwarmController : MonoBehaviour {
 
 	
 
-	Dictionary<Vector3Int, int> GetSwarms(int[] populationConcentration, int number) {
-		var swarm = new Dictionary<Vector3Int, int>();
-		var takenPlaces = new List<Vector3Int>();
+	CubicCrabGrid GetSwarms(int[] populationConcentration, int number) {
+		var crabGrid = new CubicCrabGrid();
 
 		for (int i = 1; i <= number; i++) {
 
@@ -86,7 +88,7 @@ public class SwarmController : MonoBehaviour {
 
 			while (notAllowedPlacement) {
 				
-				if (unacceptableSwarmPlace(takenPlaces, newSwarmPlace)){
+				if (!crabGrid.IsAcceptableSwarmPlace(newSwarmPlace)){
 					newSwarmPlace = GetRandomizedVector3Int();
 					continue;
 				} else {
@@ -94,16 +96,11 @@ public class SwarmController : MonoBehaviour {
 				}
 			}
 
-			AddSwarm(swarm, newSwarmPlace, populationConcentration);
+			crabGrid.AddSwarm(newSwarmPlace, populationConcentration);
 
-			takenPlaces.Add(newSwarmPlace);
 			Debug.Log("Placed swarm at " + newSwarmPlace);
 		}
-		return swarm;
-	}
-
-	bool unacceptableSwarmPlace(List<Vector3Int> takenPlaces, Vector3Int newSwarmPlace){
-		return takenPlaces.Contains(newSwarmPlace);
+		return crabGrid;
 	}
 
 	Vector3Int GetDebugVector3Int() {

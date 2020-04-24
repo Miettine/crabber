@@ -6157,8 +6157,8 @@ MonoBehaviour:
   XMaxCoordinate: 14
   YMinCoordinate: -6
   YMaxCoordinate: 6
-  numberOfSwarms: 2
-  populationConcentration: 030000000200000001000000
+  numberOfSwarms: 5
+  populationConcentration: 120000000300000001000000
 --- !u!4 &1148418178
 Transform:
   m_ObjectHideFlags: 0
