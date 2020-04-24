@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 public class CubicCrabGrid : Dictionary<Vector3Int, int> {
-	public void AddCrab(Vector3Int location, int amount){
+	public void AddCrab(int amount, Vector3Int location){
 		if (this.TryGetValue(location, out int crabAmount)) {
 			this[location] += amount;
 		} else {
@@ -14,7 +14,7 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 
 	public void AddCrab(int amount, params Vector3Int[] locations){
 		foreach (Vector3Int location in locations){
-			AddCrab(location, amount);
+			AddCrab(amount, location);
 		}
 	}
 	/**
@@ -22,7 +22,10 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	* However, developing the algorithms would take time and I want to 
 	* get this project over with, so I am making the swarms by hand.
 	*/
-	public void AddSwarm(Vector3Int center, int amount){
+	public void AddSwarm(Vector3Int center, int[] populationConcentration){
+
+		AddCrab(populationConcentration[0], center);
+
 		var p1 = new Vector3Int(center.x, center.y + 1, center.z - 1);
 		var p2 = new Vector3Int(center.x + 1, center.y, center.z - 1);
 		var p3 = new Vector3Int(center.x + 1, center.y - 1, center.z);
@@ -30,7 +33,28 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 		var p5 = new Vector3Int(center.x - 1, center.y, center.z + 1);
 		var p6 = new Vector3Int(center.x - 1, center.y + 1, center.z);
 
-		AddCrab(amount, p1, p2, p3, p4, p5, p6);
+		AddCrab(populationConcentration[1], p1, p2, p3, p4, p5, p6);
+
+		var p7 = new Vector3Int(center.x, center.y + 2, center.z - 2);
+
+		var p8 = new Vector3Int(center.x + 1, center.y + 1, center.z - 2);
+		var p9 = new Vector3Int(center.x + 2, center.y, center.z -2);
+
+		var p10 = new Vector3Int(center.x + 2, center.y - 1, center.z - 1);
+		var p11 = new Vector3Int(center.x + 2, center.y - 2, center.z);
+
+		var p12 = new Vector3Int(center.x + 1, center.y - 2, center.z + 1);
+		var p13 = new Vector3Int(center.x, center.y - 2, center.z + 2);
+
+		var p14 = new Vector3Int(center.x - 1, center.y - 1, center.z + 2);
+		var p15 = new Vector3Int(center.x - 2, center.y, center.z + 2);
+
+		var p16 = new Vector3Int(center.x - 2, center.y + 1, center.z + 1);
+		var p17 = new Vector3Int(center.x - 2, center.y + 2, center.z);
+
+		var p18 = new Vector3Int(center.x - 1, center.y + 2, center.z -1);
+
+		AddCrab(populationConcentration[2], p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18);
 	}
 
 	public static Vector3Int OffsetToCubic(Vector3Int offsetPoint){
