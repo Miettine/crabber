@@ -5,10 +5,10 @@ using System;
 
 public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	public void AddCrab(int amount, Vector3Int location){
-		if (this.TryGetValue(location, out int crabAmount)) {
+		if (TryGetValue(location, out int crabAmount)) {
 			this[location] += amount;
 		} else {
-			this.Add(location, amount);
+			Add(location, amount);
 		}
 	}
 
@@ -19,7 +19,7 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	}
 
 	public bool IsAcceptableSwarmPlace(Vector3Int swarmCenter){
-		if (this.TryGetValue(swarmCenter, out int crabAmount)) {
+		if (TryGetValue(swarmCenter, out int crabAmount)) {
 			if (crabAmount > 0){
 				return false;
 			}
@@ -29,9 +29,10 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	}
 
 	/**
-	* There exist algorithms that allow me to draw a ring of hexagons.
-	* However, developing the algorithms would take time and I want to 
-	* get this project over with, so I am making the swarms by hand.
+	* There exist algorithms that allow me to draw a ring of hexagons 
+	* around a certain center point of a given radius. Developing the 
+	* algorithms would take time and I want to get this project over 
+	* with, so I am making the swarms by hand.
 	*/
 	public void AddSwarm(Vector3Int center, int[] populationConcentration){
 
@@ -81,21 +82,6 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 
 	public static Vector3Int CubicToOffset(Vector3Int cubicPoint){
 		return CubeToEvenQ(cubicPoint);
-	}
-
-	/// <summary> Calculates the axial coordinates from a Unity tile-system offset coordinate
-	/// Taken from https://gamedevelopment.tutsplus.com/tutorials/introduction-to-axial-coordinates-for-hexagonal-tile-based-games--cms-28820
-	/// </summary> 
-	private static Vector3Int OffsetToAxial(Vector3Int offsetPoint){
-		offsetPoint.x = offsetPoint.x+(offsetPoint.y/2);
-		return offsetPoint;
-	}
-
-	/// <summary> Calculates the cubic Z-coordinate from an axial coordinate
-	/// Taken from https://gamedevelopment.tutsplus.com/tutorials/introduction-to-axial-coordinates-for-hexagonal-tile-based-games--cms-28820
-	/// </summary> 
-	private static int CalculateCubicZ(Vector3Int axialPoint){
-		return -axialPoint.x-axialPoint.y;
 	}
 
 	/// <summary>

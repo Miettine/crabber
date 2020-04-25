@@ -40,7 +40,7 @@ public class SwarmController : MonoBehaviour {
 	public int GetCrab(Vector3Int locationInOffsetCoord) {
 
 		Vector3Int locationInCubic = CubicCrabGrid.OffsetToCubic(locationInOffsetCoord);
-
+		
 		if (crabPopulation.TryGetValue(locationInCubic, out int crabAmount)) {
 			Debug.Log("Area " + locationInCubic + " contained " + crabAmount + " crab");
 
@@ -82,14 +82,14 @@ public class SwarmController : MonoBehaviour {
 
 		for (int i = 1; i <= number; i++) {
 
-			Vector3Int newSwarmPlace = GetRandomizedVector3Int();
+			Vector3Int newSwarmPlace = GetRandomizedCubicVector3Int();
 
 			bool notAllowedPlacement = true;
 
 			while (notAllowedPlacement) {
 				
 				if (!crabGrid.IsAcceptableSwarmPlace(newSwarmPlace)){
-					newSwarmPlace = GetRandomizedVector3Int();
+					newSwarmPlace = GetRandomizedCubicVector3Int();
 					continue;
 				} else {
 					notAllowedPlacement = false;
@@ -98,7 +98,7 @@ public class SwarmController : MonoBehaviour {
 
 			crabGrid.AddSwarm(newSwarmPlace, populationConcentration);
 
-			Debug.Log("Placed swarm at " + newSwarmPlace);
+			Debug.Log("Placed swarm at cubic " + newSwarmPlace);
 		}
 		return crabGrid;
 	}
@@ -106,12 +106,12 @@ public class SwarmController : MonoBehaviour {
 	Vector3Int GetDebugVector3Int() {
 		return new Vector3Int(0, 1, 0);
 	}
-	Vector3Int GetRandomizedVector3Int() {
-		return Coord(randomizer.Next(XMinCoordinate, XMaxCoordinate), randomizer.Next(YMinCoordinate, YMaxCoordinate));
-	}
-
-	Vector3Int Coord(int x, int y) {
-		return new Vector3Int(y, x, 0);
+	Vector3Int GetRandomizedCubicVector3Int() {
+		var x = randomizer.Next(XMinCoordinate, XMaxCoordinate);
+		var y = randomizer.Next(YMinCoordinate, YMaxCoordinate);
+		var z = -x-y;
+		// x+y+z=0, z=-x-y
+		return new Vector3Int(x, y, z);
 	}
 
 	internal void RevealAllSwarms() {

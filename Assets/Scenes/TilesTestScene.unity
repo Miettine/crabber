@@ -6153,12 +6153,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc276cbc01371a34bb5886839942645f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XMinCoordinate: -15
-  XMaxCoordinate: 14
-  YMinCoordinate: -6
-  YMaxCoordinate: 6
-  numberOfSwarms: 5
-  populationConcentration: 120000000300000001000000
+  XMinCoordinate: -5
+  XMaxCoordinate: 5
+  YMinCoordinate: -4
+  YMaxCoordinate: 4
+  numberOfSwarms: 1
+  populationConcentration: 090000000300000001000000
 --- !u!4 &1148418178
 Transform:
   m_ObjectHideFlags: 0
