@@ -14,9 +14,11 @@ public class GameController : MonoBehaviour
 	const string LogTextGameObjectName = "LogText";
 	const string RestartButtonGameObjectName = "RestartButton";
 	const string QuitButtonGameObjectName = "QuitButton";
+	const string MoneyTextGameObjectName = "MoneyText";
 
 	Text roundText;
 	Text logText;
+	Text moneyText;
 	Button restartButton;
 	PlayerController playerController;
 	SwarmController swarmController;
@@ -43,6 +45,7 @@ public class GameController : MonoBehaviour
 		playerController = PlayerController.GetPlayerController();
 		swarmController = SwarmController.GetSwarmController();
 		quitButton = GameObject.Find(QuitButtonGameObjectName).GetComponent<Button>();
+		moneyText = GameObject.Find(MoneyTextGameObjectName).GetComponent<Text>();
 	}
 
 	private void Start() {
@@ -56,6 +59,8 @@ public class GameController : MonoBehaviour
 		UpdateRoundsText(currentRound, numberOfRounds);
 	}
 
+
+
 	void RestartGame() {
 		Scene scene = SceneManager.GetActiveScene();
 		SceneManager.LoadScene(scene.name);
@@ -64,18 +69,22 @@ public class GameController : MonoBehaviour
 	public static GameController GetGameController() {
 		return GameObject.Find(GameControllerGameObjectName).GetComponent<GameController>();
 	}
-	internal void OnAllPotsLifted(int crabHaul) {
-		OnRoundOver(crabHaul);
+	internal void OnAllPotsLifted(int crabHaul, int currentMoney) {
+		OnRoundOver(crabHaul, currentMoney);
 	}
 
-	internal void OnRoundOver(int roundCrabHaul) {
+	internal void OnRoundOver(int roundCrabHaul, int currentMoney) {
 		UpdateLogText(currentRound, roundCrabHaul);
-		if (currentRound == numberOfRounds) {
+		if (currentRound == numberOfRounds || currentMoney < playerController.GetTripCost()) {
 			GameOver();
 		} else {
 			currentRound++;
 			UpdateRoundsText(currentRound, numberOfRounds);
 		}
+	}
+
+	public void UpdateMoneyText(int currentMoney) {
+		moneyText.text = string.Format("Money: ${0}", currentMoney);
 	}
 
 	void GameOver() {
@@ -93,7 +102,7 @@ public class GameController : MonoBehaviour
 	}
 	
 	void UpdateLogText(int round, int roundCrabHaul) {
-		logText.text += string.Format("Round {0} hauled {1} crab", round, roundCrabHaul) + "\n";
+		logText.text += string.Format("Round {0} hauled {1} crab, gained {2}$", round, roundCrabHaul, roundCrabHaul) + "\n";
 	}
 
 	internal void OnPlayersPotsChanged() {
