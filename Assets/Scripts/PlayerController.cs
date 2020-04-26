@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnCrabChanged() {
 		crabCollectedText.gameObject.SetActive(crab > 0);
-		crabCollectedText.text = "Haul: " + crab + " crab";
+		crabCollectedText.text = string.Format("Haul: {0} crab", crab);
 	}
 	public void OnGoClicked() {
 		Debug.Log("Going! :D");

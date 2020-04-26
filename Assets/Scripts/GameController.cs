@@ -84,20 +84,17 @@ public class GameController : MonoBehaviour
 		playerController.OnGameOver();
 		swarmController.RevealAllSwarms();
 	}
-
-
-	internal bool GameIsOver() {
+	public bool GameIsOver() {
 		return gameOver;
 	}
 
 	void UpdateRoundsText(int currentRound, int numberOfRounds) {
-		roundText.text = "Round: " + currentRound + "/" + numberOfRounds;
+		roundText.text = string.Format("Round: {0}/{1}", currentRound, numberOfRounds);
 	}
 	
 	void UpdateLogText(int round, int roundCrabHaul) {
 		logText.text += string.Format("Round {0} hauled {1} crab", round, roundCrabHaul) + "\n";
 	}
-
 
 	internal void OnPlayersPotsChanged() {
 		

@@ -82,14 +82,14 @@ public class SwarmController : MonoBehaviour {
 
 		for (int i = 1; i <= number; i++) {
 
-			Vector3Int newSwarmPlace = GetRandomizedCubicVector3Int();
+			Vector3Int newSwarmPlace = gridTracker.GetRandomSwarmPlacementInCubic();
 
 			bool notAllowedPlacement = true;
 
 			while (notAllowedPlacement) {
 				
-				if (!crabGrid.IsAcceptableSwarmPlace(newSwarmPlace)){
-					newSwarmPlace = GetRandomizedCubicVector3Int();
+				if (!crabGrid.IsAcceptableSwarmPlace(newSwarmPlace) || !gridTracker.SwarmPlacementIsWithinPlayArea(newSwarmPlace)) {
+					newSwarmPlace = gridTracker.GetRandomSwarmPlacementInCubic();
 					continue;
 				} else {
 					notAllowedPlacement = false;

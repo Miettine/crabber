@@ -13,7 +13,8 @@ public class GridTracker : MonoBehaviour {
 	const string MarkerGridName = "MarkerGrid";
 	const string NumberGridName = "NumberGrid";
 	const string SwarmControllerName = "SwarmController";
-
+	const string RandomizerGridName = "RandomizerGrid";
+	
 	Grid terrainGrid;
 	Tilemap terrainTilemap;
 
@@ -22,6 +23,9 @@ public class GridTracker : MonoBehaviour {
 
 	Grid numberGrid;
 	Tilemap numberTilemap;
+
+	Grid randomizerGrid;
+	Tilemap randomizerTilemap;
 
 	SwarmController swarmController;
 
@@ -44,6 +48,9 @@ public class GridTracker : MonoBehaviour {
 		numberGrid = GameObject.Find(NumberGridName).GetComponent<Grid>();
 		numberTilemap = numberGrid.GetComponentInChildren<Tilemap>();
 
+		randomizerGrid = GameObject.Find(RandomizerGridName).GetComponent<Grid>();
+		randomizerTilemap = randomizerGrid.GetComponentInChildren<Tilemap>();
+
 		swarmController = GameObject.Find(SwarmControllerName).GetComponent<SwarmController>();
 		swarmController.SetGridTracker(this);
 		//playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
@@ -52,9 +59,13 @@ public class GridTracker : MonoBehaviour {
 			throw new Exception("ERROR: Failed to find potSprite");
 	}
 
-	internal void LiftAllPots(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
+	public void LiftAllPots(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
 		//var potTiles = new List<Tile>();
 
+		/**
+		 * First make each number tile from previous round a little grayer (previousRoundColor).
+		 * This is to help the player read which tiles they just lifted pots up from.
+		 */
 		foreach (var location in numberTilemap.cellBounds.allPositionsWithin) {
 			var markerTile = (Tile)numberTilemap.GetTile(location);
 
@@ -62,12 +73,15 @@ public class GridTracker : MonoBehaviour {
 				SetNumberTileInOffsetCoordinates(location, markerTile.sprite, previousRoundColor);
 		}
 
+		/**
+		 * Next, take each tile that has a pot in it, find out how many crab that contains, and place
+		 * a tile that marks the number of crab the player lifted.
+		 * */
 		foreach (var location in markerTilemap.cellBounds.allPositionsWithin) {
 			
 			Tile potTile = (Tile) markerTilemap.GetTile(location);
 			
 			if (potTile != null && potTile.sprite != null && potTile.sprite.name == PlacedPotTileName) {
-				//potTiles.Add(potTile);
 				
 				int liftedCrab = swarmController.GetCrab(location);
 
@@ -78,13 +92,28 @@ public class GridTracker : MonoBehaviour {
 				SetNumberTileInOffsetCoordinates(location, liftedCrab, Color.white);
 			}
 		}
-		//return potTiles;
 	}
 
+	System.Random randomizer = new System.Random();
 
-	void Start() {
+	public Vector3Int GetRandomSwarmPlacementInCubic() {
+		var locations = new List<Vector3Int>();
+		foreach (var location in randomizerTilemap.cellBounds.allPositionsWithin) {
 
-		//PlaceUnderWaterTile(new Vector3Int(0, 0, 2), 3);
+			Tile tile = (Tile)randomizerTilemap.GetTile(location);
+
+			if (tile != null && tile.sprite != null) {
+				locations.Add(location);
+			}
+		}
+		int random = randomizer.Next(0, locations.Count);
+		return CubicCrabGrid.OffsetToCubic(locations[random]);
+	}
+	public bool SwarmPlacementIsWithinPlayArea(Vector3Int locationInCubic) {
+
+		var tile = (Tile)randomizerTilemap.GetTile(CubicCrabGrid.CubicToOffset(locationInCubic));
+
+		return tile != null && tile.sprite != null;
 	}
 
 	void ClearMarkerTile(Vector3Int location) {
