@@ -66,15 +66,24 @@ public class GameController : MonoBehaviour
 	public void IncreaseTripCost(int increase) {
 		tripCost += increase;
 		OnTripCostChanged();
-		ShowFutureTripCost(tripCost + increase);
+		ShowFutureTripCost(tripCost, tripCost + increase);
 	}
 
 	void OnTripCostChanged() {
 		tripCostText.text = string.Format("Trip will cost ${0}", tripCost);
 	}
 
-	void ShowFutureTripCost(int futureCost) {
-		futureTripCostText.text = string.Format("(After this round, trip will cost ${0})", futureCost);
+	void ShowFutureTripCost(int nextRoundCost, int futureCost) {
+		string message = string.Format("(After this round, trip will cost ${0})", futureCost);
+
+		int costs = nextRoundCost + futureCost;
+		if (playerController.GetMoney() < costs) {
+			message += string.Format("\nYou must make ${0} on this trip", costs - playerController.GetMoney());
+		}
+		futureTripCostText.text = message;
+	}
+	void ShowLastRoundPromptText() {
+		futureTripCostText.text = "(This is the last round)";
 	}
 
 	public int GetTripCost() {
@@ -90,6 +99,9 @@ public class GameController : MonoBehaviour
 
 		logText.text = "";
 		UpdateRoundsText(currentRound, numberOfRounds);
+
+		OnTripCostChanged();
+		ShowFutureTripCost(tripCost, tripCost + tripCostIncrease);
 	}
 
 	void RestartGame() {
@@ -106,13 +118,22 @@ public class GameController : MonoBehaviour
 
 	internal void OnRoundOver(int roundCrabHaul, int currentMoney) {
 		UpdateLogText(currentRound, roundCrabHaul);
-		if (currentRound == numberOfRounds || currentMoney < tripCost) {
+		if ( IsLastRound(currentRound) || currentMoney < tripCost) {
 			GameOver();
 		} else {
 			currentRound++;
 			UpdateRoundsText(currentRound, numberOfRounds);
-			this.IncreaseTripCost(tripCostIncrease);
+			
+			if (IsLastRound(currentRound)) {
+				ShowLastRoundPromptText();
+			} else {
+				IncreaseTripCost(tripCostIncrease);
+			}
 		}
+	}
+
+	bool IsLastRound(int currentRound) {
+		return currentRound == numberOfRounds;
 	}
 
 	public void UpdateMoneyText(int currentMoney) {
@@ -134,7 +155,7 @@ public class GameController : MonoBehaviour
 	}
 	
 	void UpdateLogText(int round, int roundCrabHaul) {
-		logText.text += string.Format("Round {0} hauled {1} crab, gained {2}$", round, roundCrabHaul, roundCrabHaul) + "\n";
+		logText.text += string.Format("Round {0} hauled {1} crab, gained ${2}", round, roundCrabHaul, roundCrabHaul) + "\n";
 	}
 
 	internal void OnPlayersPotsChanged() {

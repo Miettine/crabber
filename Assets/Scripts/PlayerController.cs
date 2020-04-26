@@ -42,6 +42,10 @@ public class PlayerController : MonoBehaviour
 		return GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
 	}
 
+	public int GetMoney() {
+		return money;
+	}
+
 	void Start()
 	{
 		OnMoneyChanged();
