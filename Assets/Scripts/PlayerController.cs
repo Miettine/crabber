@@ -11,40 +11,31 @@ public class PlayerController : MonoBehaviour
 	const string PlayerControllerGameObjectName = "PlayerController";
 	const string GoButtonName = "GoButton";
 	const string CrabCollectedTextGameObjectName = "CrabCollectedText";
-	const string TripCostTextGameObjectName = "TripCostText";
 
 	Button goButton;
 	GridTracker gridTracker;
 	Text potsLeftText;
 	Text crabCollectedText;
 	GameController gameController;
-	Text tripCostText;
 
 	public delegate void AddPotDelegate();
 	public delegate void ThrowPotDelegate();
 	public delegate void AddCrabDelegate(int crab);
 
 	[SerializeField]
-	private int startPots = 7;
+	private int pots = 6;
 
-	[SerializeField]
-	private int startMoney = 30;
-
-	[SerializeField]
-	private int tripCost = 15;
-
-	private int money;
-
-	int pots;
 	int crab = 0;
+
+	[SerializeField]
+	private int money = 30;
+
 	void Awake() {
-		pots = startPots;
 		gridTracker = GameObject.Find(GridTrackerGameObjectName).GetComponent<GridTracker>();
 		potsLeftText = GameObject.Find(PotsLeftTextGameObjectName).GetComponent<Text>();
 		gameController = GameController.GetGameController();
 		goButton = GameObject.Find(GoButtonName).GetComponent<Button>();
 		crabCollectedText = GameObject.Find(CrabCollectedTextGameObjectName).GetComponent<Text>();
-		tripCostText = GameObject.Find(TripCostTextGameObjectName).GetComponent<Text>();
 	}
 
 	public static PlayerController GetPlayerController() {
@@ -53,25 +44,10 @@ public class PlayerController : MonoBehaviour
 
 	void Start()
 	{
-		money = startMoney;
 		OnMoneyChanged();
-		OnTripCostChanged();
 		OnPotsChanged();
 		OnCrabChanged();
 		goButton.onClick.AddListener(() => OnGoClicked());
-	}
-
-	void SetTripCost(int tripCost) {
-		this.tripCost = tripCost;
-		OnTripCostChanged();
-	}
-
-	void OnTripCostChanged() {
-		tripCostText.text = string.Format("Trip will cost ${0}", tripCost);
-	}
-
-	public int GetTripCost() {
-		return tripCost;
 	}
 
 	void Update() {
@@ -134,7 +110,7 @@ public class PlayerController : MonoBehaviour
 		int crabBefore = crab;
 		gridTracker.LiftAllPots(AddPot, AddCrab);
 
-		money -= tripCost;
+		money -= gameController.GetTripCost();
 		OnMoneyChanged();
 
 		gameController.OnAllPotsLifted(crab - crabBefore, money);

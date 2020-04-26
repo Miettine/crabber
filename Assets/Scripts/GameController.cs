@@ -27,12 +27,25 @@ public class GameController : MonoBehaviour
 	[SerializeField]
 	private int numberOfRounds = 7;
 
+	[SerializeField]
+	private int tripCostIncrease = 10;
+
 	int currentRound = 1;
 
 	bool gameOver = false;
 
 	[SerializeField]
 	bool inDevelopment = true;
+
+	[SerializeField]
+	private int tripCost = 10;
+
+
+	const string TripCostTextGameObjectName = "TripCostText";
+	const string FutureTripCostTextGameObjectName = "FutureTripCostText";
+
+	Text tripCostText;
+	Text futureTripCostText;
 
 	public bool InDevelopment { get { return inDevelopment; } }
 
@@ -46,6 +59,26 @@ public class GameController : MonoBehaviour
 		swarmController = SwarmController.GetSwarmController();
 		quitButton = GameObject.Find(QuitButtonGameObjectName).GetComponent<Button>();
 		moneyText = GameObject.Find(MoneyTextGameObjectName).GetComponent<Text>();
+		tripCostText = GameObject.Find(TripCostTextGameObjectName).GetComponent<Text>();
+		futureTripCostText = GameObject.Find(FutureTripCostTextGameObjectName).GetComponent<Text>();
+	}
+	
+	public void IncreaseTripCost(int increase) {
+		tripCost += increase;
+		OnTripCostChanged();
+		ShowFutureTripCost(tripCost + increase);
+	}
+
+	void OnTripCostChanged() {
+		tripCostText.text = string.Format("Trip will cost ${0}", tripCost);
+	}
+
+	void ShowFutureTripCost(int futureCost) {
+		futureTripCostText.text = string.Format("(After this round, trip will cost ${0})", futureCost);
+	}
+
+	public int GetTripCost() {
+		return tripCost;
 	}
 
 	private void Start() {
@@ -58,8 +91,6 @@ public class GameController : MonoBehaviour
 		logText.text = "";
 		UpdateRoundsText(currentRound, numberOfRounds);
 	}
-
-
 
 	void RestartGame() {
 		Scene scene = SceneManager.GetActiveScene();
@@ -75,11 +106,12 @@ public class GameController : MonoBehaviour
 
 	internal void OnRoundOver(int roundCrabHaul, int currentMoney) {
 		UpdateLogText(currentRound, roundCrabHaul);
-		if (currentRound == numberOfRounds || currentMoney < playerController.GetTripCost()) {
+		if (currentRound == numberOfRounds || currentMoney < tripCost) {
 			GameOver();
 		} else {
 			currentRound++;
 			UpdateRoundsText(currentRound, numberOfRounds);
+			this.IncreaseTripCost(tripCostIncrease);
 		}
 	}
 
