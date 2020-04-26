@@ -5637,12 +5637,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc276cbc01371a34bb5886839942645f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XMinCoordinate: -5
-  XMaxCoordinate: 5
-  YMinCoordinate: -4
-  YMaxCoordinate: 4
-  numberOfSwarms: 3
-  populationConcentration: 090000000300000001000000
+  numberOfSwarms: 5
+  populationConcentration: 130000000300000001000000
 --- !u!4 &1148418178
 Transform:
   m_ObjectHideFlags: 0
@@ -5959,7 +5955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1e7a6917d7f9b4a944351526c1e964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPots: 99
+  startPots: 6
 --- !u!4 &1421239642
 Transform:
   m_ObjectHideFlags: 0
@@ -6316,7 +6312,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
