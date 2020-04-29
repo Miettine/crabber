@@ -163,6 +163,7 @@ public class GameController : MonoBehaviour
 
 	void GameOver() {
 		gameOver = true;
+		HideWarningLayout();
 		restartButton.gameObject.SetActive(true);
 		playerController.OnGameOver();
 		swarmController.RevealAllSwarms();
