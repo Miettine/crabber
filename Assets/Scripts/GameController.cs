@@ -147,6 +147,7 @@ public class GameController : MonoBehaviour
 			
 			if (IsLastRound(currentRound)) {
 				ShowLastRoundPromptText();
+				HideWarningLayout();
 			} else {
 				IncreaseTripCost(tripCostIncrease);
 			}
