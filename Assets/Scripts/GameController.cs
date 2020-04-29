@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
 	const string RestartButtonGameObjectName = "RestartButton";
 	const string QuitButtonGameObjectName = "QuitButton";
 	const string MoneyTextGameObjectName = "MoneyText";
+	const string WarningLayoutGameObjectName = "WarningLayout";
 
 	Text roundText;
 	Text logText;
@@ -23,6 +24,8 @@ public class GameController : MonoBehaviour
 	PlayerController playerController;
 	SwarmController swarmController;
 	Button quitButton;
+	GameObject warningLayout;
+	Text warningText;
 
 	[SerializeField]
 	private int numberOfRounds = 7;
@@ -61,36 +64,12 @@ public class GameController : MonoBehaviour
 		moneyText = GameObject.Find(MoneyTextGameObjectName).GetComponent<Text>();
 		tripCostText = GameObject.Find(TripCostTextGameObjectName).GetComponent<Text>();
 		futureTripCostText = GameObject.Find(FutureTripCostTextGameObjectName).GetComponent<Text>();
-	}
-	
-	public void IncreaseTripCost(int increase) {
-		tripCost += increase;
-		OnTripCostChanged();
-		ShowFutureTripCost(tripCost, tripCost + increase);
+
+		warningLayout = GameObject.Find(WarningLayoutGameObjectName);
+		warningText = warningLayout.GetComponentInChildren<Text>();
 	}
 
-	void OnTripCostChanged() {
-		tripCostText.text = string.Format("Trip will cost ${0}", tripCost);
-	}
-
-	void ShowFutureTripCost(int nextRoundCost, int futureCost) {
-		string message = string.Format("(After this round, trip will cost ${0})", futureCost);
-
-		int costs = nextRoundCost + futureCost;
-		if (playerController.GetMoney() < costs) {
-			message += string.Format("\nYou must make ${0} on this trip", costs - playerController.GetMoney());
-		}
-		futureTripCostText.text = message;
-	}
-	void ShowLastRoundPromptText() {
-		futureTripCostText.text = "(This is the last round)";
-	}
-
-	public int GetTripCost() {
-		return tripCost;
-	}
-
-	private void Start() {
+	void Start() {
 		restartButton.onClick.AddListener(() => RestartGame());
 		restartButton.gameObject.SetActive(false);
 
@@ -102,6 +81,48 @@ public class GameController : MonoBehaviour
 
 		OnTripCostChanged();
 		ShowFutureTripCost(tripCost, tripCost + tripCostIncrease);
+		HideWarningLayout();
+	}
+
+	public void IncreaseTripCost(int increase) {
+		tripCost += increase;
+		OnTripCostChanged();
+		ShowFutureTripCost(tripCost, tripCost + increase);
+	}
+
+	void OnTripCostChanged() {
+		tripCostText.text = string.Format("This day's trip will cost ${0}", tripCost);
+	}
+
+	void ShowFutureTripCost(int nextRoundCost, int futureCost) {
+		string message = string.Format("(On the next day, trip will cost ${0})", futureCost);
+
+		int costs = nextRoundCost + futureCost;
+		if (playerController.GetMoney() < costs) {
+			ShowWarningLayout(costs - playerController.GetMoney());
+		} else {
+			HideWarningLayout();
+		}
+
+		futureTripCostText.text = message;
+	}
+
+	void ShowWarningLayout(int needToMakeAmountOnThisTrip) {
+		warningLayout.SetActive(true);
+		warningText.text = string.Format("You must make ${0} on this day or else you lose!", needToMakeAmountOnThisTrip);
+	}
+
+	void HideWarningLayout() {
+		warningLayout.SetActive(false);
+	}
+
+
+	void ShowLastRoundPromptText() {
+		futureTripCostText.text = "(This is the last day)";
+	}
+
+	public int GetTripCost() {
+		return tripCost;
 	}
 
 	void RestartGame() {
@@ -151,11 +172,11 @@ public class GameController : MonoBehaviour
 	}
 
 	void UpdateRoundsText(int currentRound, int numberOfRounds) {
-		roundText.text = string.Format("Round: {0}/{1}", currentRound, numberOfRounds);
+		roundText.text = string.Format("Day: {0}/{1}", currentRound, numberOfRounds);
 	}
 	
 	void UpdateLogText(int round, int roundCrabHaul) {
-		logText.text += string.Format("Round {0} hauled {1} crab, gained ${2}", round, roundCrabHaul, roundCrabHaul) + "\n";
+		logText.text += string.Format("Day {0} hauled {1} crab, gained ${2}", round, roundCrabHaul, roundCrabHaul) + "\n";
 	}
 
 	internal void OnPlayersPotsChanged() {
