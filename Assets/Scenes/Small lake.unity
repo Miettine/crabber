@@ -3870,10 +3870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9daa796c307e34bb4d4043e145c729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfRounds: 7
-  tripCostIncrease: 5
+  numberOfRounds: 8
+  tripCostIncrease: 4
   inDevelopment: 0
-  tripCost: 5
+  tripCost: 4
 --- !u!4 &604619374
 Transform:
   m_ObjectHideFlags: 0
@@ -4384,7 +4384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc276cbc01371a34bb5886839942645f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfSwarms: 5
+  numberOfSwarms: 6
   populationConcentration: 130000000300000001000000
 --- !u!4 &1148418178
 Transform:
@@ -4893,7 +4893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pots: 6
-  money: 30
+  money: 24
 --- !u!4 &1421239642
 Transform:
   m_ObjectHideFlags: 0

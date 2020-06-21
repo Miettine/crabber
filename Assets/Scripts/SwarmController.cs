@@ -89,7 +89,7 @@ public class SwarmController : MonoBehaviour {
 
 			crabGrid.AddSwarm(newSwarmPlace, populationConcentration);
 
-			Debug.Log("Placed swarm at cubic " + newSwarmPlace);
+			//Debug.Log("Placed swarm at cubic " + newSwarmPlace);
 		}
 		return crabGrid;
 	}
