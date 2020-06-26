@@ -8,6 +8,7 @@ public class SwarmController : MonoBehaviour {
 	const string SwarmControllerGameObjectName = "SwarmController";
 	GridTracker gridTracker;
 
+	CubicCrabGrid originalCrabPopulation;
 	CubicCrabGrid crabPopulation;
 
 	[SerializeField]
@@ -22,9 +23,10 @@ public class SwarmController : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		crabPopulation = GetSwarms(populationConcentration, numberOfSwarms);
+		CubicCrabGrid startPopulation = GetSwarms(populationConcentration, numberOfSwarms);
+		originalCrabPopulation = startPopulation;
+		crabPopulation = startPopulation;
 		//GetDebugSwarms();
-		
 	}
 
 	public static SwarmController GetSwarmController() {
@@ -95,7 +97,7 @@ public class SwarmController : MonoBehaviour {
 	}
 
 	public void RevealAllSwarms() {
-		foreach (KeyValuePair<Vector3Int, int> swarm in crabPopulation) {
+		foreach (KeyValuePair<Vector3Int, int> swarm in originalCrabPopulation) {
 			gridTracker.SetNumberTileInCubic(swarm.Key, swarm.Value);
 		}
 	}
