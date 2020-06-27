@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
 	const string RestartButtonGameObjectName = "RestartButton";
 	const string QuitButtonGameObjectName = "QuitButton";
 	const string MoneyTextGameObjectName = "MoneyText";
-	const string WarningLayoutGameObjectName = "WarningLayout";
+	const string WarningTextGameObjectName = "WarningText";
 
 	Text roundText;
 	Text logText;
@@ -64,9 +64,7 @@ public class GameController : MonoBehaviour
 		moneyText = GameObject.Find(MoneyTextGameObjectName).GetComponent<Text>();
 		tripCostText = GameObject.Find(TripCostTextGameObjectName).GetComponent<Text>();
 		futureTripCostText = GameObject.Find(FutureTripCostTextGameObjectName).GetComponent<Text>();
-
-		warningLayout = GameObject.Find(WarningLayoutGameObjectName);
-		warningText = warningLayout.GetComponentInChildren<Text>();
+		warningText = GameObject.Find(WarningTextGameObjectName).GetComponent<Text>();
 	}
 
 	void Start() {
@@ -91,7 +89,7 @@ public class GameController : MonoBehaviour
 	}
 
 	void OnTripCostChanged() {
-		tripCostText.text = string.Format("This day's trip will cost ${0}", tripCost);
+		tripCostText.text = string.Format("This day's trip costs ${0}", tripCost);
 	}
 
 	void ShowFutureTripCost(int nextRoundCost, int futureCost) {
@@ -109,7 +107,7 @@ public class GameController : MonoBehaviour
 
 	void ShowWarningLayout(int needToMakeAmountOnThisTrip) {
 		warningLayout.SetActive(true);
-		warningText.text = string.Format("You must make ${0} on this day or else you lose!", needToMakeAmountOnThisTrip);
+		warningText.text = string.Format("You must make ${0} on this day or you lose!", needToMakeAmountOnThisTrip);
 	}
 
 	void HideWarningLayout() {

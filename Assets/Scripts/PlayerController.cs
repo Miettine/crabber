@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	internal void OnGameOver() {
-		goButton.interactable = false;
+		goButton.gameObject.SetActive(false);
 	}
 
 	internal void ThrowPot() {
