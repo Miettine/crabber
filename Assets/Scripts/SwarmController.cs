@@ -8,8 +8,17 @@ public class SwarmController : MonoBehaviour {
 	const string SwarmControllerGameObjectName = "SwarmController";
 	GridTracker gridTracker;
 
-	CubicCrabGrid originalCrabPopulation;
+	/// <summary>
+	/// The current layout of the crab population. The amount of crab changes during the game. 
+	/// Athe player fishes crab, the crab are substracted from this CubicCrabGrid
+	/// </summary>
 	CubicCrabGrid crabPopulation;
+
+	/// <summary>
+	/// This crab population is made at the start and never modified. This is used at the end of the game 
+	/// when revealing to the player the original layout of the crab swarms.
+	/// </summary>
+	CubicCrabGrid originalCrabPopulation;
 
 	[SerializeField]
 	int numberOfSwarms = 3;
@@ -24,9 +33,10 @@ public class SwarmController : MonoBehaviour {
 	// Start is called before the first frame update
 	void Start() {
 		CubicCrabGrid startPopulation = GetSwarms(populationConcentration, numberOfSwarms);
-		originalCrabPopulation = startPopulation;
-		crabPopulation = startPopulation;
-		//GetDebugSwarms();
+		crabPopulation = startPopulation;	
+		
+		//A copy is made of the start population.
+		originalCrabPopulation = new CubicCrabGrid(startPopulation);
 	}
 
 	public static SwarmController GetSwarmController() {

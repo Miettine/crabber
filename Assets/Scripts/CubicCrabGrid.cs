@@ -12,6 +12,20 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 		}
 	}
 
+	public CubicCrabGrid() : base() {
+		
+	}
+
+	/// <summary>
+	/// Makes the new instance of CubicGrabGrid a copy of another supplied grid
+	/// </summary>
+	/// <param name="gridToCopy">This grid is copied</param>
+	public CubicCrabGrid (CubicCrabGrid gridToCopy) {
+		foreach (Vector3Int key in gridToCopy.Keys) {
+			Add(key, gridToCopy[key]);
+		}
+	}
+
 	public void AddCrab(int amount, params Vector3Int[] locations){
 		foreach (Vector3Int location in locations){
 			AddCrab(amount, location);
