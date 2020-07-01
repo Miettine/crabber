@@ -70,7 +70,7 @@ public class GameController : MonoBehaviour
 		restartButton.onClick.AddListener(() => RestartGame());
 		restartButton.gameObject.SetActive(false);
 
-		quitButton.onClick.AddListener(() => GameOver());
+		quitButton.onClick.AddListener(() => GameOver(false));
 		quitButton.gameObject.SetActive(InDevelopment);
 
 		logText.text = "";
