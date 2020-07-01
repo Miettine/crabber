@@ -175,8 +175,6 @@ public class GameController : MonoBehaviour
 			ShowLostNotification();
 		}
 		restartButton.gameObject.SetActive(true);
-		tripCostText.gameObject.SetActive(false);
-		futureTripCostText.gameObject.SetActive(false);
 		playerController.OnGameOver();
 		swarmController.RevealAllSwarms();
 	}
@@ -186,7 +184,7 @@ public class GameController : MonoBehaviour
 	}
 
 	void ShowLostNotification() {
-		ShowNotificationText("You cannot pay the trip costs. You have lost!", Color.red);
+		ShowNotificationText("You could not pay the trip costs. You have lost!", Color.red);
 	}
 
 	public bool GameIsOver() {
