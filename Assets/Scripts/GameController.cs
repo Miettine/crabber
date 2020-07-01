@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
 	const string RestartButtonGameObjectName = "RestartButton";
 	const string QuitButtonGameObjectName = "QuitButton";
 	const string MoneyTextGameObjectName = "MoneyText";
-	const string WarningTextGameObjectName = "WarningText";
+	const string NotificationTextGameObjectName = "NotificationText";
 
 	Text roundText;
 	Text logText;
@@ -24,8 +24,7 @@ public class GameController : MonoBehaviour
 	PlayerController playerController;
 	SwarmController swarmController;
 	Button quitButton;
-	GameObject warningLayout;
-	Text warningText;
+	Text notificationText;
 
 	[SerializeField]
 	private int numberOfRounds = 7;
@@ -64,7 +63,7 @@ public class GameController : MonoBehaviour
 		moneyText = GameObject.Find(MoneyTextGameObjectName).GetComponent<Text>();
 		tripCostText = GameObject.Find(TripCostTextGameObjectName).GetComponent<Text>();
 		futureTripCostText = GameObject.Find(FutureTripCostTextGameObjectName).GetComponent<Text>();
-		warningText = GameObject.Find(WarningTextGameObjectName).GetComponent<Text>();
+		notificationText = GameObject.Find(NotificationTextGameObjectName).GetComponent<Text>();
 	}
 
 	void Start() {
@@ -79,7 +78,7 @@ public class GameController : MonoBehaviour
 
 		OnTripCostChanged();
 		ShowFutureTripCost(tripCost, tripCost + tripCostIncrease);
-		HideWarningLayout();
+		HideNotificationText();
 	}
 
 	public void IncreaseTripCost(int increase) {
@@ -99,19 +98,24 @@ public class GameController : MonoBehaviour
 		if (playerController.GetMoney() < costs) {
 			ShowWarningLayout(costs - playerController.GetMoney());
 		} else {
-			HideWarningLayout();
+			HideNotificationText();
 		}
 
 		futureTripCostText.text = message;
 	}
 
 	void ShowWarningLayout(int needToMakeAmountOnThisTrip) {
-		warningLayout.SetActive(true);
-		warningText.text = string.Format("You must make ${0} on this day or you lose!", needToMakeAmountOnThisTrip);
+		ShowNotificationText(string.Format("You must make ${0} on this day or you lose!", needToMakeAmountOnThisTrip), Color.yellow);
 	}
 
-	void HideWarningLayout() {
-		warningLayout.SetActive(false);
+	void ShowNotificationText(String text, Color color) {
+		notificationText.gameObject.SetActive(true);
+		notificationText.color = color;
+		notificationText.text = text;
+	}
+
+	void HideNotificationText() {
+		notificationText.gameObject.SetActive(false);
 	}
 
 
@@ -137,15 +141,17 @@ public class GameController : MonoBehaviour
 
 	internal void OnRoundOver(int roundCrabHaul, int currentMoney) {
 		UpdateLogText(currentRound, roundCrabHaul);
-		if ( IsLastRound(currentRound) || currentMoney < tripCost) {
-			GameOver();
+		if (currentMoney < tripCost) {
+			GameOver(false);
+		} else if (IsLastRound(currentRound)) {
+			GameOver(true);
 		} else {
 			currentRound++;
 			UpdateRoundsText(currentRound, numberOfRounds);
 			
 			if (IsLastRound(currentRound)) {
 				ShowLastRoundPromptText();
-				HideWarningLayout();
+				HideNotificationText();
 			} else {
 				IncreaseTripCost(tripCostIncrease);
 			}
@@ -160,13 +166,29 @@ public class GameController : MonoBehaviour
 		moneyText.text = string.Format("Money: ${0}", currentMoney);
 	}
 
-	void GameOver() {
+	void GameOver(bool wonTheGame) {
 		gameOver = true;
-		HideWarningLayout();
+		HideNotificationText();
+		if (wonTheGame) {
+			ShowVictoryNotification();
+		} else {
+			ShowLostNotification();
+		}
 		restartButton.gameObject.SetActive(true);
+		tripCostText.gameObject.SetActive(false);
+		futureTripCostText.gameObject.SetActive(false);
 		playerController.OnGameOver();
 		swarmController.RevealAllSwarms();
 	}
+
+	void ShowVictoryNotification() {
+		ShowNotificationText("You've won the game!", Color.green);
+	}
+
+	void ShowLostNotification() {
+		ShowNotificationText("You cannot pay the trip costs. You have lost!", Color.red);
+	}
+
 	public bool GameIsOver() {
 		return gameOver;
 	}
@@ -180,6 +202,6 @@ public class GameController : MonoBehaviour
 	}
 
 	internal void OnPlayersPotsChanged() {
-		
+		//Apparently nothing happens
 	}
 }
