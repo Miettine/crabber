@@ -96,8 +96,12 @@ public class GameController : MonoBehaviour
 
 		int costs = nextRoundCost + futureCost;
 		if (playerController.GetMoney() < costs) {
+			tripCostText.color = Color.yellow;
+			futureTripCostText.color = Color.yellow;
 			ShowWarningLayout(costs - playerController.GetMoney());
 		} else {
+			tripCostText.color = Color.white;
+			futureTripCostText.color = Color.white;
 			HideNotificationText();
 		}
 
@@ -120,6 +124,7 @@ public class GameController : MonoBehaviour
 
 
 	void ShowLastRoundPromptText() {
+		futureTripCostText.color = Color.white;
 		futureTripCostText.text = "(This is the last day)";
 	}
 
@@ -141,10 +146,10 @@ public class GameController : MonoBehaviour
 
 	internal void OnRoundOver(int roundCrabHaul, int currentMoney) {
 		UpdateLogText(currentRound, roundCrabHaul);
-		if (currentMoney < tripCost) {
-			GameOver(false);
-		} else if (IsLastRound(currentRound)) {
+		if (IsLastRound(currentRound)) {
 			GameOver(true);
+		} else if (currentMoney < tripCost) {
+			GameOver(false);
 		} else {
 			currentRound++;
 			UpdateRoundsText(currentRound, numberOfRounds);
@@ -184,7 +189,8 @@ public class GameController : MonoBehaviour
 	}
 
 	void ShowLostNotification() {
-		ShowNotificationText("You could not pay the trip costs. You have lost!", Color.red);
+		tripCostText.color = Color.red;
+		ShowNotificationText("You cannot pay the trip cost. You have lost!", Color.red);
 	}
 
 	public bool GameIsOver() {
