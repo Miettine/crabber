@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SwarmController : MonoBehaviour {
@@ -60,27 +58,7 @@ public class SwarmController : MonoBehaviour {
 		return 0;
 	}
 
-	CubicCrabGrid GetDebugSwarms() {
-		var crabGrid = new CubicCrabGrid();
-		/*
-		crabGrid.AddCrab(new Vector3Int(0, 1, -1), 1);
-	
-		crabGrid.AddCrab(new Vector3Int(1, 0, -1), 2);
-		crabGrid.AddCrab(new Vector3Int(1, -1, 0), 3);			
-
-		crabGrid.AddCrab(new Vector3Int(0, -1, 1), 4);
-		crabGrid.AddCrab(new Vector3Int(-1, 0, 1), 5);			
-		crabGrid.AddCrab(new Vector3Int(-1, 1, 0), 6);
-
-		crabGrid.AddCrab(new Vector3Int(-2, 0, 2), 1);
-		crabGrid.AddCrab(new Vector3Int(-1, -1, 2), 2);
-		crabGrid.AddCrab(new Vector3Int(0, -2, 2), 3);*/
-		crabGrid.AddSwarm(new Vector3Int(0,0,0), populationConcentration);
-		crabGrid.AddSwarm(new Vector3Int(3,3,-6), populationConcentration);
-		return crabGrid;
-	}
-
-	CubicCrabGrid GetSwarms(int[] populationConcentration, int number) {
+	CubicCrabGrid GetSwarms(int[] populationConcentration, int number, int emptySpaceAroundCenters) {
 		var crabGrid = new CubicCrabGrid();
 
 		for (int i = 1; i <= number; i++) {
@@ -91,7 +69,7 @@ public class SwarmController : MonoBehaviour {
 
 			while (notAllowedPlacement) {
 				
-				if (!crabGrid.IsAcceptableSwarmPlace(newSwarmPlace) || !gridTracker.SwarmPlacementIsWithinPlayArea(newSwarmPlace)) {
+				if (!crabGrid.IsAcceptableSwarmPlace(newSwarmPlace, emptySpaceAroundCenters) || !gridTracker.SwarmPlacementIsWithinPlayArea(newSwarmPlace)) {
 					newSwarmPlace = gridTracker.GetRandomSwarmPlacementInCubic();
 					continue;
 				} else {
@@ -100,8 +78,6 @@ public class SwarmController : MonoBehaviour {
 			}
 
 			crabGrid.AddSwarm(newSwarmPlace, populationConcentration);
-
-			//Debug.Log("Placed swarm at cubic " + newSwarmPlace);
 		}
 		return crabGrid;
 	}
