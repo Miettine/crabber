@@ -15,15 +15,28 @@ public class GridTracker : MonoBehaviour {
 	const string SwarmControllerName = "SwarmController";
 	const string RandomizerGridName = "RandomizerGrid";
 	
+	/// <summary>
+	/// Shows the environment graphically, such as the water-areas.
+	/// </summary>
 	Grid terrainGrid;
 	Tilemap terrainTilemap;
 
+	/// <summary>
+	/// Shows the pot sprites.
+	/// </summary>
 	Grid markerGrid;
 	Tilemap markerTilemap;
 
+	/// <summary>
+	/// Shows the number icons how many crab the player lifted from each water-area
+	/// </summary>
 	Grid numberGrid;
 	Tilemap numberTilemap;
 
+	/// <summary>
+	/// This grid is used to paint the locations where the crab swarms can be placed. 
+	/// This is used to avoid placing any crab outside the play-area.
+	/// </summary>
 	Grid randomizerGrid;
 	Tilemap randomizerTilemap;
 

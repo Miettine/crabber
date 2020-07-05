@@ -24,7 +24,7 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 		}
 	}
 
-	public void AddCrab(int amount, params Vector3Int[] locations){
+	private void AddCrab(int amount, params Vector3Int[] locations){
 		foreach (Vector3Int location in locations){
 			AddCrab(amount, location);
 		}
