@@ -3872,7 +3872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfRounds: 8
   tripCostIncrease: 3
-  inDevelopment: 1
+  inDevelopment: 0
   tripCost: 3
 --- !u!4 &604619374
 Transform:
@@ -4435,6 +4435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f68946f80ce49b4d8d369022fd52265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterTileName: HexTilesetv3_5
   potSprite: {fileID: 21300000, guid: 3267621a1b6ee334dbe170d7fda9eb49, type: 3}
   numberSprites:
   - {fileID: -692137379706087870, guid: 4844fc9be49015c46997957524b7354d, type: 3}
