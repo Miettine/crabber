@@ -3871,9 +3871,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfRounds: 8
-  tripCostIncrease: 4
-  inDevelopment: 0
-  tripCost: 4
+  tripCostIncrease: 3
+  inDevelopment: 1
+  tripCost: 3
 --- !u!4 &604619374
 Transform:
   m_ObjectHideFlags: 0
@@ -4221,7 +4221,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.9299927, y: -5.200012}
+  m_AnchoredPosition: {x: -4, y: -5}
   m_SizeDelta: {x: 285.27, y: 163.79}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &789068515
@@ -4388,8 +4388,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc276cbc01371a34bb5886839942645f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfSwarms: 6
-  populationConcentration: 120000000300000001000000
+  numberOfSwarms: 7
+  emptySpaceBetweenCenters: 3
+  populationConcentration: 0c0000000200000001000000
 --- !u!4 &1148418178
 Transform:
   m_ObjectHideFlags: 0
@@ -4874,7 +4875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pots: 6
-  money: 24
+  money: 18
 --- !u!4 &1421239642
 Transform:
   m_ObjectHideFlags: 0
@@ -7536,7 +7537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -213, y: -168.98996}
+  m_AnchoredPosition: {x: -213, y: -169}
   m_SizeDelta: {x: 209.07, y: 32.18}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2098727031

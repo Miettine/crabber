@@ -28,7 +28,6 @@ public class GridTracker : MonoBehaviour {
 
 	SwarmController swarmController;
 
-	//TODO: Get sprite with code
 	[SerializeField]
 	private Sprite potSprite;
 
@@ -59,7 +58,6 @@ public class GridTracker : MonoBehaviour {
 	}
 
 	public void LiftAllPots(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
-		//var potTiles = new List<Tile>();
 
 		/**
 		 * First make each number tile from previous round a little grayer (previousRoundColor).

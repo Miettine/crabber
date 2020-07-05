@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
 	public delegate void ThrowPotDelegate();
 	public delegate void AddCrabDelegate(int crab);
 
+	/// <summary>
+	/// Represents the number of pots that the player is capable of carrying on their boat. Pot is what a crab fishing trap is called.
+	/// </summary>
 	[SerializeField]
 	private int pots = 6;
 
@@ -110,7 +113,6 @@ public class PlayerController : MonoBehaviour
 	}
 
 	public void OnGoClicked() {
-		Debug.Log("Going! :D");
 		int crabBefore = crab;
 		gridTracker.LiftAllPots(AddPot, AddCrab);
 

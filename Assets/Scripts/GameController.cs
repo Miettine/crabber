@@ -147,6 +147,9 @@ public class GameController : MonoBehaviour
 		if (IsLastRound(currentRound)) {
 			GameOver(true);
 		} else if (currentMoney < tripCost) {
+			currentRound++;
+			UpdateRoundsText(currentRound, numberOfRounds);
+			IncreaseTripCost(tripCostIncrease);
 			GameOver(false);
 		} else {
 			currentRound++;

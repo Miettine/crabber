@@ -40,6 +40,10 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 		if (ContainsCrab(GetRing(center, 1))) {
 			return false;
 		}
+		
+		if (emptyDistanceAround == 1) {
+			return true;
+		}
 
 		//Find out if the ring at radius 2 contains crab
 		if (ContainsCrab(GetRing(center, 2))) {
@@ -115,7 +119,7 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	* There exist algorithms that allow me to draw a ring of hexagons 
 	* around a certain center point of a given radius. Developing the 
 	* algorithms would take time and I want to get this project over 
-	* with, so I am making the rings hand.
+	* with, so I am making the rings by hand.
 	*/
 	private static Vector3Int[] GetRing(Vector3Int center, int radius) {
 		if (radius == 1) {
@@ -151,6 +155,6 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 
 			return new Vector3Int[] { p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18 };
 		}
-		throw new System.InvalidOperationException("Not supported");
+		throw new System.NotSupportedException("Not supported with radius " + radius);
 	}
 }

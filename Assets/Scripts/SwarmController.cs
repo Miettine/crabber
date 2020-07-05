@@ -22,15 +22,27 @@ public class SwarmController : MonoBehaviour {
 	int numberOfSwarms = 3;
 
 	/// <summary>
+	/// Setting this to a small number has the possibility that the swarms could overlap.
+	/// </summary>
+	[SerializeField]
+	int emptySpaceBetweenCenters = 3;
+
+	/// <summary>
 	/// Describes the concentration of crab in each crab swarm. The first number is the crab in the center of the population, 
 	/// the second number is the ring around the center, and the third number is the number on the outer ring.
 	/// </summary>
 	[SerializeField]
 	int[] populationConcentration = { 6, 2, 1 };
 
+	/// <summary>
+	/// The maximum number of attempts that a random placement for each swarm is attempted at the start of the game.
+	/// </summary>
+	[SerializeField]
+	int maximumAttempts = 100;
+
 	// Start is called before the first frame update
 	void Start() {
-		CubicCrabGrid startPopulation = GetSwarms(populationConcentration, numberOfSwarms);
+		CubicCrabGrid startPopulation = GetSwarms(populationConcentration, numberOfSwarms, emptySpaceBetweenCenters);
 		crabPopulation = startPopulation;	
 		
 		//A copy is made of the start population.
@@ -65,15 +77,23 @@ public class SwarmController : MonoBehaviour {
 
 			Vector3Int newSwarmPlace = gridTracker.GetRandomSwarmPlacementInCubic();
 
-			bool notAllowedPlacement = true;
+			bool acceptablePlacement = false;
+			int attemptNumber = 0;
 
-			while (notAllowedPlacement) {
-				
+			while (!acceptablePlacement) {
+				attemptNumber++;
 				if (!crabGrid.IsAcceptableSwarmPlace(newSwarmPlace, emptySpaceAroundCenters) || !gridTracker.SwarmPlacementIsWithinPlayArea(newSwarmPlace)) {
 					newSwarmPlace = gridTracker.GetRandomSwarmPlacementInCubic();
+
+					if (attemptNumber >= maximumAttempts) {
+						Debug.Log(string.Format("Attempted {0} times and couldn't find placement for swarm number {1}", attemptNumber, i));
+
+						acceptablePlacement = true;
+					}
+					
 					continue;
 				} else {
-					notAllowedPlacement = false;
+					acceptablePlacement = true;
 				}
 			}
 
