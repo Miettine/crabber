@@ -154,6 +154,10 @@ public class GridTracker : MonoBehaviour {
 		bool allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
 		Vector3Int location = markerCoordinate;
 
+		/**
+		 * Not all of the information gathered above is actually necessary if playerHasPotsLeft equals 'false'. 
+		 * This function could be "optimized", but what's the point? The execution is lighning-fast anyway.
+		 * */
 		if (allowedToPlace && playerHasPotsLeft) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();
 			tile.sprite = potSprite;
