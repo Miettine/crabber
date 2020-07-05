@@ -176,6 +176,7 @@ public class GameController : MonoBehaviour
 		gameOver = true;
 		HideNotificationText();
 		if (wonTheGame) {
+			HideTripCostTexts();
 			ShowVictoryNotification();
 		} else {
 			ShowLostNotification();
@@ -183,6 +184,11 @@ public class GameController : MonoBehaviour
 		restartButton.gameObject.SetActive(true);
 		playerController.OnGameOver();
 		swarmController.RevealAllSwarms();
+	}
+
+	void HideTripCostTexts() {
+		tripCostText.gameObject.SetActive(false);
+		futureTripCostText.gameObject.SetActive(false);
 	}
 
 	void ShowVictoryNotification() {

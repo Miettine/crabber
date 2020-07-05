@@ -6,8 +6,9 @@ using static PlayerController;
 
 public class GridTracker : MonoBehaviour {
 
-	const string WaterTileName = "HexTilesetv3_5";
-	const string PlacedPotTileName = "HexTilesetv3_41";
+	[SerializeField]
+	string waterTileName = "HexTilesetv3_5";
+
 	const string TerrainGridName = "TerrainGrid";
 	const string MarkerGridName = "MarkerGrid";
 	const string NumberGridName = "NumberGrid";
@@ -78,7 +79,7 @@ public class GridTracker : MonoBehaviour {
 			
 			Tile potTile = (Tile) markerTilemap.GetTile(location);
 			
-			if (potTile != null && potTile.sprite != null && potTile.sprite.name == PlacedPotTileName) {
+			if (potTile != null && potTile.sprite != null && potTile.sprite.name == potSprite.name) {
 				
 				int liftedCrab = swarmController.GetCrab(location);
 
@@ -142,12 +143,12 @@ public class GridTracker : MonoBehaviour {
 		Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
 		var terrainTile = (Tile) terrainTilemap.GetTile(terrainCoordinate);
 
-		bool terrainIsWaterTile = TileHasSpriteWithName(terrainTile, WaterTileName);
+		bool terrainIsWaterTile = TileHasSpriteWithName(terrainTile, waterTileName);
 
 		Vector3Int markerCoordinate = markerGrid.WorldToCell(worldPos);
 		var markerTile = (Tile) markerTilemap.GetTile(markerCoordinate);
 
-		bool markerGridHasPlacedPotTile = TileHasSpriteWithName(markerTile, PlacedPotTileName);
+		bool markerGridHasPlacedPotTile = TileHasSpriteWithName(markerTile, potSprite.name);
 
 		bool allowedToPlace = terrainIsWaterTile && !markerGridHasPlacedPotTile;
 		bool allowedToRemove = terrainIsWaterTile && markerGridHasPlacedPotTile;
