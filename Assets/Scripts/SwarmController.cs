@@ -114,7 +114,7 @@ public class SwarmController : Singleton<SwarmController> {
 		}
 
 		/**
-		 * First I make the tiles with the number zero white.
+		 * First I go through all tiles that have the number zero in them and make them white.
 		 * The orginal crab population doesn't know where the player tried to fish from but didn't get any crab.
 		 * */
 		gridTracker.SetZeroTilesWhite();

@@ -21,10 +21,7 @@ public class PlayerController : Singleton<PlayerController>
 	[SerializeField]
 	private int money = 30;
 
-	public int Pots { get => pots; private set { 
-			pots = value;
-			Ui.OnPotsChanged();
-		}
+	public int Pots { get => pots; private set => pots = value;
 	}
 
 	void Awake() {
@@ -58,11 +55,14 @@ public class PlayerController : Singleton<PlayerController>
 
 	internal void AddPot() {
 		Pots++;
+		Ui.OnPotsChanged();
 	}
 
 	internal void ThrowPot() {
-		if (Pots > 0) 
+		if (Pots > 0) {
 			Pots--;
+			Ui.OnPotsChanged();
+		}
 	}
 
 	void AddCrab(int crab) {
