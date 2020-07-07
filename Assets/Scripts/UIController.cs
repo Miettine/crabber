@@ -84,7 +84,7 @@ public class UIController : Singleton<UIController> {
 	internal void OnRoundOver(int roundCrabHaul) {
 		int currentRound = gameController.CurrentRound;
 		UpdateRoundsText(currentRound, gameController.NumberOfRounds);
-		UpdateLogText(currentRound, roundCrabHaul);
+		UpdateLogText(currentRound-1, roundCrabHaul);
 
 		if (!gameController.IsGameOver() && gameController.IsLastRound()) {
 			ShowLastRoundPromptText();
@@ -102,7 +102,6 @@ public class UIController : Singleton<UIController> {
 			ShowLostNotification();
 		}
 		restartButton.gameObject.SetActive(true);
-		swarmController.RevealAllSwarms();
 	}
 
 	void Start() {

@@ -98,10 +98,39 @@ public class SwarmController : Singleton<SwarmController> {
 		return crabGrid;
 	}
 
-	public void RevealAllSwarms() {
-		foreach (KeyValuePair<Vector3Int, int> swarm in originalCrabPopulation) {
-			gridTracker.SetNumberTileInCubic(swarm.Key, swarm.Value);
+	/// <summary>
+	/// Reveals all swarms at the end of the game. The tiles that the player fished from during the game will be
+	/// shown white. The tiles that they didn't fish from will be gray.
+	/// </summary>
+	/// <param name="gameController">I accidentally called this function from UIController. 
+	/// To be more prudent I am making this function so that it can be called only from GameController</param>
+	public void RevealAllSwarms(GameController gameController) {
+		if (gameController == null) {
+			throw new System.UnauthorizedAccessException("Only GameController can call this function");
 		}
+
+		if (!gameController.IsGameOver()) {
+			throw new System.UnauthorizedAccessException("Game hasn't ended yet");
+		}
+
+		/**
+		 * First I make the tiles with the number zero white.
+		 * The orginal crab population doesn't know where the player tried to fish from but didn't get any crab.
+		 * */
+		gridTracker.SetZeroTilesWhite();
+
+		foreach (KeyValuePair<Vector3Int, int> swarm in originalCrabPopulation) {
+
+			if (gridTracker.HasNumberTile(swarm.Key)) {
+				//If this is a tile where the player has fished from during this game, we make the tile white to highlight it.
+				gridTracker.SetNumberTileInCubic(swarm.Key, swarm.Value, Color.white);
+			} else {
+				//If the player didn't fish from this file during this game, the tile will be gray.
+				gridTracker.SetNumberTileInCubic(swarm.Key, swarm.Value);
+			}
+		}
+
+
 	}
 
 	internal void SetGridTracker(GridTracker gridTracker) {

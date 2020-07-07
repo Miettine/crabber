@@ -3644,6 +3644,9 @@ MonoBehaviour:
   NotificationTextGameObjectName: NotificationText
   TripCostTextGameObjectName: TripCostText
   FutureTripCostTextGameObjectName: FutureTripCostText
+  PotsLeftTextGameObjectName: PotsLeftText
+  GoButtonName: GoButton
+  CrabCollectedTextGameObjectName: CrabCollectedText
 --- !u!4 &445095756
 Transform:
   m_ObjectHideFlags: 0
@@ -3694,7 +3697,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.33812356, g: 0.447, b: 0.25032, a: 0}
+  m_BackGroundColor: {r: 0.32242438, g: 0.38679248, b: 0.27184942, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

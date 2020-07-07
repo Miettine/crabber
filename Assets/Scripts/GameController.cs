@@ -27,7 +27,9 @@ public class GameController : Singleton<GameController>
 	public bool WonTheGame { get; private set; } = false;
 	public int CurrentRound { get; set; } = 1;
 
+	SwarmController swarmController;
 	void Awake() {
+		swarmController = SwarmController.GetInstance();
 		Ui = UIController.GetInstance();
 	}
 
@@ -79,6 +81,7 @@ public class GameController : Singleton<GameController>
 	public void GameOver(bool wonTheGame) {
 		gameOver = true;
 		WonTheGame = wonTheGame;
+		swarmController.RevealAllSwarms(this);
 		Ui.OnGameOver();
 	}
 

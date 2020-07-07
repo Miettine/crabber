@@ -50,13 +50,16 @@ public class GridTracker : Singleton<GridTracker> {
 	SwarmController swarmController;
 
 	[SerializeField]
-	private Sprite potSprite;
+	public Sprite potSprite;
 
 	[SerializeField]
 	private Sprite[] numberSprites;
 
 	[SerializeField]
 	Color previousRoundColor;
+
+	System.Random randomizer = new System.Random();
+
 	private void Awake() {
 		terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
 		terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
@@ -84,10 +87,10 @@ public class GridTracker : Singleton<GridTracker> {
 		 * This is to help the player read which tiles they just lifted pots up from.
 		 */
 		foreach (var location in numberTilemap.cellBounds.allPositionsWithin) {
-			var markerTile = (Tile)numberTilemap.GetTile(location);
+			var numberTile = (Tile)numberTilemap.GetTile(location);
 
-			if (markerTile != null && markerTile.sprite != null)
-				SetNumberTileInOffsetCoordinates(location, markerTile.sprite, previousRoundColor);
+			if (numberTile != null && numberTile.sprite != null)
+				SetNumberTileInOffsetCoordinates(location, numberTile.sprite, previousRoundColor);
 		}
 
 		/**
@@ -111,7 +114,31 @@ public class GridTracker : Singleton<GridTracker> {
 		}
 	}
 
-	System.Random randomizer = new System.Random();
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="location"></param>
+	/// <returns>Whether the given tile contains a number tile</returns>
+	internal bool HasNumberTile(Vector3Int locationInCubic) {
+		Tile tile = (Tile) numberTilemap.GetTile(CubicCrabGrid.CubicToOffset(locationInCubic));
+		if (tile != null && tile.sprite != null) {
+			return true;
+		}
+		return false;
+	}
+
+	/// <summary>
+	/// Finds all number tiles with the number zero on them and makes them white. 
+	/// This is done at the end of the game to mark the tiles that the player fished from that contained no crab.
+	/// </summary>
+	internal void SetZeroTilesWhite() {
+		foreach (var location in numberTilemap.cellBounds.allPositionsWithin) {
+			var numberTile = (Tile)numberTilemap.GetTile(location);
+
+			if (numberTile != null && numberTile.sprite != null && TileHasSpriteWithName(numberTile, numberSprites[0].name))
+				SetNumberTileInOffsetCoordinates(location, numberTile.sprite, Color.white);
+		}
+	}
 
 	public Vector3Int GetRandomSwarmPlacementInCubic() {
 		var locations = new List<Vector3Int>();
@@ -139,9 +166,13 @@ public class GridTracker : Singleton<GridTracker> {
 	}
 
 	public void SetNumberTileInCubic(Vector3Int locationInCubicCoord, int number) {
+		SetNumberTileInCubic(locationInCubicCoord, number, previousRoundColor);
+	}
+
+	public void SetNumberTileInCubic(Vector3Int locationInCubicCoord, int number, Color color) {
 		var offset = CubicCrabGrid.CubicToOffset(locationInCubicCoord);
 		Debug.Log(string.Format("Number tile cubic {0} offset {1} amount {2}", locationInCubicCoord, offset, number));
-		SetNumberTileInOffsetCoordinates(offset, number, previousRoundColor);
+		SetNumberTileInOffsetCoordinates(offset, number, color);
 	}
 
 	void SetNumberTileInOffsetCoordinates(Vector3Int locationInOffsetCoord, int number, Color color){
