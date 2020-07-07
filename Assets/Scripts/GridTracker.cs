@@ -4,16 +4,23 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static PlayerController;
 
+/// <summary>
+/// Deals with the hexagon grids
+/// </summary>
 public class GridTracker : MonoBehaviour {
 
 	[SerializeField]
 	string waterTileName = "HexTilesetv3_5";
-
-	const string TerrainGridName = "TerrainGrid";
-	const string MarkerGridName = "MarkerGrid";
-	const string NumberGridName = "NumberGrid";
-	const string SwarmControllerName = "SwarmController";
-	const string RandomizerGridName = "RandomizerGrid";
+	[SerializeField] 
+	string TerrainGridName = "TerrainGrid";
+	[SerializeField]
+	string MarkerGridName = "MarkerGrid";
+	[SerializeField]
+	string NumberGridName = "NumberGrid";
+	[SerializeField]
+	string SwarmControllerName = "SwarmController";
+	[SerializeField]
+	string RandomizerGridName = "RandomizerGrid";
 	
 	/// <summary>
 	/// Shows the environment graphically, such as the water-areas.
@@ -65,7 +72,6 @@ public class GridTracker : MonoBehaviour {
 
 		swarmController = GameObject.Find(SwarmControllerName).GetComponent<SwarmController>();
 		swarmController.SetGridTracker(this);
-		//playerController = GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
 
 		if (potSprite == null)
 			throw new Exception("ERROR: Failed to find potSprite");

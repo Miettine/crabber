@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
 {
 	const string GridTrackerGameObjectName = "GridTracker";
 	const string PotsLeftTextGameObjectName = "PotsLeftText";
-	const string PlayerControllerGameObjectName = "PlayerController";
 	const string GoButtonName = "GoButton";
 	const string CrabCollectedTextGameObjectName = "CrabCollectedText";
 
@@ -17,6 +16,8 @@ public class PlayerController : MonoBehaviour
 	Text potsLeftText;
 	Text crabCollectedText;
 	GameController gameController;
+
+	UIController Ui { get; set; }
 
 	public delegate void AddPotDelegate();
 	public delegate void ThrowPotDelegate();
@@ -34,15 +35,16 @@ public class PlayerController : MonoBehaviour
 	private int money = 30;
 
 	void Awake() {
-		gridTracker = GameObject.Find(GridTrackerGameObjectName).GetComponent<GridTracker>();
+		gridTracker = GameObject.Find(typeof(GridTracker).Name).GetComponent<GridTracker>();
 		potsLeftText = GameObject.Find(PotsLeftTextGameObjectName).GetComponent<Text>();
 		gameController = GameController.GetGameController();
 		goButton = GameObject.Find(GoButtonName).GetComponent<Button>();
 		crabCollectedText = GameObject.Find(CrabCollectedTextGameObjectName).GetComponent<Text>();
+		Ui = UIController.GetUIController();
 	}
 
 	public static PlayerController GetPlayerController() {
-		return GameObject.Find(PlayerControllerGameObjectName).GetComponent<PlayerController>();
+		return GameObject.Find(typeof(PlayerController).Name).GetComponent<PlayerController>();
 	}
 
 	public int GetMoney() {
@@ -58,7 +60,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void Update() {
-		if (!gameController.GameIsOver() && Input.GetMouseButtonDown(0)) {
+		if (!gameController.IsGameOver() && Input.GetMouseButtonDown(0)) {
 			Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 			gridTracker.PlaceOrRemovePot(mouseWorldPos, HasPotsLeft(), ThrowPot, AddPot);
@@ -76,7 +78,6 @@ public class PlayerController : MonoBehaviour
 
 	void OnPotsChanged() {
 		potsLeftText.text = "Pots left: " + pots;
-		gameController.OnPlayersPotsChanged();
 
 		if (!gameController.InDevelopment)
 			goButton.interactable = !HasPotsLeft();
@@ -109,7 +110,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void OnMoneyChanged() {
-		gameController.UpdateMoneyText(money);
+		Ui.OnMoneyChanged();
 	}
 
 	public void OnGoClicked() {

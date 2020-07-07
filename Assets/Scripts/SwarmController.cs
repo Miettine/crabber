@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SwarmController : MonoBehaviour {
 
-	const string SwarmControllerGameObjectName = "SwarmController";
 	GridTracker gridTracker;
 
 	/// <summary>
@@ -50,7 +49,7 @@ public class SwarmController : MonoBehaviour {
 	}
 
 	public static SwarmController GetSwarmController() {
-		return GameObject.Find(SwarmControllerGameObjectName).GetComponent<SwarmController>();
+		return GameObject.Find(typeof(SwarmController).Name).GetComponent<SwarmController>();
 	}
 	public int GetCrab(Vector3Int locationInOffsetCoord) {
 
