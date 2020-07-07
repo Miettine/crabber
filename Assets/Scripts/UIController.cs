@@ -7,10 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Deals with the canvas UI-elements
 /// </summary>
-public class UIController : MonoBehaviour
-{
-
-	const string UIControllerGameObjectName = "UIController";
+public class UIController : Singleton<UIController> {
 
 	[SerializeField]
 	string RoundTextGameObjectName = "RoundsText";
@@ -42,25 +39,20 @@ public class UIController : MonoBehaviour
 
 	GameController gameController;
 
-	public static UIController GetUIController() {
-		return GameObject.Find(UIControllerGameObjectName).GetComponent<UIController>();
-	}
-
 	private void Awake() {
-		//gridTracker = GameObject.Find(GridTrackerName).GetComponent<GridTracker>();
-		//playerController = PlayerController.GetPlayerController();
+
 		roundText = GameObject.Find(RoundTextGameObjectName).GetComponent<Text>();
 		logText = GameObject.Find(LogTextGameObjectName).GetComponent<Text>();
 		restartButton = GameObject.Find(RestartButtonGameObjectName).GetComponent<Button>();
-		playerController = PlayerController.GetPlayerController();
-		swarmController = SwarmController.GetSwarmController();
+		playerController = PlayerController.GetInstance();
+		swarmController = SwarmController.GetInstance();
 		quitButton = GameObject.Find(QuitButtonGameObjectName).GetComponent<Button>();
 		moneyText = GameObject.Find(MoneyTextGameObjectName).GetComponent<Text>();
 		tripCostText = GameObject.Find(TripCostTextGameObjectName).GetComponent<Text>();
 		futureTripCostText = GameObject.Find(FutureTripCostTextGameObjectName).GetComponent<Text>();
 		notificationText = GameObject.Find(NotificationTextGameObjectName).GetComponent<Text>();
 
-		gameController = GameController.GetGameController();
+		gameController = GameController.GetInstance();
 	}
 
 	internal void OnRoundOver(int roundCrabHaul) {

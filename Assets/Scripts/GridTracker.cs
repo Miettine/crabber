@@ -7,7 +7,7 @@ using static PlayerController;
 /// <summary>
 /// Deals with the hexagon grids
 /// </summary>
-public class GridTracker : MonoBehaviour {
+public class GridTracker : Singleton<GridTracker> {
 
 	[SerializeField]
 	string waterTileName = "HexTilesetv3_5";

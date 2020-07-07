@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
-	const string GridTrackerGameObjectName = "GridTracker";
 	const string PotsLeftTextGameObjectName = "PotsLeftText";
 	const string GoButtonName = "GoButton";
 	const string CrabCollectedTextGameObjectName = "CrabCollectedText";
@@ -35,16 +34,12 @@ public class PlayerController : MonoBehaviour
 	private int money = 30;
 
 	void Awake() {
-		gridTracker = GameObject.Find(typeof(GridTracker).Name).GetComponent<GridTracker>();
+		gridTracker = GridTracker.GetInstance();
+		gameController = GameController.GetInstance();
+		Ui = UIController.GetInstance();
 		potsLeftText = GameObject.Find(PotsLeftTextGameObjectName).GetComponent<Text>();
-		gameController = GameController.GetGameController();
 		goButton = GameObject.Find(GoButtonName).GetComponent<Button>();
 		crabCollectedText = GameObject.Find(CrabCollectedTextGameObjectName).GetComponent<Text>();
-		Ui = UIController.GetUIController();
-	}
-
-	public static PlayerController GetPlayerController() {
-		return GameObject.Find(typeof(PlayerController).Name).GetComponent<PlayerController>();
 	}
 
 	public int GetMoney() {

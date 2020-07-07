@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SwarmController : MonoBehaviour {
+public class SwarmController : Singleton<SwarmController> {
 
 	GridTracker gridTracker;
 
@@ -48,9 +48,6 @@ public class SwarmController : MonoBehaviour {
 		originalCrabPopulation = new CubicCrabGrid(startPopulation);
 	}
 
-	public static SwarmController GetSwarmController() {
-		return GameObject.Find(typeof(SwarmController).Name).GetComponent<SwarmController>();
-	}
 	public int GetCrab(Vector3Int locationInOffsetCoord) {
 
 		Vector3Int locationInCubic = CubicCrabGrid.OffsetToCubic(locationInOffsetCoord);

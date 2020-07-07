@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour
+public class GameController : Singleton<GameController>
 {
 
 	[SerializeField]
@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
 	public int CurrentRound { get; set; } = 1;
 
 	void Awake() {
-		Ui = UIController.GetUIController();
+		Ui = UIController.GetInstance();
 	}
 
 	private void IncreaseTripCost(int increase) {
@@ -47,9 +47,6 @@ public class GameController : MonoBehaviour
 		SceneManager.LoadScene(scene.name);
 	}
 
-	public static GameController GetGameController() {
-		return GameObject.Find(typeof(GameController).Name).GetComponent<GameController>();
-	}
 	internal void OnAllPotsLifted(int crabHaul, int currentMoney) {
 		OnRoundOver(crabHaul, currentMoney);
 	}
