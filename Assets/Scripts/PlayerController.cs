@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : Singleton<PlayerController>
 {
-	const string PotsLeftTextGameObjectName = "PotsLeftText";
-	const string GoButtonName = "GoButton";
-	const string CrabCollectedTextGameObjectName = "CrabCollectedText";
-
-	Button goButton;
 	GridTracker gridTracker;
-	Text potsLeftText;
-	Text crabCollectedText;
 	GameController gameController;
 
 	UIController Ui { get; set; }
+	public int Crab { get; private set; } = 0;
 
 	public delegate void AddPotDelegate();
 	public delegate void ThrowPotDelegate();
@@ -27,19 +18,19 @@ public class PlayerController : Singleton<PlayerController>
 	/// </summary>
 	[SerializeField]
 	private int pots = 6;
-
-	int crab = 0;
-
 	[SerializeField]
 	private int money = 30;
+
+	public int Pots { get => pots; private set { 
+			pots = value;
+			Ui.OnPotsChanged();
+		}
+	}
 
 	void Awake() {
 		gridTracker = GridTracker.GetInstance();
 		gameController = GameController.GetInstance();
 		Ui = UIController.GetInstance();
-		potsLeftText = GameObject.Find(PotsLeftTextGameObjectName).GetComponent<Text>();
-		goButton = GameObject.Find(GoButtonName).GetComponent<Button>();
-		crabCollectedText = GameObject.Find(CrabCollectedTextGameObjectName).GetComponent<Text>();
 	}
 
 	public int GetMoney() {
@@ -48,10 +39,9 @@ public class PlayerController : Singleton<PlayerController>
 
 	void Start()
 	{
-		OnMoneyChanged();
-		OnPotsChanged();
-		OnCrabChanged();
-		goButton.onClick.AddListener(() => OnGoClicked());
+		Ui.OnMoneyChanged();
+		Ui.OnPotsChanged();
+		Ui.OnCrabChanged();
 	}
 
 	void Update() {
@@ -63,58 +53,36 @@ public class PlayerController : Singleton<PlayerController>
 	}
 
 	public bool HasPotsLeft() {
-		return pots > 0;
+		return Pots > 0;
 	}
 
 	internal void AddPot() {
-		pots++;
-		OnPotsChanged();
-	}
-
-	void OnPotsChanged() {
-		potsLeftText.text = "Pots left: " + pots;
-
-		if (!gameController.InDevelopment)
-			goButton.interactable = !HasPotsLeft();
-	}
-
-	internal void OnGameOver() {
-		goButton.gameObject.SetActive(false);
+		Pots++;
 	}
 
 	internal void ThrowPot() {
-		if (pots > 0) 
-			pots--;
-		OnPotsChanged();
+		if (Pots > 0) 
+			Pots--;
 	}
 
 	void AddCrab(int crab) {
 		if (crab < 0)
 			crab = 0;
 
-		this.crab += crab;
-		OnCrabChanged();
+		Crab += crab;
+		Ui.OnCrabChanged();
 
 		money += crab;
-		OnMoneyChanged();
-	}
-
-	void OnCrabChanged() {
-		crabCollectedText.gameObject.SetActive(crab > 0);
-		crabCollectedText.text = string.Format("Haul: {0} crab", crab);
-	}
-
-	void OnMoneyChanged() {
 		Ui.OnMoneyChanged();
 	}
 
 	public void OnGoClicked() {
-		int crabBefore = crab;
+		int crabBefore = Crab;
 		gridTracker.LiftAllPots(AddPot, AddCrab);
 
 		money -= gameController.GetTripCost();
-		OnMoneyChanged();
+		Ui.OnMoneyChanged();
 
-		gameController.OnAllPotsLifted(crab - crabBefore, money);
+		gameController.OnAllPotsLifted(Crab - crabBefore, money);
 	}
 }

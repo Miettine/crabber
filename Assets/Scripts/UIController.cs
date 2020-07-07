@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -9,6 +6,10 @@ using UnityEngine.UI;
 /// </summary>
 public class UIController : Singleton<UIController> {
 
+	/*
+	 * I use the SerializeField-annotation to make the field serialized 
+	 * in the Unity editor but still keep it a private member in the code.
+	 * */
 	[SerializeField]
 	string RoundTextGameObjectName = "RoundsText";
 	[SerializeField]
@@ -25,7 +26,16 @@ public class UIController : Singleton<UIController> {
 	string TripCostTextGameObjectName = "TripCostText";
 	[SerializeField]
 	string FutureTripCostTextGameObjectName = "FutureTripCostText";
-
+	[SerializeField]
+	string PotsLeftTextGameObjectName = "PotsLeftText";
+	[SerializeField]
+	string GoButtonName = "GoButton";
+	[SerializeField]
+	string CrabCollectedTextGameObjectName = "CrabCollectedText";
+	
+	Button goButton;
+	Text potsLeftText;
+	Text crabCollectedText;
 	Text roundText;
 	Text logText;
 	Text moneyText;
@@ -41,18 +51,34 @@ public class UIController : Singleton<UIController> {
 
 	private void Awake() {
 
+		gameController = GameController.GetInstance();
+		playerController = PlayerController.GetInstance();
+		swarmController = SwarmController.GetInstance();
+
+		/*
+		 * With 2 years working experience with Unity, 
+		 * I determined that this is the best way to find object references to components in a Unity scene:
+		 * */
 		roundText = GameObject.Find(RoundTextGameObjectName).GetComponent<Text>();
 		logText = GameObject.Find(LogTextGameObjectName).GetComponent<Text>();
 		restartButton = GameObject.Find(RestartButtonGameObjectName).GetComponent<Button>();
-		playerController = PlayerController.GetInstance();
-		swarmController = SwarmController.GetInstance();
+
 		quitButton = GameObject.Find(QuitButtonGameObjectName).GetComponent<Button>();
 		moneyText = GameObject.Find(MoneyTextGameObjectName).GetComponent<Text>();
 		tripCostText = GameObject.Find(TripCostTextGameObjectName).GetComponent<Text>();
 		futureTripCostText = GameObject.Find(FutureTripCostTextGameObjectName).GetComponent<Text>();
 		notificationText = GameObject.Find(NotificationTextGameObjectName).GetComponent<Text>();
+		potsLeftText = GameObject.Find(PotsLeftTextGameObjectName).GetComponent<Text>();
+		goButton = GameObject.Find(GoButtonName).GetComponent<Button>();
+		crabCollectedText = GameObject.Find(CrabCollectedTextGameObjectName).GetComponent<Text>();
 
-		gameController = GameController.GetInstance();
+		goButton.onClick.AddListener(() => playerController.OnGoClicked());
+	}
+	internal void OnPotsChanged() {
+		potsLeftText.text = "Pots left: " + playerController.Pots;
+
+		if (!gameController.InDevelopment)
+			goButton.interactable = !playerController.HasPotsLeft();
 	}
 
 	internal void OnRoundOver(int roundCrabHaul) {
@@ -67,6 +93,7 @@ public class UIController : Singleton<UIController> {
 	}
 
 	internal void OnGameOver() {
+		goButton.gameObject.SetActive(false);
 		HideNotificationText();
 		if (gameController.WonTheGame) {
 			HideTripCostTexts();
@@ -75,7 +102,6 @@ public class UIController : Singleton<UIController> {
 			ShowLostNotification();
 		}
 		restartButton.gameObject.SetActive(true);
-		playerController.OnGameOver();
 		swarmController.RevealAllSwarms();
 	}
 
@@ -103,6 +129,11 @@ public class UIController : Singleton<UIController> {
 		ShowFutureTripCost(tripCost, tripCost + gameController.TripCostIncrease, playerController.GetMoney());
 	}
 
+	internal void OnCrabChanged() {
+		int crab = playerController.Crab;
+		crabCollectedText.gameObject.SetActive(crab > 0);
+		crabCollectedText.text = string.Format("Haul: {0} crab", crab);
+	}
 
 	void ShowFutureTripCost(int nextRoundCost, int futureCost, int playerMoney) {
 		string message = string.Format("(On the next day, trip will cost ${0})", futureCost);
