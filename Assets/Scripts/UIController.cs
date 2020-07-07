@@ -141,6 +141,7 @@ public class UIController : MonoBehaviour
 
 
 	void ShowLastRoundPromptText() {
+		tripCostText.color = Color.white;
 		futureTripCostText.color = Color.white;
 		futureTripCostText.text = "(This is the last day)";
 	}
