@@ -352,7 +352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 9, y: -96}
+  m_AnchoredPosition: {x: 10, y: -104.68997}
   m_SizeDelta: {x: 253.4, y: 64.1}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &159108577
@@ -376,7 +376,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_FontSize: 45
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -3927,7 +3927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfRounds: 7
-  tripCostIncrease: 4
+  tripCostIncrease: 3
   inDevelopment: 1
 --- !u!4 &604619374
 Transform:
@@ -4278,8 +4278,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4, y: -5}
-  m_SizeDelta: {x: 285.27, y: 163.79}
+  m_AnchoredPosition: {x: -4, y: 0}
+  m_SizeDelta: {x: 282.4407, y: 168.79002}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &789068515
 MonoBehaviour:
@@ -4313,25 +4313,26 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Round 1 hauled 17 crab
+  m_Text: 'Round 1 hauled 17 crab, gained $17
 
     Round 2 hauled 12 crab
 
-    Round 3 hauled
-    11 crab
+    Round
+    3 hauled 11 crab
 
     Round 4 hauled 9 crab
 
     Round 5 hauled 7 crab
 
-    Round 6 hauled
-    0 crab
+    Round
+    6 hauled 0 crab
 
     Round 7 hauled 9 crab
 
     Day 8 hauled 20 crab
 
-    Day 9'
+    Day
+    9'
 --- !u!222 &789068516
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4447,7 +4448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc276cbc01371a34bb5886839942645f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfSwarms: 6
+  numberOfSwarms: 7
   emptySpaceBetweenCenters: 2
   populationConcentration: 0c0000000200000001000000
   maximumAttempts: 100
@@ -4662,8 +4663,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -212, y: 98}
-  m_SizeDelta: {x: 206.33, y: 123.5}
+  m_AnchoredPosition: {x: -231.13, y: 99.06}
+  m_SizeDelta: {x: 226.12547, y: 131.75412}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1204593239
 MonoBehaviour:
@@ -4686,7 +4687,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 49
+    m_FontSize: 65
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
@@ -4870,8 +4871,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5, y: 130}
-  m_SizeDelta: {x: 316.22, y: 30.94}
+  m_AnchoredPosition: {x: 5, y: 132}
+  m_SizeDelta: {x: 348.33524, y: 32.892418}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1293094254
 MonoBehaviour:
@@ -4894,7 +4895,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -4902,7 +4903,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: (On the next day, trip will cost $25)
@@ -5122,8 +5123,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 9, y: -11}
-  m_SizeDelta: {x: 253.4, y: 72.6}
+  m_AnchoredPosition: {x: 10, y: -5}
+  m_SizeDelta: {x: 311.0593, y: 78.075935}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1636043621
 MonoBehaviour:
@@ -5146,7 +5147,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 54
+    m_FontSize: 65
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
@@ -5154,7 +5155,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 'Day: A/B'
@@ -5266,8 +5267,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5, y: 168}
-  m_SizeDelta: {x: 316.22, y: 31.92}
+  m_AnchoredPosition: {x: 5, y: 177.2}
+  m_SizeDelta: {x: 350.81363, y: 38.86776}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1819266638
 MonoBehaviour:
@@ -5290,7 +5291,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 23
+    m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
@@ -5298,7 +5299,7 @@ MonoBehaviour:
     m_Alignment: 6
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: This day's trip costs $20

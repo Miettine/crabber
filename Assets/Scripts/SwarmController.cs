@@ -18,13 +18,13 @@ public class SwarmController : Singleton<SwarmController> {
 	CubicCrabGrid originalCrabPopulation;
 
 	[SerializeField]
-	int numberOfSwarms = 3;
+	int numberOfSwarms = 7;
 
 	/// <summary>
 	/// Setting this to a small number has the possibility that the swarms could overlap.
 	/// </summary>
 	[SerializeField]
-	int emptySpaceBetweenCenters = 3;
+	int emptySpaceBetweenCenters = 2;
 
 	/// <summary>
 	/// Describes the concentration of crab in each crab swarm. The first number is the crab in the center of the population, 
