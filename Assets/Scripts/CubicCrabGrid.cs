@@ -36,18 +36,12 @@ public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 			return false;
 		}
 
-		//Find out if the ring at radius 1 contains crab
-		if (ContainsCrab(GetRing(center, 1))) {
-			return false;
-		}
-		
-		if (emptyDistanceAround == 1) {
-			return true;
-		}
+		//Making rings around trhe center and seeing if those rings contain crab.
 
-		//Find out if the ring at radius 2 contains crab
-		if (ContainsCrab(GetRing(center, 2))) {
-			return false;
+		for (int i = 1; i <= emptyDistanceAround; i++) {
+			if (ContainsCrab(GetRing(center, i))) {
+				return false;
+			}
 		}
 
 		return true;

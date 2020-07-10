@@ -53,7 +53,7 @@ public class GridTracker : Singleton<GridTracker> {
 	public Sprite potSprite;
 
 	[SerializeField]
-	private Sprite[] numberSprites;
+	Sprite[] numberSprites;
 
 	[SerializeField]
 	Color previousRoundColor;

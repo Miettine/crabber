@@ -14,32 +14,32 @@ public class GameController : Singleton<GameController>
 	[SerializeField]
 	bool inDevelopment = true;
 
-	[SerializeField]
-	private int tripCost = 10;
-	public int TripCost { get { return tripCost; } }
+	public int TripCost { get; private set; }
 
 	public bool InDevelopment { get { return inDevelopment; } }
 
-	UIController Ui { get; set; }
+	UIController ui;
 	public int TripCostIncrease { get => tripCostIncrease; }
 
 	private bool gameOver = false;
 	public bool WonTheGame { get; private set; } = false;
-	public int CurrentRound { get; set; } = 1;
+	public int CurrentRound { get; private set; } = 1;
 
 	SwarmController swarmController;
 	void Awake() {
 		swarmController = SwarmController.GetInstance();
-		Ui = UIController.GetInstance();
+		ui = UIController.GetInstance();
+
+		/**
+		* Trip cost needs to be initialized at awake because 
+		* the player controller needs it during the Start-function.
+		*/
+		TripCost = tripCostIncrease;
 	}
 
 	private void IncreaseTripCost(int increase) {
-		tripCost += increase;
-		Ui.OnTripCostChanged();
-	}
-
-	public int GetTripCost() {
-		return tripCost;
+		TripCost += increase;
+		ui.OnTripCostChanged();
 	}
 
 	public void RestartGame() {
@@ -54,19 +54,19 @@ public class GameController : Singleton<GameController>
 	internal void OnRoundOver(int roundCrabHaul, int currentMoney) {
 
 		if (IsLastRound(CurrentRound)) {
-			Ui.OnRoundOver(roundCrabHaul);
+			ui.OnRoundOver(roundCrabHaul);
 			GameOver(true);
-		} else if (currentMoney < tripCost) {
+		} else if (currentMoney < TripCost) {
 			CurrentRound++;
 			IncreaseTripCost(tripCostIncrease);
-			Ui.OnRoundOver(roundCrabHaul);
+			ui.OnRoundOver(roundCrabHaul);
 			GameOver(false);
 		} else {
 			CurrentRound++;
 			if (!IsLastRound(CurrentRound)) { 
 				IncreaseTripCost(tripCostIncrease);
 			}
-			Ui.OnRoundOver(roundCrabHaul);
+			ui.OnRoundOver(roundCrabHaul);
 		}	
 	}
 
@@ -82,7 +82,7 @@ public class GameController : Singleton<GameController>
 		gameOver = true;
 		WonTheGame = wonTheGame;
 		swarmController.RevealAllSwarms(this);
-		Ui.OnGameOver();
+		ui.OnGameOver();
 	}
 
 	internal bool IsLastRound() {

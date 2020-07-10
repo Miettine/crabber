@@ -102,7 +102,7 @@ public class SwarmController : Singleton<SwarmController> {
 	/// Reveals all swarms at the end of the game. The tiles that the player fished from during the game will be
 	/// shown white. The tiles that they didn't fish from will be gray.
 	/// </summary>
-	/// <param name="gameController">I accidentally called this function from UIController. 
+	/// <param name="gameController">Once during this project I accidentally called this function from UIController. 
 	/// To be more prudent I am making this function so that it can be called only from GameController</param>
 	public void RevealAllSwarms(GameController gameController) {
 		if (gameController == null) {
@@ -115,7 +115,7 @@ public class SwarmController : Singleton<SwarmController> {
 
 		/**
 		 * First I go through all tiles that have the number zero in them and make them white.
-		 * The orginal crab population doesn't know where the player tried to fish from but didn't get any crab.
+		 * The original crab population doesn't know where the player tried to fish from but didn't get any crab.
 		 * */
 		gridTracker.SetZeroTilesWhite();
 

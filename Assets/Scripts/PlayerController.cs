@@ -18,11 +18,10 @@ public class PlayerController : Singleton<PlayerController>
 	/// </summary>
 	[SerializeField]
 	private int pots = 6;
-	[SerializeField]
-	private int money = 30;
 
-	public int Pots { get => pots; private set => pots = value;
-	}
+	int money = 30;
+
+	public int Pots { get => pots; private set => pots = value;}
 
 	void Awake() {
 		gridTracker = GridTracker.GetInstance();
@@ -34,8 +33,14 @@ public class PlayerController : Singleton<PlayerController>
 		return money;
 	}
 
-	void Start()
-	{
+	void Start() {
+		/**
+		 * The following is a simplified equation of the summed together trip costs of the first three rounds.
+		 * I want to guarantee the player to always be able to play the first three rounds 
+		 * without losing. This is to lessen the player's frustration.
+		 * */
+		money = 3 * gameController.TripCost + 3 * gameController.TripCostIncrease;
+
 		Ui.OnMoneyChanged();
 		Ui.OnPotsChanged();
 		Ui.OnCrabChanged();
@@ -80,7 +85,7 @@ public class PlayerController : Singleton<PlayerController>
 		int crabBefore = Crab;
 		gridTracker.LiftAllPots(AddPot, AddCrab);
 
-		money -= gameController.GetTripCost();
+		money -= gameController.TripCost;
 		Ui.OnMoneyChanged();
 
 		gameController.OnAllPotsLifted(Crab - crabBefore, money);
