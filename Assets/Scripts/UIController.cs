@@ -41,7 +41,6 @@ public class UIController : Singleton<UIController> {
 	Text moneyText;
     Button restartButton;
     PlayerController playerController;
-    SwarmController swarmController;
     Button quitButton;
 	Text notificationText;
 	Text tripCostText;
@@ -53,7 +52,6 @@ public class UIController : Singleton<UIController> {
 
 		gameController = GameController.GetInstance();
 		playerController = PlayerController.GetInstance();
-		swarmController = SwarmController.GetInstance();
 
 		/*
 		 * With 2 years working experience with Unity, 
@@ -75,7 +73,7 @@ public class UIController : Singleton<UIController> {
 		goButton.onClick.AddListener(() => playerController.OnGoClicked());
 	}
 	internal void OnPotsChanged() {
-		potsLeftText.text = "Pots left: " + playerController.Pots;
+		potsLeftText.text = "Pots left: " + playerController.GetPots();
 
 		if (!gameController.InDevelopment)
 			goButton.interactable = !playerController.HasPotsLeft();

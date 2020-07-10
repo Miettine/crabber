@@ -120,6 +120,9 @@ public class SwarmController : Singleton<SwarmController> {
 		gridTracker.SetZeroTilesWhite();
 
 		foreach (KeyValuePair<Vector3Int, int> swarm in originalCrabPopulation) {
+			if (!gridTracker.HasWaterTile(swarm.Key)) {
+				continue; //I only want to reveal the crab swarms in water areas.
+			}
 
 			if (gridTracker.HasNumberTile(swarm.Key)) {
 				//If this is a tile where the player has fished from during this game, we make the tile white to highlight it.

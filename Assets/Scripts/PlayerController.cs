@@ -6,7 +6,7 @@ public class PlayerController : Singleton<PlayerController>
 	GridTracker gridTracker;
 	GameController gameController;
 
-	UIController Ui { get; set; }
+	UIController ui;
 	public int Crab { get; private set; } = 0;
 
 	public delegate void AddPotDelegate();
@@ -21,12 +21,14 @@ public class PlayerController : Singleton<PlayerController>
 
 	int money = 30;
 
-	public int Pots { get => pots; private set => pots = value;}
+	public int GetPots() { 
+		return pots; 
+	}
 
 	void Awake() {
 		gridTracker = GridTracker.GetInstance();
 		gameController = GameController.GetInstance();
-		Ui = UIController.GetInstance();
+		ui = UIController.GetInstance();
 	}
 
 	public int GetMoney() {
@@ -41,9 +43,9 @@ public class PlayerController : Singleton<PlayerController>
 		 * */
 		money = 3 * gameController.TripCost + 3 * gameController.TripCostIncrease;
 
-		Ui.OnMoneyChanged();
-		Ui.OnPotsChanged();
-		Ui.OnCrabChanged();
+		ui.OnMoneyChanged();
+		ui.OnPotsChanged();
+		ui.OnCrabChanged();
 	}
 
 	void Update() {
@@ -55,18 +57,18 @@ public class PlayerController : Singleton<PlayerController>
 	}
 
 	public bool HasPotsLeft() {
-		return Pots > 0;
+		return pots > 0;
 	}
 
 	internal void AddPot() {
-		Pots++;
-		Ui.OnPotsChanged();
+		pots++;
+		ui.OnPotsChanged();
 	}
 
 	internal void ThrowPot() {
-		if (Pots > 0) {
-			Pots--;
-			Ui.OnPotsChanged();
+		if (pots > 0) {
+			pots--;
+			ui.OnPotsChanged();
 		}
 	}
 
@@ -75,10 +77,10 @@ public class PlayerController : Singleton<PlayerController>
 			crab = 0;
 
 		Crab += crab;
-		Ui.OnCrabChanged();
+		ui.OnCrabChanged();
 
 		money += crab;
-		Ui.OnMoneyChanged();
+		ui.OnMoneyChanged();
 	}
 
 	public void OnGoClicked() {
@@ -86,7 +88,7 @@ public class PlayerController : Singleton<PlayerController>
 		gridTracker.LiftAllPots(AddPot, AddCrab);
 
 		money -= gameController.TripCost;
-		Ui.OnMoneyChanged();
+		ui.OnMoneyChanged();
 
 		gameController.OnAllPotsLifted(Crab - crabBefore, money);
 	}

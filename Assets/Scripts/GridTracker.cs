@@ -140,6 +140,14 @@ public class GridTracker : Singleton<GridTracker> {
 		}
 	}
 
+	internal bool HasWaterTile(Vector3Int locationInCubic) {
+		return HasWaterTileInOffset(CubicCrabGrid.CubicToOffset(locationInCubic));
+	}
+	bool HasWaterTileInOffset(Vector3Int locationInOffset) {
+		var terrainTile = (Tile)terrainTilemap.GetTile(locationInOffset);
+		return TileHasSpriteWithName(terrainTile, waterTileName);
+	}
+
 	public Vector3Int GetRandomSwarmPlacementInCubic() {
 		var locations = new List<Vector3Int>();
 		foreach (var location in randomizerTilemap.cellBounds.allPositionsWithin) {
@@ -190,10 +198,9 @@ public class GridTracker : Singleton<GridTracker> {
 	}
 
 	public void PlaceOrRemovePot(Vector3 worldPos, bool playerHasPotsLeft, ThrowPotDelegate throwPotDelegate, AddPotDelegate addPotDelegate) {
-		Vector3Int terrainCoordinate = terrainGrid.WorldToCell(worldPos);
-		var terrainTile = (Tile) terrainTilemap.GetTile(terrainCoordinate);
 
-		bool terrainIsWaterTile = TileHasSpriteWithName(terrainTile, waterTileName);
+		var terrainCoordinate = terrainGrid.WorldToCell(worldPos);
+		bool terrainIsWaterTile = HasWaterTileInOffset(terrainCoordinate);
 
 		Vector3Int markerCoordinate = markerGrid.WorldToCell(worldPos);
 		var markerTile = (Tile) markerTilemap.GetTile(markerCoordinate);
