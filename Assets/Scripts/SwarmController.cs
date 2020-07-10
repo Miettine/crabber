@@ -82,7 +82,7 @@ public class SwarmController : Singleton<SwarmController> {
 					newSwarmPlace = gridTracker.GetRandomSwarmPlacementInCubic();
 
 					if (attemptNumber >= maximumAttempts) {
-						Debug.Log(string.Format("Attempted {0} times and couldn't find placement for swarm number {1}", attemptNumber, i));
+						Debug.LogWarningFormat("Attempted {0} times and couldn't find placement for swarm number {1}", attemptNumber, i);
 
 						acceptablePlacement = true;
 					}
