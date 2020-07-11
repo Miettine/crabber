@@ -17,7 +17,9 @@ public class PlayerController : Singleton<PlayerController>
 	public delegate void AddCrabDelegate(int crab);
 
 	/// <summary>
-	/// Represents the number of pots that the player is capable of carrying on their boat. Pot is what a crab fishing trap is called.
+	/// Represents the number of pots that the player is capable of carrying on their boat. 
+	/// In case you don't know, a pot is what a crab fishing trap is called. The trap is made of metal, so it
+	/// sinks to the bottom of the water bed. It's attached with a rope to a floating buoy at the surface.
 	/// </summary>
 	[SerializeField]
 	private int pots = 6;

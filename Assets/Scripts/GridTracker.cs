@@ -80,6 +80,11 @@ public class GridTracker : Singleton<GridTracker> {
 			throw new Exception("ERROR: Failed to find potSprite");
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="addPotDelegate">The function that gets called whenever the player retreives a pot</param>
+	/// <param name="addCrabDelegate">The function that gets called whenever the player gains crab</param>
 	public void LiftAllPots(AddPotDelegate addPotDelegate, AddCrabDelegate addCrabDelegate) {
 
 		/**
@@ -179,7 +184,7 @@ public class GridTracker : Singleton<GridTracker> {
 
 	public void SetNumberTileInCubic(Vector3Int locationInCubicCoord, int number, Color color) {
 		var offset = CubicCrabGrid.CubicToOffset(locationInCubicCoord);
-		Debug.Log(string.Format("Number tile cubic {0} offset {1} amount {2}", locationInCubicCoord, offset, number));
+		Debug.LogFormat("Number tile cubic {0} offset {1} amount {2}", locationInCubicCoord, offset, number);
 		SetNumberTileInOffsetCoordinates(offset, number, color);
 	}
 
@@ -220,7 +225,7 @@ public class GridTracker : Singleton<GridTracker> {
 			tile.sprite = potSprite;
 			markerTilemap.SetTile(location, tile);
 
-			Debug.Log(string.Format("Placed pot at offset {0}, cubic {1}", location, CubicCrabGrid.OffsetToCubic(location)));
+			Debug.LogFormat("Placed pot at offset {0}, cubic {1}", location, CubicCrabGrid.OffsetToCubic(location));
 	
 			throwPotDelegate();
 		} else if (allowedToRemove) {
