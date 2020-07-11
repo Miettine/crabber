@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Deals with the game's current state and the game's progression.
+/// </summary>
 public class GameController : Singleton<GameController>
 {
 

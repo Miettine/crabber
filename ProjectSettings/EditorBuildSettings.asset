@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TilesTestScene-dev.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Small lake.unity
     guid: d63da6b08796507419108b4eaad2bee4
+  - enabled: 1
+    path: Assets/Scenes/Tiny lake.unity
+    guid: a44ef75a5abab2d4caacc43ea7aed248
   m_configObjects: {}

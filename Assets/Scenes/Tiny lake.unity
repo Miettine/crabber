@@ -2470,7 +2470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfRounds: 7
   tripCostIncrease: 3
-  inDevelopment: 1
+  inDevelopment: 0
 --- !u!4 &604619374
 Transform:
   m_ObjectHideFlags: 0

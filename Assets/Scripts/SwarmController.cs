@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Deals with the crab swarm layout in the current scene.
+/// </summary>
 public class SwarmController : Singleton<SwarmController> {
 
 	GridTracker gridTracker;
@@ -17,6 +20,9 @@ public class SwarmController : Singleton<SwarmController> {
 	/// </summary>
 	CubicCrabGrid originalCrabPopulation;
 
+	/// <summary>
+	/// How many swarms does the current scene (or level or map or lake or whatever you wish to call it) contain.
+	/// </summary>
 	[SerializeField]
 	int numberOfSwarms = 7;
 
@@ -31,7 +37,7 @@ public class SwarmController : Singleton<SwarmController> {
 	/// the second number is the ring around the center, and the third number is the number on the outer ring.
 	/// </summary>
 	[SerializeField]
-	int[] populationConcentration = { 6, 2, 1 };
+	int[] populationConcentration = { 12, 2, 1 };
 
 	/// <summary>
 	/// The maximum number of attempts that a random placement for each swarm is attempted at the start of the game.

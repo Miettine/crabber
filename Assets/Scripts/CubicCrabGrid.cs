@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class was made to mark which areas of the hexagon grid contain how many crab. 
+/// It extends dictionary with key value of type three-dimentional integer vector, and a value type of an integer.
+/// </summary>
 public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	private void AddCrab(int amount, Vector3Int location){
 		if (TryGetValue(location, out int crabAmount)) {

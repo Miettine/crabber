@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 using static PlayerController;
 
 /// <summary>
-/// Deals with the hexagon grids
+/// Deals with the hexagon grids in the Unity scene.
 /// </summary>
 public class GridTracker : Singleton<GridTracker> {
 

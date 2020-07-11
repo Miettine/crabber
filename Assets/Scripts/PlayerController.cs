@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Deals with whatever the player has and can do.
+/// </summary>
 public class PlayerController : Singleton<PlayerController>
 {
 	GridTracker gridTracker;
