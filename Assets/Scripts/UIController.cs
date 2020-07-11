@@ -40,12 +40,12 @@ public class UIController : Singleton<UIController> {
 	Text logText;
 	Text moneyText;
     Button restartButton;
-    PlayerController playerController;
     Button quitButton;
 	Text notificationText;
 	Text tripCostText;
 	Text futureTripCostText;
 
+	PlayerController playerController;
 	GameController gameController;
 
 	private void Awake() {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// This class was made to mark which areas of the hexagon grid contain how many crab. 
-/// It extends dictionary with key value of type three-dimentional integer vector, and a value type of an integer.
+/// It maps each area (Vector3Int) into crab amount of the given area (int)
 /// </summary>
 public class CubicCrabGrid : Dictionary<Vector3Int, int> {
 	private void AddCrab(int amount, Vector3Int location){

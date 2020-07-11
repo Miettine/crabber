@@ -218,7 +218,7 @@ public class GridTracker : Singleton<GridTracker> {
 
 		/**
 		 * Not all of the information gathered above is actually necessary if playerHasPotsLeft equals 'false'. 
-		 * This function could be "optimized", but what's the point? The execution is lighning-fast anyway.
+		 * This function could be "optimized", but what's the point? The execution is lightning-fast anyway.
 		 * */
 		if (allowedToPlace && playerHasPotsLeft) {
 			Tile tile = ScriptableObject.CreateInstance<Tile>();
