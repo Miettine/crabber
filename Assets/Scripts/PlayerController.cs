@@ -6,6 +6,8 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerController : Singleton<PlayerController>
 {
+
+
 	GridTracker gridTracker;
 	GameController gameController;
 
@@ -21,10 +23,9 @@ public class PlayerController : Singleton<PlayerController>
 	/// In case you don't know, a pot is what a crab fishing trap is called. The trap is made of metal, so it
 	/// sinks to the bottom of the water bed. It's attached with a rope to a floating buoy at the surface.
 	/// </summary>
-	[SerializeField]
-	private int pots = 6;
+	int pots;
 
-	int money = 30;
+	int money;
 
 	public int GetPots() { 
 		return pots; 
@@ -34,6 +35,8 @@ public class PlayerController : Singleton<PlayerController>
 		gridTracker = GridTracker.GetInstance();
 		gameController = GameController.GetInstance();
 		ui = UIController.GetInstance();
+
+
 	}
 
 	public int GetMoney() {
@@ -41,6 +44,9 @@ public class PlayerController : Singleton<PlayerController>
 	}
 
 	void Start() {
+		DifficultyLevel difficulty = gameController.Difficulty;
+		pots = difficulty.StartingPots;
+
 		/**
 		 * The following is a simplified equation of the summed together trip costs of the first three rounds.
 		 * I want to guarantee the player to always be able to play the first three rounds 

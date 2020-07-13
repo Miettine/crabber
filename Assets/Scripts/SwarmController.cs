@@ -21,25 +21,6 @@ public class SwarmController : Singleton<SwarmController> {
 	CubicCrabGrid originalCrabPopulation;
 
 	/// <summary>
-	/// How many swarms does the current scene (or level or map or lake or whatever you wish to call it) contain.
-	/// </summary>
-	[SerializeField]
-	int numberOfSwarms = 7;
-
-	/// <summary>
-	/// Setting this to a small number has the possibility that the swarms could overlap.
-	/// </summary>
-	[SerializeField]
-	int emptySpaceBetweenCenters = 2;
-
-	/// <summary>
-	/// Describes the concentration of crab in each crab swarm. The first number is the crab in the center of the population, 
-	/// the second number is the ring around the center, and the third number is the number on the outer ring.
-	/// </summary>
-	[SerializeField]
-	int[] populationConcentration = { 12, 2, 1 };
-
-	/// <summary>
 	/// The maximum number of attempts that a random placement for each swarm is attempted at the start of the game.
 	/// </summary>
 	[SerializeField]
@@ -47,7 +28,10 @@ public class SwarmController : Singleton<SwarmController> {
 
 	// Start is called before the first frame update
 	void Start() {
-		CubicCrabGrid startPopulation = GetSwarms(populationConcentration, numberOfSwarms, emptySpaceBetweenCenters);
+
+		DifficultyLevel difficulty = GameController.GetInstance().Difficulty;
+
+		CubicCrabGrid startPopulation = GetSwarms(difficulty.PopulationConcentration, difficulty.NumberOfSwarms, difficulty.EmptySpaceBetweenCenters);
 		crabPopulation = startPopulation;	
 		
 		//A copy is made of the start population.

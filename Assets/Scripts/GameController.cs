@@ -7,14 +7,12 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameController : Singleton<GameController>
 {
-
 	[SerializeField]
-	private int numberOfRounds = 7;
+	DifficultyLevel difficulty;
 
-	public int NumberOfRounds { get => numberOfRounds; }
+	public int NumberOfRounds { get; private set; }
 
-	[SerializeField]
-	private int tripCostIncrease = 3;
+
 	[SerializeField]
 	bool inDevelopment = true;
 
@@ -23,22 +21,28 @@ public class GameController : Singleton<GameController>
 	public bool InDevelopment { get { return inDevelopment; } }
 
 	UIController ui;
-	public int TripCostIncrease { get => tripCostIncrease; }
+	public int TripCostIncrease { get; private set; }
 
 	private bool gameOver = false;
 	public bool WonTheGame { get; private set; } = false;
 	public int CurrentRound { get; private set; } = 1;
+	public DifficultyLevel Difficulty { get => difficulty; }
 
 	SwarmController swarmController;
 	void Awake() {
 		swarmController = SwarmController.GetInstance();
 		ui = UIController.GetInstance();
+	}
 
+	void Start() {
 		/**
-		* Trip cost needs to be initialized at awake because 
-		* the player controller needs it during the Start-function.
+		* The trip cost on the first round is equal to the amount it increases on further rounds.
 		*/
-		TripCost = tripCostIncrease;
+		TripCost = difficulty.TripCostIncrease;
+		TripCostIncrease = difficulty.TripCostIncrease;
+		NumberOfRounds = difficulty.NumberOfRounds;
+
+		ui.OnTripCostChanged();
 	}
 
 	private void IncreaseTripCost(int increase) {
@@ -62,13 +66,13 @@ public class GameController : Singleton<GameController>
 			GameOver(true);
 		} else if (currentMoney < TripCost) {
 			CurrentRound++;
-			IncreaseTripCost(tripCostIncrease);
+			IncreaseTripCost(TripCostIncrease);
 			ui.OnRoundOver(roundCrabHaul);
 			GameOver(false);
 		} else {
 			CurrentRound++;
 			if (!IsLastRound(CurrentRound)) { 
-				IncreaseTripCost(tripCostIncrease);
+				IncreaseTripCost(TripCostIncrease);
 			}
 			ui.OnRoundOver(roundCrabHaul);
 		}	
@@ -79,7 +83,7 @@ public class GameController : Singleton<GameController>
 	}
 
 	bool IsLastRound(int currentRound) {
-		return currentRound == numberOfRounds;
+		return currentRound == NumberOfRounds;
 	}
 
 	public void GameOver(bool wonTheGame) {

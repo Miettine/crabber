@@ -2203,8 +2203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9daa796c307e34bb4d4043e145c729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfRounds: 7
-  tripCostIncrease: 7
+  difficulty: {fileID: 11400000, guid: 125d434b360d7b14cb03535b391046a5, type: 2}
   inDevelopment: 0
 --- !u!4 &604619374
 Transform:
@@ -2337,9 +2336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc276cbc01371a34bb5886839942645f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfSwarms: 8
-  emptySpaceBetweenCenters: 1
-  populationConcentration: 120000000300000001000000
   maximumAttempts: 100
 --- !u!4 &1148418178
 Transform:
@@ -2469,7 +2465,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1e7a6917d7f9b4a944351526c1e964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pots: 5
 --- !u!4 &1421239642
 Transform:
   m_ObjectHideFlags: 0
