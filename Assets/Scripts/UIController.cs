@@ -6,35 +6,6 @@ using UnityEngine.UI;
 /// </summary>
 public class UIController : Singleton<UIController> {
 
-	/*
-	 * I use the SerializeField-annotation to make the field serialized 
-	 * in the Unity editor but still keep it a private member in the code.
-	 * */
-	[SerializeField]
-	string RoundTextGameObjectName = "RoundsText";
-	[SerializeField]
-	string LogTextGameObjectName = "LogText";
-	[SerializeField]
-	string MenuButtonGameObjectName = "MenuButton";
-	[SerializeField]
-	string QuitButtonGameObjectName = "QuitButton";
-	[SerializeField]
-	string MoneyTextGameObjectName = "MoneyText";
-	[SerializeField]
-	string NotificationTextGameObjectName = "NotificationText";
-	[SerializeField]
-	string TripCostTextGameObjectName = "TripCostText";
-	[SerializeField]
-	string FutureTripCostTextGameObjectName = "FutureTripCostText";
-	[SerializeField]
-	string PotsLeftTextGameObjectName = "PotsLeftText";
-	[SerializeField]
-	string GoButtonName = "GoButton";
-	[SerializeField]
-	string CrabCollectedTextGameObjectName = "CrabCollectedText";
-	
-
-
 	Button goButton;
 	Text potsLeftText;
 	Text crabCollectedText;
@@ -59,20 +30,25 @@ public class UIController : Singleton<UIController> {
 
 		/*
 		 * With 2 years working experience with Unity, 
-		 * I determined that this is the best way to find object references to components in a Unity scene:
+		 * I determined that this is the best way to find object references to components in a Unity scene.
+		 * Save the name of the Game Object somewhere safe (like a scriptable object or a prefab), then use
+		 * GameObject.Find for a GameObject of that name.
 		 * */
-		roundText = GameObject.Find(RoundTextGameObjectName).GetComponent<Text>();
-		logText = GameObject.Find(LogTextGameObjectName).GetComponent<Text>();
-		menuButton = GameObject.Find(MenuButtonGameObjectName).GetComponent<Button>();
 
-		quitButton = GameObject.Find(QuitButtonGameObjectName).GetComponent<Button>();
-		moneyText = GameObject.Find(MoneyTextGameObjectName).GetComponent<Text>();
-		tripCostText = GameObject.Find(TripCostTextGameObjectName).GetComponent<Text>();
-		futureTripCostText = GameObject.Find(FutureTripCostTextGameObjectName).GetComponent<Text>();
-		notificationText = GameObject.Find(NotificationTextGameObjectName).GetComponent<Text>();
-		potsLeftText = GameObject.Find(PotsLeftTextGameObjectName).GetComponent<Text>();
-		goButton = GameObject.Find(GoButtonName).GetComponent<Button>();
-		crabCollectedText = GameObject.Find(CrabCollectedTextGameObjectName).GetComponent<Text>();
+		UIGameObjectNames uiGONames = Resources.Load<UIGameObjectNames>("UIGameObjectNames");
+
+		roundText = GameObject.Find(uiGONames.RoundTextGameObjectName).GetComponent<Text>();
+		logText = GameObject.Find(uiGONames.LogTextGameObjectName).GetComponent<Text>();
+		menuButton = GameObject.Find(uiGONames.MenuButtonGameObjectName).GetComponent<Button>();
+
+		quitButton = GameObject.Find(uiGONames.QuitButtonGameObjectName).GetComponent<Button>();
+		moneyText = GameObject.Find(uiGONames.MoneyTextGameObjectName).GetComponent<Text>();
+		tripCostText = GameObject.Find(uiGONames.TripCostTextGameObjectName).GetComponent<Text>();
+		futureTripCostText = GameObject.Find(uiGONames.FutureTripCostTextGameObjectName).GetComponent<Text>();
+		notificationText = GameObject.Find(uiGONames.NotificationTextGameObjectName).GetComponent<Text>();
+		potsLeftText = GameObject.Find(uiGONames.PotsLeftTextGameObjectName).GetComponent<Text>();
+		goButton = GameObject.Find(uiGONames.GoButtonName).GetComponent<Button>();
+		crabCollectedText = GameObject.Find(uiGONames.CrabCollectedTextGameObjectName).GetComponent<Text>();
 
 		goButton.onClick.AddListener(() => playerController.OnGoClicked());
 	}

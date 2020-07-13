@@ -7,11 +7,15 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameController : Singleton<GameController>
 {
+
+	/*
+	* I use the SerializeField-annotation to make the field serialized 
+	* in the Unity editor but still keep it a private member in the code.
+	* */
 	[SerializeField]
 	DifficultyLevel difficulty;
 
 	public int NumberOfRounds { get; private set; }
-
 
 	[SerializeField]
 	bool inDevelopment = true;
