@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -90,5 +91,9 @@ public class GameController : Singleton<GameController>
 
 	internal bool IsLastRound() {
 		return IsLastRound(CurrentRound);
+	}
+
+	internal void ReturnToMenu() {
+		SceneManager.LoadScene("");
 	}
 }

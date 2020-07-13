@@ -15,7 +15,7 @@ public class UIController : Singleton<UIController> {
 	[SerializeField]
 	string LogTextGameObjectName = "LogText";
 	[SerializeField]
-	string RestartButtonGameObjectName = "RestartButton";
+	string MenuButtonGameObjectName = "MenuButton";
 	[SerializeField]
 	string QuitButtonGameObjectName = "QuitButton";
 	[SerializeField]
@@ -33,13 +33,15 @@ public class UIController : Singleton<UIController> {
 	[SerializeField]
 	string CrabCollectedTextGameObjectName = "CrabCollectedText";
 	
+
+
 	Button goButton;
 	Text potsLeftText;
 	Text crabCollectedText;
 	Text roundText;
 	Text logText;
 	Text moneyText;
-    Button restartButton;
+    Button menuButton;
     Button quitButton;
 	Text notificationText;
 	Text tripCostText;
@@ -50,6 +52,8 @@ public class UIController : Singleton<UIController> {
 
 	private void Awake() {
 
+		Instantiate(Resources.Load("Canvas"));
+
 		gameController = GameController.GetInstance();
 		playerController = PlayerController.GetInstance();
 
@@ -59,7 +63,7 @@ public class UIController : Singleton<UIController> {
 		 * */
 		roundText = GameObject.Find(RoundTextGameObjectName).GetComponent<Text>();
 		logText = GameObject.Find(LogTextGameObjectName).GetComponent<Text>();
-		restartButton = GameObject.Find(RestartButtonGameObjectName).GetComponent<Button>();
+		menuButton = GameObject.Find(MenuButtonGameObjectName).GetComponent<Button>();
 
 		quitButton = GameObject.Find(QuitButtonGameObjectName).GetComponent<Button>();
 		moneyText = GameObject.Find(MoneyTextGameObjectName).GetComponent<Text>();
@@ -99,12 +103,12 @@ public class UIController : Singleton<UIController> {
 		} else {
 			ShowLostNotification();
 		}
-		restartButton.gameObject.SetActive(true);
+		menuButton.gameObject.SetActive(true);
 	}
 
 	void Start() {
-		restartButton.onClick.AddListener(() => gameController.RestartGame());
-		restartButton.gameObject.SetActive(false);
+		menuButton.onClick.AddListener(() => gameController.ReturnToMenu());
+		menuButton.gameObject.SetActive(false);
 
 		quitButton.onClick.AddListener(() => gameController.GameOver(false));
 		quitButton.gameObject.SetActive(gameController.InDevelopment);
