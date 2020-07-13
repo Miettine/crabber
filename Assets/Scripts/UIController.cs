@@ -31,8 +31,8 @@ public class UIController : Singleton<UIController> {
 		/*
 		 * With 2 years working experience with Unity, 
 		 * I determined that this is the best way to find object references to components in a Unity scene.
-		 * Save the name of the Game Object somewhere safe (like a scriptable object or a prefab), then use
-		 * GameObject.Find for a GameObject of that name.
+		 * Save the name of the Game Objects somewhere safe (like a scriptable object or a prefab), then use
+		 * GameObject.Find  to find each GameObject of that name.
 		 * */
 
 		UIGameObjectNames uiGONames = Resources.Load<UIGameObjectNames>("UIGameObjectNames");
