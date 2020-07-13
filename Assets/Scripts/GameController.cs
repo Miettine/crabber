@@ -94,6 +94,6 @@ public class GameController : Singleton<GameController>
 	}
 
 	internal void ReturnToMenu() {
-		SceneManager.LoadScene("");
+		SceneManager.LoadScene("Scene select");
 	}
 }
