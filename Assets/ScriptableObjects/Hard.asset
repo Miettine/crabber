@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfRounds: 7
   startingPots: 5
-  numberOfSwarms: 7
+  numberOfSwarms: 8
   emptySpaceBetweenCenters: 1
   populationConcentration: 120000000300000001000000
-  tripCostIncrease: 6
+  tripCostIncrease: 8

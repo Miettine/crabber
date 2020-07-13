@@ -36,14 +36,6 @@ public class PlayerController : Singleton<PlayerController>
 		gameController = GameController.GetInstance();
 		ui = UIController.GetInstance();
 
-
-	}
-
-	public int GetMoney() {
-		return money;
-	}
-
-	void Start() {
 		DifficultyLevel difficulty = gameController.Difficulty;
 		pots = difficulty.StartingPots;
 
@@ -53,6 +45,14 @@ public class PlayerController : Singleton<PlayerController>
 		 * without losing. This is to lessen the player's frustration.
 		 * */
 		money = 3 * gameController.TripCost + 3 * gameController.TripCostIncrease;
+
+	}
+
+	public int GetMoney() {
+		return money;
+	}
+
+	void Start() {
 
 		ui.OnMoneyChanged();
 		ui.OnPotsChanged();

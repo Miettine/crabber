@@ -84,14 +84,17 @@ public class UIController : Singleton<UIController> {
 	}
 
 	internal void OnRoundOver(int roundCrabHaul) {
-		int currentRound = gameController.CurrentRound;
-		UpdateRoundsText(currentRound, gameController.NumberOfRounds);
-		UpdateLogText(currentRound-1, roundCrabHaul);
+		OnRoundChanged();
+		UpdateLogText(gameController.CurrentRound - 1, roundCrabHaul);
 
 		if (!gameController.IsGameOver() && gameController.IsLastRound()) {
 			ShowLastRoundPromptText();
 			HideNotificationText();
 		}
+	}
+
+	internal void OnRoundChanged() {
+		UpdateRoundsText(gameController.CurrentRound, gameController.NumberOfRounds);
 	}
 
 	internal void OnGameOver() {

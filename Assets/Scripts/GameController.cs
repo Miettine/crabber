@@ -32,16 +32,17 @@ public class GameController : Singleton<GameController>
 	void Awake() {
 		swarmController = SwarmController.GetInstance();
 		ui = UIController.GetInstance();
-	}
 
-	void Start() {
 		/**
 		* The trip cost on the first round is equal to the amount it increases on further rounds.
 		*/
 		TripCost = difficulty.TripCostIncrease;
 		TripCostIncrease = difficulty.TripCostIncrease;
 		NumberOfRounds = difficulty.NumberOfRounds;
+	}
 
+	void Start() {
+		ui.OnRoundChanged();
 		ui.OnTripCostChanged();
 	}
 
