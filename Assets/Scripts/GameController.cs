@@ -67,6 +67,7 @@ public class GameController : Singleton<GameController>
 	internal void OnRoundOver(int roundCrabHaul, int currentMoney) {
 
 		if (IsLastRound(CurrentRound)) {
+			CurrentRound++;
 			ui.OnRoundOver(roundCrabHaul);
 			GameOver(true);
 		} else if (currentMoney < TripCost) {
@@ -76,9 +77,9 @@ public class GameController : Singleton<GameController>
 			GameOver(false);
 		} else {
 			CurrentRound++;
-			if (!IsLastRound(CurrentRound)) { 
-				IncreaseTripCost(TripCostIncrease);
-			}
+			
+			IncreaseTripCost(TripCostIncrease);
+			
 			ui.OnRoundOver(roundCrabHaul);
 		}	
 	}

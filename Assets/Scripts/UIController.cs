@@ -62,15 +62,12 @@ public class UIController : Singleton<UIController> {
 	internal void OnRoundOver(int roundCrabHaul) {
 		OnRoundChanged();
 		UpdateLogText(gameController.CurrentRound - 1, roundCrabHaul);
-
-		if (!gameController.IsGameOver() && gameController.IsLastRound()) {
-			ShowLastRoundPromptText();
-			HideNotificationText();
-		}
 	}
 
 	internal void OnRoundChanged() {
-		UpdateRoundsText(gameController.CurrentRound, gameController.NumberOfRounds);
+		if (gameController.CurrentRound <= gameController.NumberOfRounds) {
+			UpdateRoundsText(gameController.CurrentRound, gameController.NumberOfRounds);
+		}
 	}
 
 	internal void OnGameOver() {
@@ -106,7 +103,12 @@ public class UIController : Singleton<UIController> {
 	public void OnTripCostChanged() {
 		int tripCost = gameController.TripCost;
 		tripCostText.text = string.Format("This day's trip costs ${0}", tripCost);
-		ShowFutureTripCost(tripCost, tripCost + gameController.TripCostIncrease, playerController.GetMoney());
+		if (!gameController.IsGameOver() && gameController.IsLastRound()) {
+			ShowLastRoundPromptText();
+			HideNotificationText();
+		} else {
+			ShowFutureTripCost(tripCost, tripCost + gameController.TripCostIncrease, playerController.GetMoney());
+		}
 	}
 
 	internal void OnCrabChanged() {
