@@ -16,5 +16,5 @@ MonoBehaviour:
   startingPots: 5
   numberOfSwarms: 7
   emptySpaceBetweenCenters: 1
-  populationConcentration: 180000000300000001000000
+  populationConcentration: 150000000300000001000000
   tripCostIncrease: 8
