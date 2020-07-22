@@ -26,6 +26,10 @@ public class SwarmController : Singleton<SwarmController> {
 	[SerializeField]
 	int maximumAttempts = 100;
 
+	void Awake() {
+		gridTracker = GridTracker.GetInstance();
+	}
+
 	// Start is called before the first frame update
 	void Start() {
 
@@ -124,9 +128,5 @@ public class SwarmController : Singleton<SwarmController> {
 		}
 
 
-	}
-
-	internal void SetGridTracker(GridTracker gridTracker) {
-		this.gridTracker = gridTracker;
 	}
 }

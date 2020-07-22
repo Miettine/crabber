@@ -1913,17 +1913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df1e96e1f5f6644a83ec051f711d859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoundTextGameObjectName: RoundsText
-  LogTextGameObjectName: LogText
-  MenuButtonGameObjectName: MenuButton
-  QuitButtonGameObjectName: QuitButton
-  MoneyTextGameObjectName: MoneyText
-  NotificationTextGameObjectName: NotificationText
-  TripCostTextGameObjectName: TripCostText
-  FutureTripCostTextGameObjectName: FutureTripCostText
-  PotsLeftTextGameObjectName: PotsLeftText
-  GoButtonName: GoButton
-  CrabCollectedTextGameObjectName: CrabCollectedText
 --- !u!4 &445095756
 Transform:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(fileName = "Crabber settings", menuName = "UI Game Object names", order = 1)]
+[CreateAssetMenu(fileName = "UIGameObjectNames", menuName = "UI Game Object names", order = 1)]
 public class UIGameObjectNames : ScriptableObject 
 {
 	[SerializeField]

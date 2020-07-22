@@ -8,19 +8,6 @@ using static PlayerController;
 /// Deals with the hexagon grids in the Unity scene.
 /// </summary>
 public class GridTracker : Singleton<GridTracker> {
-
-	[SerializeField]
-	string waterTileName = "HexTilesetv3_5";
-	[SerializeField] 
-	string TerrainGridName = "TerrainGrid";
-	[SerializeField]
-	string MarkerGridName = "MarkerGrid";
-	[SerializeField]
-	string NumberGridName = "NumberGrid";
-	[SerializeField]
-	string SwarmControllerName = "SwarmController";
-	[SerializeField]
-	string RandomizerGridName = "RandomizerGrid";
 	
 	/// <summary>
 	/// Shows the environment graphically, such as the water-areas.
@@ -60,21 +47,27 @@ public class GridTracker : Singleton<GridTracker> {
 
 	System.Random randomizer = new System.Random();
 
+	string waterTileName;
+
 	private void Awake() {
-		terrainGrid = GameObject.Find(TerrainGridName).GetComponent<Grid>();
+
+		GridGameObjectNames gridGONames = Resources.Load<GridGameObjectNames>("GridGameObjectNames");
+
+		terrainGrid = GameObject.Find(gridGONames.TerrainGridGameObjectName).GetComponent<Grid>();
 		terrainTilemap = terrainGrid.GetComponentInChildren<Tilemap>();
 		
-		markerGrid = GameObject.Find(MarkerGridName).GetComponent<Grid>();
+		markerGrid = GameObject.Find(gridGONames.MarkerGridGameObjectName).GetComponent<Grid>();
 		markerTilemap = markerGrid.GetComponentInChildren<Tilemap>();
 
-		numberGrid = GameObject.Find(NumberGridName).GetComponent<Grid>();
+		numberGrid = GameObject.Find(gridGONames.NumberGridGameObjectName).GetComponent<Grid>();
 		numberTilemap = numberGrid.GetComponentInChildren<Tilemap>();
 
-		randomizerGrid = GameObject.Find(RandomizerGridName).GetComponent<Grid>();
+		randomizerGrid = GameObject.Find(gridGONames.RandomizerGridGameObjectName).GetComponent<Grid>();
 		randomizerTilemap = randomizerGrid.GetComponentInChildren<Tilemap>();
 
-		swarmController = GameObject.Find(SwarmControllerName).GetComponent<SwarmController>();
-		swarmController.SetGridTracker(this);
+		waterTileName = gridGONames.WaterTileName;
+
+		swarmController = SwarmController.GetInstance();
 
 		if (potSprite == null)
 			throw new Exception("ERROR: Failed to find potSprite");
