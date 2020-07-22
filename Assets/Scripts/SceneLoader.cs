@@ -19,4 +19,8 @@ public class SceneLoader : Singleton<SceneLoader> {
         GameObject.Find(EasyButtonGameObjectName).GetComponent<Button>().onClick.AddListener(() => SceneManager.LoadScene(easySceneName));
         GameObject.Find(HardButtonGameObjectName).GetComponent<Button>().onClick.AddListener(() => SceneManager.LoadScene(hardSceneName));
     }
+
+    public void FullScreen() {
+        Screen.fullScreen = true;
+    }
 }
